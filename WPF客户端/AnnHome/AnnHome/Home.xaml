@@ -9,9 +9,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="31*" />
+            <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="16">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="212,16,212,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -23,7 +24,27 @@
                 <Button Command="{x:Static wpf:DrawerHost.OpenDrawerCommand}">菜单</Button>
             </StackPanel>
         </Grid>
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Stretch"
+                      Margin="50 8 0 8"
+            >
+            <StackPanel Orientation="Horizontal">
+                <wpf:Card Width="350" Height="auto" x:Name="date_card">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="30" Height="30" Margin="5 5 0 5" ToolTip="天气"></Image>
+                        <Border BorderThickness="0.6" BorderBrush="Gray"  Margin="5 5 5 5"/>
+                        <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" x:Name="index_date" ToolTip="今日日期" Foreground="{DynamicResource MaterialDesignBodyLight}">2015-02-14</Label>
+                        <Border BorderThickness="0.6" BorderBrush="Gray"  Margin="5 5 5 5" x:Name="border"/>
+                        <Label HorizontalAlignment="Center" Width="140" VerticalAlignment="Center"  FontSize="22" x:Name="index_holiday" Foreground="{DynamicResource MaterialDesignBodyLight}">国庆节(放假)</Label>
+                        
+                        
+                    </StackPanel>
+                    
+                </wpf:Card>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
                       Margin="18,0,18,77">
