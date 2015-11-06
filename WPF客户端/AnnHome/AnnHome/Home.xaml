@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="AnnHome.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="Resources/logo.png" Stretch="Uniform" Width="100" Height="100" />
+            <StackPanel Grid.Column="1" Margin="24 0 0 0">
+                <TextBlock FontSize="32" TextWrapping="Wrap">欢迎来到小安安の自留地</TextBlock>
+                <TextBlock Margin="0 8 0 10" TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBodyLight}">咦 ,系酱紫的咩?</TextBlock>
+                <Button Command="{x:Static wpf:DrawerHost.OpenDrawerCommand}">菜单</Button>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      Margin="18,0,18,77">
+            <StackPanel Orientation="Horizontal">
+                <wpf:Card Width="420" Margin="4 2 8 16" Height="272">
+                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="Resources/logo1.jpg" Grid.RowSpan="4" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"/>
+                        <TextBlock Grid.Column="1" FontSize="28" Margin="16 16 16 8"  FontWeight="Light">潘安(作者)</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   VerticalAlignment="Top">一名深爱民谣的码农，常年混迹于各大平台，至今毫无作为。</TextBlock>
+                        <Border Grid.Column="1" Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" Margin="0 0 0 0">
+                            <Grid Margin="8">
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Left"
+                                        x:Name="GitHubButton" Click="GitHubButton_OnClick" Width="97" ToolTip="GitHub主页">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" 
+                                                        Fill="{DynamicResource MaterialDesignBody}" />
+                                            </Canvas>
+                                        </Viewbox>
+                                        <TextBlock Margin="3 0 0 0" VerticalAlignment="Center" Width="54">GitHub</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Right"
+                                        x:Name="TecentButton" Click="TecentButton_OnClick" Width="90" ToolTip="QQ交谈">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="F1 M 11.5585,72.366C 12.061,72.1984 12.7499,72.2885 13.0661,71.8634C 14.0692,70.5146 14.2958,68.6914 15.2961,67.3405C 16.3735,65.8857 17.903,64.8278 19.2065,63.5715C 20.51,62.3151 22.2514,61.3925 23.1169,59.8024C 23.7598,58.6214 23.3368,57.1222 23.4467,55.7821C 23.5566,54.442 23.2306,52.9906 23.7765,51.7618C 24.3329,50.5092 26.0836,50.0272 26.5719,48.7465C 27.109,47.3376 26.6242,45.7313 26.6504,44.2236C 26.6766,42.716 26.3014,41.1467 26.7289,39.7008C 26.9873,38.8268 28.302,38.5578 28.582,37.6906C 28.994,36.415 28.2764,34.9497 28.6763,33.6703C 28.8538,33.1021 29.8574,33.1822 30.1525,32.6652C 30.6227,31.8415 30.6027,30.8225 30.8278,29.9012C 31.0529,28.9799 31.0474,27.969 31.5031,27.1372C 31.8627,26.4807 32.7308,26.2375 33.1677,25.6296C 33.7116,24.873 33.8525,23.8761 34.3927,23.1169C 35.4131,21.6827 36.675,20.4367 37.8162,19.0966C 38.9574,17.7565 39.9414,16.2647 41.2398,15.0762C 42.1899,14.2066 43.407,13.6838 44.4906,12.9875C 45.5742,12.2913 46.5799,11.4555 47.7414,10.8989C 48.9098,10.3389 50.1983,10.0753 51.4267,9.66345C 52.6552,9.25165 53.8836,8.83983 55.112,8.42802C 56.3405,8.01622 57.5132,7.36467 58.7973,7.19261C 60.375,6.98126 61.9801,7.26068 63.5715,7.29469C 65.1629,7.32872 66.7542,7.36275 68.3456,7.39677C 69.937,7.4308 71.5284,7.46483 73.1198,7.49886C 74.7112,7.53288 76.3682,7.14711 77.8939,7.60094C 78.7811,7.86485 79.0259,9.22417 79.9041,9.51688C 81.1758,9.94078 82.6527,9.18721 83.9244,9.6111C 84.8026,9.90382 85.1247,11.0787 85.9346,11.527C 86.3743,11.7705 86.9945,11.3299 87.4422,11.5585C 88.0752,11.8815 88.362,12.6666 88.9498,13.0661C 89.7205,13.5899 90.6994,13.7564 91.4625,14.291C 92.7247,15.1752 93.8077,16.2907 94.9803,17.2906C 96.1529,18.2904 97.5505,19.0749 98.4981,20.2901C 99.1379,21.1105 99.231,22.2374 99.5974,23.2111C 99.9639,24.1848 100.124,25.2637 100.697,26.1321C 101.131,26.7901 102.164,26.9359 102.518,27.6398C 103.084,28.762 103.049,30.0966 103.314,31.3251C 103.579,32.5535 103.845,33.7819 104.11,35.0104C 104.375,36.2388 104.695,37.4568 104.906,38.6957C 105.075,39.693 104.885,40.7676 105.251,41.7109C 105.561,42.5098 106.59,42.9058 106.853,43.7211C 107.266,45.0011 106.761,46.4694 107.198,47.7414C 107.486,48.5769 108.654,48.9109 108.926,49.7516C 109.338,51.0288 109.161,52.4299 109.146,53.7719C 109.134,54.7819 108.947,55.7821 108.847,56.7872C 108.748,57.7923 108.25,58.8376 108.549,59.8024C 108.866,60.827 109.889,61.4776 110.559,62.3151C 111.229,63.1527 112.094,63.8663 112.569,64.8278C 113.027,65.7543 112.818,66.9245 113.292,67.8431C 113.879,68.9824 115.107,69.7111 115.679,70.8583C 116.409,72.3233 116.649,73.9853 117.134,75.5487C 117.619,77.1122 118.104,78.6756 118.589,80.2391C 119.074,81.8026 119.887,83.3001 120.045,84.9295C 120.175,86.2788 119.636,87.6097 119.432,88.9498C 119.228,90.2899 119.369,91.7311 118.82,92.9701C 118.217,94.3273 116.998,95.3153 116.087,96.4879C 115.585,95.9854 114.979,95.5681 114.579,94.9803C 114.056,94.2097 113.885,93.2337 113.354,92.4676C 112.368,91.0425 111.156,89.7874 110.057,88.4473C 109.219,88.8556 108.162,88.975 107.544,89.6722C 106.922,90.3734 106.926,91.4416 106.617,92.3263C 106.308,93.211 106.111,94.1427 105.691,94.9803C 105.24,95.8784 104.581,96.6554 104.026,97.493C 103.471,98.3306 102.811,99.1071 102.361,100.006C 102.131,100.467 102.131,101.011 102.016,101.513C 101.513,101.681 100.88,101.639 100.508,102.016C 99.9851,102.546 99.4524,103.286 99.5346,104.026C 99.6419,104.992 100.278,105.901 101.011,106.539C 101.927,107.337 103.188,107.617 104.277,108.156C 105.366,108.696 106.642,108.96 107.544,109.774C 108.886,110.984 109.742,112.643 110.842,114.077C 109.24,115.585 107.833,117.331 106.036,118.6C 105.33,119.098 104.361,119.029 103.524,119.244C 102.686,119.458 101.863,119.739 101.011,119.888C 99.9037,120.08 98.7773,120.139 97.6605,120.264C 96.5438,120.39 95.427,120.516 94.3103,120.641C 93.1935,120.767 92.0836,121.04 90.96,121.018C 89.609,120.992 88.2798,120.673 86.9397,120.5C 85.5995,120.327 84.2594,120.154 82.9193,119.982C 81.5792,119.809 80.2391,119.636 78.899,119.464C 77.5589,119.291 76.1449,119.417 74.8787,118.945C 74.0507,118.637 73.7035,117.506 72.8685,117.218C 71.705,116.816 70.4116,117.057 69.1832,116.977C 67.9548,116.897 66.7263,116.816 65.4979,116.736C 64.2695,116.656 63.0137,116.226 61.8126,116.495C 60.8379,116.714 60.1374,117.584 59.2999,118.129C 58.4623,118.673 57.7245,119.416 56.7872,119.762C 55.5066,120.234 54.107,120.278 52.7668,120.537C 51.4267,120.795 50.0866,121.053 48.7465,121.311C 47.4064,121.57 46.0892,122.018 44.7262,122.086C 43.4235,122.152 42.1297,121.835 40.8315,121.709C 39.5333,121.584 38.235,121.458 36.9368,121.332C 35.6386,121.207 34.3403,121.081 33.0421,120.955C 31.7439,120.83 30.4204,120.862 29.1474,120.579C 28.2611,120.381 27.4723,119.877 26.6347,119.526C 25.7971,119.176 24.9216,118.904 24.122,118.474C 23.406,118.089 22.3595,117.867 22.1118,117.092C 21.7026,115.813 22.3003,114.412 22.3945,113.072C 22.4887,111.732 21.7689,110.041 22.6772,109.051C 23.8591,107.763 25.9511,107.807 27.6398,107.355C 28.6209,107.093 29.6499,107.062 30.655,106.916C 30.8225,106.287 31.4511,105.611 31.1576,105.031C 30.4654,103.663 29.0567,102.798 28.0062,101.681C 26.9558,100.564 25.9053,99.4473 24.8549,98.3306C 23.8044,97.2138 22.4263,96.3324 21.7035,94.9803C 21.2281,94.0909 21.8803,92.8783 21.4522,91.9651C 20.8912,90.7682 19.5828,90.0672 18.8767,88.9498C 18.6036,88.5176 18.6883,87.9447 18.594,87.4422C 17.5889,87.683 16.3533,87.4803 15.5788,88.1646C 14.4936,89.1233 14.3953,90.8475 13.4744,91.9651C 12.3569,93.3212 10.857,94.3103 9.54828,95.4828L 7.53812,93.4727L 7.03558,92.9701C 7.10189,91.8534 7.16819,90.7366 7.2345,89.6199C 7.30081,88.5031 7.36712,87.3864 7.43342,86.2696C 7.49973,85.1528 7.23239,83.9641 7.63235,82.9193C 7.95816,82.0682 9.12999,81.7483 9.48547,80.9091C 9.81227,80.1377 9.52735,79.234 9.54828,78.3965C 9.56923,77.5589 9.27529,76.6513 9.6111,75.8837C 9.98213,75.0357 11.0787,74.6834 11.527,73.8736C 11.7705,73.4338 11.548,72.8685 11.5585,72.366 Z" 
+                                                        Fill="{DynamicResource MaterialDesignBody}" Height="24" Stretch="Fill" Width="24"  Margin="-15 0 0 0"/>
+                                            </Canvas>
+                                        </Viewbox>
+                                        <TextBlock Margin="-2 0 0 0" VerticalAlignment="Center">QQ</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                            <Grid Margin="8">
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Left"
+                                        x:Name="AnnButton" Click="AnnButton_OnClick" Width="95" ToolTip="小安安个人主页">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M7.5,2A2,2 0 0,1 9.5,4A2,2 0 0,1 7.5,6A2,2 0 0,1 5.5,4A2,2 0 0,1 7.5,2M6,7H9A2,2 0 0,1 11,9V14.5H9.5V22H5.5V14.5H4V9A2,2 0 0,1 6,7M16.5,2A2,2 0 0,1 18.5,4A2,2 0 0,1 16.5,6A2,2 0 0,1 14.5,4A2,2 0 0,1 16.5,2M15,22V16H12L14.59,8.41C14.84,7.59 15.6,7 16.5,7C17.4,7 18.16,7.59 18.41,8.41L21,16H18V22H15Z" 
+                                                        Fill="{DynamicResource MaterialDesignBody}" />
+                                            </Canvas>
+                                        </Viewbox>
+                                        <TextBlock Margin="3 0 0 0" VerticalAlignment="Center">小安安</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}" HorizontalAlignment="Right"
+                                        x:Name="EmailButton" Click="EmailButton_OnClick" Width="92" ToolTip="发送邮件">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" 
+                                                        Fill="{DynamicResource MaterialDesignBody}" />
+                                            </Canvas>
+                                        </Viewbox>
+                                        <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Email</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </wpf:Card>
+                <wpf:Card Width="520" Margin="8 2 4 16" Height="274">
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Width="160" Height="212" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20,0,20,-46">
+                            <Canvas Width="24" Height="29">
+                                <Image Source="Resources/logo2.png" Width="24" Height="29"/>
+                            </Canvas>
+                        </Viewbox>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,-80">
+                            <Label FontSize="28" Margin="16 16 16 8"  FontWeight="Light" Height="50" x:Name="index_title">示例标题</Label>
+                            <TextBlock TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       VerticalAlignment="Top" Height="152" x:Name="index_content">这只是一个实例，。</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </wpf:Card>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
