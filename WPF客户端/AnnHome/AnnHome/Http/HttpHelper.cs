@@ -57,7 +57,7 @@ namespace AnnHome.Http
         /// <param name="contentType"></param>
         /// <param name="charset"></param>
         /// <returns></returns>
-        public static string RequestUrl(string url, out int requestCode, string data = null, string method = "GET", string contentType = "text", string charset = "utf-8")
+        public static string RequestUrl(string url, out int requestCode, string data = null, string method = "GET", string contentType = "text", string charset = "gbk")
         {
             try
             {

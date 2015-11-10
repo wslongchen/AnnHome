@@ -1,11 +1,28 @@
-﻿using System;
+﻿using AnnHome.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace AnnHome.Tools
 {
-    class DateHelper
+    class ToolHelper
     {
+        public static string ConvertExtendedASCII(string HTML)
+        {
+            string retVal = "";
+            char[] s = HTML.ToCharArray();
+
+            foreach (char c in s)
+            {
+                if (Convert.ToInt32(c) > 127)
+                    retVal += "&#" + Convert.ToInt32(c) + ";";
+                else
+                    retVal += c;
+            }
+
+            return retVal;
+        }
         //检查是否是节日
         public static string CheckHoliday(out int code)
         {
@@ -29,6 +46,30 @@ namespace AnnHome.Tools
                 code = -1;
             
             return "";
+        }
+        //获取当前地址
+        public static string getCurrentPlace()
+        {
+            int code = 0;
+            string result = HttpHelper.RequestUrl("http://int.dpool.sina.com.cn/iplookup/iplookup.php", out code);
+            if (code != -1)
+            {
+                var place = result?.Split('\t');
+                return place?[5];
+            }
+            return "";
+
+        }
+
+        //显示网络照片
+        public static BitmapImage showNetImage(string url)
+        {
+            BitmapImage myBitmapImage = new BitmapImage();
+            myBitmapImage.BeginInit();
+            myBitmapImage.UriSource = new Uri(url, UriKind.Absolute);
+            myBitmapImage.DecodePixelWidth = 2048;
+            myBitmapImage.EndInit();
+            return myBitmapImage;
         }
         //公历节日 *表示放假日
         static string[] sFtv = new string[]{

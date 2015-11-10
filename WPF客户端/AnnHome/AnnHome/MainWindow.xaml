@@ -60,6 +60,11 @@
                                 <wpfExample:MenusAndToolBars/>
                             </domain:DemoItem.Content>
                         </domain:DemoItem>
+                        <domain:DemoItem Name="Articles">
+                            <domain:DemoItem.Content>
+                                <wpfExample:Articles/>
+                            </domain:DemoItem.Content>
+                        </domain:DemoItem>
                     </ListBox>
                 </StackPanel>
             </wpf:DrawerHost.LeftDrawerContent>

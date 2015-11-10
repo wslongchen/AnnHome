@@ -32,13 +32,11 @@
             <StackPanel Orientation="Horizontal">
                 <wpf:Card Width="350" Height="auto" x:Name="date_card">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="30" Height="30" Margin="5 5 0 5" ToolTip="天气"></Image>
+                        <Image Width="30" Height="30" Margin="5 5 0 5" x:Name="img_weather" Source="Resources/logo2.png"></Image>
                         <Border BorderThickness="0.6" BorderBrush="Gray"  Margin="5 5 5 5"/>
                         <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" x:Name="index_date" ToolTip="今日日期" Foreground="{DynamicResource MaterialDesignBodyLight}">2015-02-14</Label>
                         <Border BorderThickness="0.6" BorderBrush="Gray"  Margin="5 5 5 5" x:Name="border"/>
-                        <Label HorizontalAlignment="Center" Width="140" VerticalAlignment="Center"  FontSize="22" x:Name="index_holiday" Foreground="{DynamicResource MaterialDesignBodyLight}">国庆节(放假)</Label>
-                        
-                        
+                        <Label HorizontalAlignment="Center" Width="140" VerticalAlignment="Center"  FontSize="22" x:Name="index_holiday" Foreground="{DynamicResource MaterialDesignBodyLight}" ToolTip="节日">国庆节(放假)</Label>
                     </StackPanel>
                     
                 </wpf:Card>
@@ -138,7 +136,7 @@
                             </Canvas>
                         </Viewbox>
                         <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,-80">
-                            <Label FontSize="28" Margin="16 16 16 8"  FontWeight="Light" Height="50" x:Name="index_title">示例标题</Label>
+                            <Label FontSize="28" Margin="16 16 16 8"  FontWeight="Light" Height="50" x:Name="index_title" MouseLeftButtonDown="index_title_MouseLeftButtonDown">示例标题</Label>
                             <TextBlock TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
                                        VerticalAlignment="Top" Height="152" x:Name="index_content">这只是一个实例，。</TextBlock>
                         </StackPanel>
