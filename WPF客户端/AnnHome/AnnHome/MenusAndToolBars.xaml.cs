@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,9 +27,36 @@ namespace AnnHome
             InitializeComponent();
         }
 
-        private void TwitterButton_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://twitter.com/James_Willock");
+            string filepath = "";
+            string filename = "";
+            OpenFileDialog openfilejpg = new OpenFileDialog();
+            openfilejpg.Filter = "jpg图片(*.jpg)|*.jpg|gif图片(*.gif)|*.gif";
+            openfilejpg.FilterIndex = 0;
+            openfilejpg.RestoreDirectory = true;
+            openfilejpg.Multiselect = false;
+            if (openfilejpg.ShowDialog() == true)
+            {
+                filepath = openfilejpg.FileName;
+                Image img = new Image();
+                BitmapImage bImg = new BitmapImage();
+                img.IsEnabled = true;
+                bImg.BeginInit();
+                bImg.UriSource = new Uri(filepath, UriKind.Relative);
+                bImg.EndInit();
+                img.Source = bImg;
+                //MessageBox.Show(bImg.Width.ToString() + "," + bImg.Height.ToString());
+                /* 调整图片大小
+                if (bImg.Height > 100 || bImg.Width > 100)
+                {
+                    img.Height = bImg.Height * 0.2;
+                    img.Width = bImg.Width * 0.2;
+                }*/
+                img.Stretch = Stretch.Uniform;  //图片缩放模式
+                new InlineUIContainer(img, rt_file.Selection.Start); //插入图片到选定位置
+
+            }
         }
     }
 }

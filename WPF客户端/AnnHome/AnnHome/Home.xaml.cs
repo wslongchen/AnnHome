@@ -11,11 +11,13 @@ using System.Windows.Media.Imaging;
 
 namespace AnnHome
 {
+
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
     public partial class Home : UserControl
     {
+
         public Home()
         {
             InitializeComponent();
@@ -70,6 +72,8 @@ namespace AnnHome
             }
             //显示最新文章
             string result = HttpHelper.RequestUrl(Contacts.getAllArticles(), out code);
+            //string data= "{\"status\":\"publish\",\"title\":\"sdfadafsasdf\",\"content\":\"dasdfasdfasdfasdfasdfsfa\",\"author\":\"vaelongchen\",\"categories\":[],\"tags\":[]}";
+            //string result2 = HttpHelper.RequestUrl("http://www.mrpann.com/?json=create_posts", out code,data,"POST");
             if (code != -1)
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
@@ -85,14 +89,14 @@ namespace AnnHome
 
         private void index_title_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Cards c = new Cards();
-            var w = new Window();
-            w.Content = c;
-            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.WindowStyle = WindowStyle.SingleBorderWindow;
-            w.Width = 210;
-            w.Height = 300;
-            w.ShowDialog();
+            //Cards c = new Cards();
+            //var w = new Window();
+            //w.Content = c;
+            //w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            //w.WindowStyle = WindowStyle.SingleBorderWindow;
+            //w.Width = 210;
+            //w.Height = 300;
+            //w.ShowDialog();
         }
     }
 }

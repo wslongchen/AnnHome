@@ -64,12 +64,16 @@ namespace AnnHome.Tools
         //显示网络照片
         public static BitmapImage showNetImage(string url)
         {
-            BitmapImage myBitmapImage = new BitmapImage();
-            myBitmapImage.BeginInit();
-            myBitmapImage.UriSource = new Uri(url, UriKind.Absolute);
-            myBitmapImage.DecodePixelWidth = 2048;
-            myBitmapImage.EndInit();
-            return myBitmapImage;
+            if (url != null)
+            {
+                BitmapImage myBitmapImage = new BitmapImage();
+                myBitmapImage.BeginInit();
+                myBitmapImage.UriSource = new Uri(url, UriKind.Absolute);
+                myBitmapImage.DecodePixelWidth = 2048;
+                myBitmapImage.EndInit();
+                return myBitmapImage;
+            }
+            return null;
         }
         //公历节日 *表示放假日
         static string[] sFtv = new string[]{
@@ -131,6 +135,27 @@ namespace AnnHome.Tools
         "1223 北方小年",
         "1224 南方小年",
         "0100*除夕" };
+        //调用JS
+        //        Basic ds = new Basic();
+        //        this.wbrExam.NavigateToString("<HTML><head><script language =\"JavaScript\" type = \"text/javascript\">function Selec(){alert(\"提示信息！\"); }</script> </head><Body><Form><div id = \"div1\" onClick = \"Selec();\"> 000000000000 </div> <div id = \"div2\"> 111111 </ div></Form></Body></HTML>");
+        //        wbrExam.ObjectForScripting = ds;//该对象可由显示在WebBrowser控件中的网页所包含的脚本代码访问  
+
+        //        this.wbrExam.InvokeScript("Selec");
+
+        //         [System.Runtime.InteropServices.ComVisibleAttribute(true)]//将该类设置为com可访问  
+        //    public class Basic
+        //    {
+        //        public static string name;
+        //        public string Name
+        //        {
+        //            get { return name; }
+        //            set { name = value; }
+        //        }
+        //        public void ClickEvent(string str)
+        //        {
+        //            this.Name = str;
+        //        }
+        //    }
 
     }
 }

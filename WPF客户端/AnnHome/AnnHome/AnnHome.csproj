@@ -75,15 +75,8 @@
     <Compile Include="Articles.xaml.cs">
       <DependentUpon>Articles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Cards.xaml.cs">
-      <DependentUpon>Cards.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Tools\ToolHelper.cs" />
     <Page Include="Articles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Cards.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -172,6 +165,9 @@
     <Resource Include="Resources\logo.png" />
     <Resource Include="Resources\logo1.jpg" />
     <Resource Include="Resources\logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\next_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
