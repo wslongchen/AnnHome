@@ -21,6 +21,7 @@ namespace AnnHome
         public Home()
         {
             InitializeComponent();
+            
             init();
             
         }

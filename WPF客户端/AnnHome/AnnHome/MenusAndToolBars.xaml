@@ -71,7 +71,7 @@
         </Menu>
         <Border BorderBrush="Gray" BorderThickness="0.3" DockPanel.Dock="Top" Margin="5 0 0 5"/>
         <ToolBarTray DockPanel.Dock="Top" Height="45" Margin="0,0,0,0">
-            <ToolBar Style="{DynamicResource MaterialDesignToolBar}">
+            <ToolBar Style="{DynamicResource MaterialDesignToolBar}" Margin="0,0,-33,0">
                 
                 <Button ToolTip="Save">
                     <Viewbox Width="16" Height="16">
@@ -105,11 +105,34 @@
                 </Button>
                 <Separator />
                 <Label Content="Font size:" VerticalAlignment="Center"/>
-                <ComboBox>
+                <ComboBox x:Name="font_size" SelectionChanged="font_size_SelectionChanged" MaxDropDownHeight="150">
+                    <ComboBoxItem Content="6"/>
+                    <ComboBoxItem Content="8"/>
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem IsSelected="True" Content="12"/>
                     <ComboBoxItem Content="14"/>
                     <ComboBoxItem Content="16"/>
+                    <ComboBoxItem Content="18"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="22"/>
+                    <ComboBoxItem Content="24"/>
+                    <ComboBoxItem Content="26"/>
+                    <ComboBoxItem Content="28"/>
+                    <ComboBoxItem Content="30"/>
+                    <ComboBoxItem Content="32"/>
+                    <ComboBoxItem Content="34"/>
+                    <ComboBoxItem Content="36"/>
+                    <ComboBoxItem Content="38"/>
+                    <ComboBoxItem Content="40"/>
+                    <ComboBoxItem Content="42"/>
+                    <ComboBoxItem Content="44"/>
+                    <ComboBoxItem Content="46"/>
+                    <ComboBoxItem Content="48"/>
+                    <ComboBoxItem Content="50"/>
+                    <ComboBoxItem Content="52"/>
+                    <ComboBoxItem Content="54"/>
+                    <ComboBoxItem Content="56"/>
+                    <ComboBoxItem Content="58"/>
                 </ComboBox>
                 <CheckBox>
                     Check
@@ -126,13 +149,16 @@
                 <ToggleButton>
                     Switch
                 </ToggleButton>
+                <ToggleButton ToolBar.OverflowMode="Always">
+                    Switch
+                </ToggleButton>
                 <Menu>
                     <MenuItem>Embedded menu</MenuItem>
                 </Menu>
             </ToolBar>
             
         </ToolBarTray>
-        <RichTextBox x:Name="rt_file" Margin="5 2 5 5" Foreground="{DynamicResource MaterialDesignBodyLight}">
+        <RichTextBox x:Name="rt_file" Margin="5 8 5 5" Foreground="{DynamicResource MaterialDesignBodyLight}">
             <RichTextBox.Document>
                 <FlowDocument Focusable="True" LineHeight="5">
                     <Paragraph x:Name="gara">

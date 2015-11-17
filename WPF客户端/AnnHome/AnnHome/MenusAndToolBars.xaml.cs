@@ -22,15 +22,23 @@ namespace AnnHome
     /// </summary>
     public partial class MenusAndToolBars : UserControl
     {
+
+        private TextRange select_range;
+
         public MenusAndToolBars()
         {
             InitializeComponent();
         }
 
+        void init()
+        {
+             select_range = this.rt_file.Selection;
+            
+        }
+
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             string filepath = "";
-            string filename = "";
             OpenFileDialog openfilejpg = new OpenFileDialog();
             openfilejpg.Filter = "jpg图片(*.jpg)|*.jpg|gif图片(*.gif)|*.gif";
             openfilejpg.FilterIndex = 0;
@@ -55,6 +63,20 @@ namespace AnnHome
                 }*/
                 img.Stretch = Stretch.Uniform;  //图片缩放模式
                 new InlineUIContainer(img, rt_file.Selection.Start); //插入图片到选定位置
+
+            }
+        }
+
+        private void font_size_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.font_size.SelectedIndex != -1)
+            {
+                ComboBoxItem item = font_size.SelectedValue as ComboBoxItem;
+                if (item.Content != null && rt_file.Selection.Text!="")
+                {
+                    rt_file.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, item.Content);
+                }
+                //this.rt_file.Selection.ApplyPropertyValue(TextElement.FontSizeProperty,fontSize);
 
             }
         }
