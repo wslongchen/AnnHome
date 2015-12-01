@@ -134,6 +134,9 @@
                     <ComboBoxItem Content="56"/>
                     <ComboBoxItem Content="58"/>
                 </ComboBox>
+                <Label Content="Font style:" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cmb"  MaxDropDownHeight="150" SelectionChanged="cmb_SelectionChanged">
+                </ComboBox>
                 <CheckBox>
                     Check
                 </CheckBox>
@@ -146,7 +149,7 @@
                 </Button>
                 <RadioButton GroupName="XXX" Content="Radio" />
                 <RadioButton GroupName="XXX" Content="Ga Ga" />
-                <ToggleButton>
+                <ToggleButton Command="{Binding ToggleBaseCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" >
                     Switch
                 </ToggleButton>
                 <ToggleButton ToolBar.OverflowMode="Always">

@@ -28,12 +28,26 @@ namespace AnnHome
         public MenusAndToolBars()
         {
             InitializeComponent();
+            DataContext = new PaletteSelectorViewModel();
+            InitializeFontFamilyList();
         }
 
         void init()
         {
              select_range = this.rt_file.Selection;
             
+        }
+
+        private void InitializeFontFamilyList()
+        {
+            foreach (FontFamily font in Fonts.SystemFontFamilies)
+            {
+                ComboBoxItem a = new ComboBoxItem();
+                a.FontFamily = font;
+                a.Content = font.Source;
+                cmb.Items.Add(a);
+
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -54,6 +68,8 @@ namespace AnnHome
                 bImg.UriSource = new Uri(filepath, UriKind.Relative);
                 bImg.EndInit();
                 img.Source = bImg;
+                FontFamily font = new FontFamily();
+                
                 //MessageBox.Show(bImg.Width.ToString() + "," + bImg.Height.ToString());
                 /* 调整图片大小
                 if (bImg.Height > 100 || bImg.Width > 100)
@@ -77,6 +93,19 @@ namespace AnnHome
                     rt_file.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, item.Content);
                 }
                 //this.rt_file.Selection.ApplyPropertyValue(TextElement.FontSizeProperty,fontSize);
+
+            }
+        }
+
+        private void cmb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.cmb.SelectedIndex != -1)
+            {
+                ComboBoxItem item = cmb.SelectedValue as ComboBoxItem;
+                if (item.Content != null && rt_file.Selection.Text != "")
+                {
+                    rt_file.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, item.Content);
+                }
 
             }
         }

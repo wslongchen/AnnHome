@@ -43,6 +43,7 @@
       <HintPath>..\packages\MaterialDesignThemes.1.1.0.234\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -75,6 +76,10 @@
     <Compile Include="Articles.xaml.cs">
       <DependentUpon>Articles.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Domain\PaletteSelectorViewModel.cs" />
+    <Compile Include="Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\ToolHelper.cs" />
     <Page Include="Articles.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +92,10 @@
     <Page Include="Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
