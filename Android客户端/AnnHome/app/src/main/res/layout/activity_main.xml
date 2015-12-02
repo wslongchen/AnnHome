@@ -3,22 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyActivity"
-    android:orientation="vertical"
-    android:weightSum="2">
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="fill_parent"
+        android:layout_height="67dp"
+        android:background="@drawable/bg_topbar" >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_menu" />
+
+        <Button
+            android:id="@+id/btnPerson"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_personal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:layout_weight="3"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffeeeeee"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvTag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="menu1"
+            android:textSize="20sp"
+            android:textColor="#ff000000" />
+
+        <TextView
+            android:id="@+id/tvTag2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="menu2"
+            android:textSize="20sp"
+            android:textColor="#ff000000" />
+
+        <TextView
+            android:id="@+id/tvTag3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="menu3"
+            android:textSize="20sp"
+            android:textColor="#ff000000" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        tools:context=".MyActivity"
-         />
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_widget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".MyActivity"
+                />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="3dp"
+        android:visibility="gone"
         >
         <LinearLayout
             android:layout_width="wrap_content"

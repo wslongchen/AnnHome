@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.transition.ChangeTransform;
 import android.transition.Transition;
 import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,8 @@ public class MainActivity extends Activity {
     private MyAdapter myAdapter;
 
     private SlidingMenu slidingMenu = null;
+
+    private SwipeRefreshLayout mSwipeRefreshWidget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,34 @@ public class MainActivity extends Activity {
             @Override
             public void onItemLongClick(View view, int postion) {
                 Toast.makeText(MainActivity.this, "22222222222222", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //下拉刷新
+        mSwipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_widget);
+        mRecyclerView = (RecyclerView) findViewById(android.R.id.list);
+
+        //mSwipeRefreshWidget.setColorScheme(R.color.color1, R.color.color2,
+            //    R.color.color3, R.color.color4);
+        //mSwipeRefreshWidget.setOnRefreshListener(this);
+
+        // 这句话是为了，第一次进入页面的时候显示加载进度条
+        mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        //&& lastVisibleItem + 1 == adapter.getItemCount()
+                        ) {
+                    mSwipeRefreshWidget.setRefreshing(true);
+                    //网络请求数据代码，sendRequest .....
+                }
             }
         });
     }

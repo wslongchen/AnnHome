@@ -52,7 +52,7 @@ public class DetailActivity extends Activity {
         works.setText("代表作：22");
         role.setText("饰演：33");
         // set action bar title
-        getActionBar().setTitle("title");
+        //getActionBar().setTitle("title");
 
         // floating action button
         btn.setImageDrawable(getDrawable(android.R.drawable.ic_menu_gallery));
