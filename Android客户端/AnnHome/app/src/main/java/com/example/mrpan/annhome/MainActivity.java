@@ -3,6 +3,7 @@ package com.example.mrpan.annhome;
 import android.animation.Animator;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -45,6 +47,13 @@ public class MainActivity extends Activity {
 
     //初始化操作
     private void init(){
+        //绑定控件
+        Button btnMenu=(Button)findViewById(R.id.btnMenu);
+        Button btnPerson=(Button)findViewById(R.id.btnPerson);
+        btnMenu.setOnClickListener(new MyOnClickListener());
+        btnPerson.setOnClickListener(new MyOnClickListener());
+
+
         // 设置抽屉菜单
         slidingMenu = new SlidingMenu(this);
         slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
@@ -95,24 +104,24 @@ public class MainActivity extends Activity {
         //mSwipeRefreshWidget.setOnRefreshListener(this);
 
         // 这句话是为了，第一次进入页面的时候显示加载进度条
-        mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
+//        mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
+//                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+//                        .getDisplayMetrics()));
 
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView,
-                                             int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        //&& lastVisibleItem + 1 == adapter.getItemCount()
-                        ) {
-                    mSwipeRefreshWidget.setRefreshing(true);
-                    //网络请求数据代码，sendRequest .....
-                }
-            }
-        });
+//        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView,
+//                                             int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE
+//                        //&& lastVisibleItem + 1 == adapter.getItemCount()
+//                        ) {
+//                    mSwipeRefreshWidget.setRefreshing(true);
+//                    //网络请求数据代码，sendRequest .....
+//                }
+//            }
+//        });
     }
 
     //设置数据
@@ -132,7 +141,7 @@ public class MainActivity extends Activity {
         View pic = v.findViewById(R.id.pic);
         Transition ts = new ChangeTransform();
         ts.setDuration(3000);
-        getWindow().setExitTransition(ts);
+        this.getWindow().setExitTransition(ts);
         Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) this,
                 Pair.create(pic, 1 + "pic"),
                 Pair.create(pic, 1 + "pic")).toBundle();
@@ -140,5 +149,20 @@ public class MainActivity extends Activity {
         intent.putExtra("pos", 1);
         startActivity(intent);
     }
+    public class MyOnClickListener implements View.OnClickListener{
 
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnMenu:
+                    slidingMenu.showMenu();
+                    break;
+                case R.id.btnPerson:
+                    slidingMenu.showSecondaryMenu();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

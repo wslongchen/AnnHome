@@ -30,9 +30,9 @@ public class DetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setEnterTransition(new Explode().setDuration(1000));
-        getWindow().setExitTransition(null);
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//        getWindow().setEnterTransition(new Explode().setDuration(1000));
+//        getWindow().setExitTransition(null);
 
         setContentView(R.layout.art_content);
 
@@ -40,14 +40,14 @@ public class DetailActivity extends Activity {
         //actor = MainActivity.actors.get(position);
         pic = (ImageView) findViewById(R.id.detail_pic);
 
-        TextView name = (TextView) findViewById(R.id.detail_name);
+        TextView name = (TextView) findViewById(R.id.author);
         TextView works = (TextView) findViewById(R.id.detail_works);
         TextView role = (TextView) findViewById(R.id.detail_role);
         ImageButton btn = (ImageButton) findViewById(R.id.detail_btn);
 
         // set detail info
         //pic.setTransitionName(position + "pic");
-        pic.setImageDrawable(getDrawable(R.drawable.p));
+        pic.setImageDrawable(getDrawable(R.drawable.drawing012));
         name.setText("姓名：11");
         works.setText("代表作：22");
         role.setText("饰演：33");

@@ -1,54 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-        <ImageView
-            android:id="@+id/detail_pic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY" />
-
-        <ImageButton
-            android:id="@+id/detail_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right|bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:elevation="50dp"
-            android:transitionName="ShareBtn"
-            android:tint="@android:color/white"
-            android:background="@drawable/oval"
-            android:src="@android:drawable/ic_menu_gallery"/>
-
-    </FrameLayout>
-
-    <View
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/menu_s"
         android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:background="#424242"></View>
+        android:layout_height="67dp"
+        android:background="@drawable/bg_topbar" >
 
-    <TextView
-        android:id="@+id/detail_name"
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_menu" />
+
+        <Button
+            android:id="@+id/share_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_personal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:text="姓名：朱茵"
-        android:padding="5dp"
-        android:textColor="@android:color/black"
-        />
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        card_view:cardCornerRadius="5dp" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/detail_pic"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY" />
+
+            <ImageButton
+                android:id="@+id/detail_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="50dp"
+                android:transitionName="ShareBtn"
+                android:tint="@android:color/white"
+                android:background="@drawable/oval"
+                android:src="@android:drawable/ic_menu_gallery"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="吊吊的标题"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center|left"
+                    android:layout_gravity="left|bottom">
+                    <TextView
+                        android:id="@+id/author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="朱茵"
+                        android:padding="1dp"
+                        android:textColor="@android:color/black"
+                        />
+                    <utils.CircleImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/p"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+        </android.support.v7.widget.CardView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="10dp"
+        android:layout_height="3dp"
         android:background="#424242"></View>
+
 
     <TextView
         android:id="@+id/detail_works"
@@ -61,7 +135,7 @@
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="10dp"
+        android:layout_height="3dp"
         android:background="#424242"
         android:textColor="@android:color/white"></View>
 
@@ -73,11 +147,100 @@
         android:padding="5dp"
         android:textColor="@android:color/black"
         android:text="饰演：紫霞仙子" />
-
     <View
         android:layout_width="wrap_content"
-        android:layout_height="10dp"
+        android:layout_height="3dp"
         android:background="#424242"
-        android:textColor="@android:color/black"></View>
+        android:textColor="@android:color/white"></View>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"></WebView>
+    <!--底部菜单栏-->
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="0.25">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/p"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Index"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="0.25">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/p"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Index"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="0.25">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/p"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Index"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="79dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="0.25"
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/p"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Index"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

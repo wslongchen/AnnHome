@@ -6,4 +6,74 @@
     android:paddingLeft="20dp"
     android:paddingTop="20dp"
     android:paddingBottom="60dp" >
+    <RelativeLayout
+        android:id="@+id/left_menu1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/menu_select"
+        android:paddingTop="20dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/biz_navigation_tab_news" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="left_menu1"
+            android:textColor="#99ffffff"
+            android:textSize="10dp"
+            android:layout_below="@+id/textView1"
+            android:layout_alignStart="@+id/textView1" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="left_menu1"
+            android:textColor="#99ffffff"
+            android:textSize="18dp"
+            android:layout_alignTop="@+id/imageView1"
+            android:layout_toEndOf="@+id/imageView1"
+            android:layout_marginTop="13dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/left_menu2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/menu_select"
+        android:paddingTop="20dp" >
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/biz_navigation_tab_news" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="left_menu1"
+            android:textColor="#99ffffff"
+            android:textSize="10dp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="left_menu1"
+            android:textColor="#99ffffff"
+            android:textSize="18dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView2"
+            android:layout_marginTop="13dp" />
+
+    </RelativeLayout>
 </LinearLayout>
