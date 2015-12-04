@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="xingren_bai">#FFFFCD</color>
+    <color name="list_bg_color">#ffeeeade</color>
+    <color name="dark_gray">#ff636363</color>
     <drawable name="clr_normal">#00000000</drawable>
     <drawable name="clr_pressed">#22c85555</drawable>
+
 </resources>

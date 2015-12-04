@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
+
+import entity.Posts;
 
 /**
  * Created by mrpan on 15/12/2.
@@ -21,7 +24,7 @@ public class DetailActivity extends Activity {
 
     ImageView pic;
 
-    int position;
+    private Posts datas=null;
 
     int picIndex = 0;
 
@@ -33,26 +36,28 @@ public class DetailActivity extends Activity {
 //        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
 //        getWindow().setEnterTransition(new Explode().setDuration(1000));
 //        getWindow().setExitTransition(null);
-
         setContentView(R.layout.art_content);
-
-        position = getIntent().getIntExtra("pos", 0);
+        //接受传来的id
+        int artId = getIntent().getIntExtra("artID", 0);
+        //初始化操作
+        init();
         //actor = MainActivity.actors.get(position);
+
+    }
+
+    private void init(){
+        //控件
+        WebView contentView=(WebView)findViewById(R.id.content);
         pic = (ImageView) findViewById(R.id.detail_pic);
-
-        TextView name = (TextView) findViewById(R.id.author);
-        TextView works = (TextView) findViewById(R.id.detail_works);
-        TextView role = (TextView) findViewById(R.id.detail_role);
+        //TextView name = (TextView) findViewById(R.id.author);
+        //TextView works = (TextView) findViewById(R.id.detail_works);
+        //TextView role = (TextView) findViewById(R.id.detail_role);
         ImageButton btn = (ImageButton) findViewById(R.id.detail_btn);
-
-        // set detail info
-        //pic.setTransitionName(position + "pic");
+        pic.setTransitionName("1" + "pic");
         pic.setImageDrawable(getDrawable(R.drawable.drawing012));
-        name.setText("姓名：11");
-        works.setText("代表作：22");
-        role.setText("饰演：33");
-        // set action bar title
-        //getActionBar().setTitle("title");
+        //name.setText("姓名：11");
+        //works.setText("代表作：22");
+        //role.setText("饰演：33");
 
         // floating action button
         btn.setImageDrawable(getDrawable(android.R.drawable.ic_menu_gallery));
@@ -93,14 +98,13 @@ public class DetailActivity extends Activity {
             }
         });
     }
-
     /**
      * exec second animation for pic view
      */
     private void doSecondAnim() {
-        //pic.setImageDrawable(getDrawable(actor.getImageResourceId(this, actor.getPics()[picIndex])));
-        //Animator animator = createAnimation(pic, false);
-        //animator.start();
+        pic.setImageDrawable(getDrawable(R.drawable.p));
+        Animator animator = createAnimation(pic, false);
+        animator.start();
     }
 
     /**

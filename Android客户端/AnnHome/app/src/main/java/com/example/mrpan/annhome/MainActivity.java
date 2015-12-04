@@ -6,12 +6,16 @@ import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeTransform;
 import android.transition.Transition;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -19,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,7 +33,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
+
+    public MenuFragment menuFragment;
 
     private RecyclerView mRecyclerView;
 
@@ -37,12 +44,62 @@ public class MainActivity extends Activity {
     private SlidingMenu slidingMenu = null;
 
     private SwipeRefreshLayout mSwipeRefreshWidget;
+    private int maxMargin = 0;
+    private DisplayMetrics displayMetrics = new DisplayMetrics();
+    private SlidingPaneLayout slidingPaneLayout;
+    private FragmentTransaction transaction;
+    private MainFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        init();
+        setContentView(R.layout.activity_main2);
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        mainFragment = new MainFragment();
+        init2();
+    }
+    private void init2(){
+        slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
+        menuFragment = new MenuFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.slidingpane_menu, menuFragment);
+        transaction.replace(R.id.slidingpane_content, mainFragment);
+        transaction.commit();
+        maxMargin = displayMetrics.heightPixels / 10;
+        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                int contentMargin = (int) (slideOffset * maxMargin);
+
+                FrameLayout.LayoutParams contentParams = mainFragment
+                        .getCurrentViewParams();
+                contentParams.setMargins(0, contentMargin, 0, contentMargin);
+
+                mainFragment.setCurrentViewPararms(contentParams);
+
+                float scale = 1 - ((1 - slideOffset) * maxMargin * 3)
+                        / (float) displayMetrics.heightPixels;
+                menuFragment.getCurrentView().setScaleX(scale);//设置缩放的基准点
+                menuFragment.getCurrentView().setScaleY(scale);// 设置缩放的基准点
+                menuFragment.getCurrentView().setPivotX(0);// 设置缩放和选择的点
+                menuFragment.getCurrentView().setPivotY(
+                        displayMetrics.heightPixels / 2);
+                menuFragment.getCurrentView().setAlpha(slideOffset);
+            }
+
+            @Override
+            public void onPanelOpened(View arg0) {
+            }
+
+            @Override
+            public void onPanelClosed(View arg0) {
+            }
+        });
+    }
+
+    public SlidingPaneLayout getSlidingPaneLayout() {
+        return slidingPaneLayout;
     }
 
     //初始化操作
@@ -122,6 +179,10 @@ public class MainActivity extends Activity {
 //                }
 //            }
 //        });
+    }
+
+    private void initData(){
+
     }
 
     //设置数据

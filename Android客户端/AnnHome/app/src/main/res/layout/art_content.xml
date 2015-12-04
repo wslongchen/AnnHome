@@ -44,7 +44,8 @@
         card_view:cardCornerRadius="5dp" >
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="200dp"
+            >
 
             <ImageView
                 android:id="@+id/detail_pic"
@@ -68,7 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -115,7 +117,8 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 
     <View
@@ -123,7 +126,7 @@
         android:layout_height="3dp"
         android:background="#424242"></View>
 
-
+<!--
     <TextView
         android:id="@+id/detail_works"
         android:layout_width="match_parent"
@@ -131,7 +134,8 @@
         android:textSize="24sp"
         android:padding="5dp"
         android:text="代表作：大话西游"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        />
 
     <View
         android:layout_width="wrap_content"
@@ -152,10 +156,11 @@
         android:layout_height="3dp"
         android:background="#424242"
         android:textColor="@android:color/white"></View>
-
+-->
     <WebView
         android:layout_width="match_parent"
-        android:layout_height="300dp"></WebView>
+        android:layout_height="300dp"
+        android:id="@+id/content"></WebView>
     <!--底部菜单栏-->
     <LinearLayout
         android:visibility="gone"
