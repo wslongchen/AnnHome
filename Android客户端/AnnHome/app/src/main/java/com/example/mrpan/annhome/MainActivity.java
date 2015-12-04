@@ -31,7 +31,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class MainActivity extends FragmentActivity {
 
@@ -56,8 +55,14 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mainFragment = new MainFragment();
+
+
+
         init2();
+
     }
+
+    //第二种SlideView
     private void init2(){
         slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
         menuFragment = new MenuFragment();
@@ -102,31 +107,31 @@ public class MainActivity extends FragmentActivity {
         return slidingPaneLayout;
     }
 
-    //初始化操作
+    //第一种SlideView
     private void init(){
-        //绑定控件
-        Button btnMenu=(Button)findViewById(R.id.btnMenu);
-        Button btnPerson=(Button)findViewById(R.id.btnPerson);
-        btnMenu.setOnClickListener(new MyOnClickListener());
-        btnPerson.setOnClickListener(new MyOnClickListener());
+//        //绑定控件
+//        Button btnMenu=(Button)findViewById(R.id.btnMenu);
+//        Button btnPerson=(Button)findViewById(R.id.btnPerson);
+//        btnMenu.setOnClickListener(new MyOnClickListener());
+//        btnPerson.setOnClickListener(new MyOnClickListener());
 
 
-        // 设置抽屉菜单
-        slidingMenu = new SlidingMenu(this);
-        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN); // 触摸边界拖出菜单
-        slidingMenu.setMenu(R.layout.slidingmenu_left);
-        slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
-//        if (log_State) {
-//            slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right_havelogin);
-//        } else {
-//            slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
-//        }
-        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        // 将抽屉菜单与主页面关联起来
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+//        // 设置抽屉菜单
+//        slidingMenu = new SlidingMenu(this);
+//        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
+//        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN); // 触摸边界拖出菜单
+//        slidingMenu.setMenu(R.layout.slidingmenu_left);
+//        slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
+////        if (log_State) {
+////            slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right_havelogin);
+////        } else {
+////            slidingMenu.setSecondaryMenu(R.layout.slidingmenu_right);
+////        }
+//        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+//        // 将抽屉菜单与主页面关联起来
+//        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         // 拿到RecyclerView
-        mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.list2);
         // 设置LinearLayoutManager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 设置ItemAnimator
@@ -186,7 +191,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     //设置数据
-    private ArrayList<HashMap<String,Object>> getItems(){
+    public static ArrayList<HashMap<String,Object>> getItems(){
         ArrayList<HashMap<String,Object>> items=new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<5;i++) {
             HashMap<String,Object> item=new HashMap<String,Object>();

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/btn_personal" />
+            android:src="@drawable/logo"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -29,31 +30,36 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="10dp"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="这里有你看不完的妹纸~^~"
+        android:paddingTop="10dp"
+        android:text="@string/appLogn"
         android:textColor="@color/xingren_bai" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        >
     <LinearLayout
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <Button
             android:id="@+id/bt_shouye"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_other"
             android:drawablePadding="5dp"
             android:gravity="left|center"
-            android:text="home_title"
+            android:text="最新文章"
+            android:paddingTop="10dp"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
 
@@ -62,10 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_pack"
             android:drawablePadding="5dp"
             android:gravity="left|center"
-            android:text="发现美女"
+            android:paddingTop="10dp"
+            android:text="日志发表"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
 
@@ -74,10 +81,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_special"
             android:drawablePadding="5dp"
             android:gravity="left|center"
-            android:text="我的收藏"
+            android:paddingTop="10dp"
+            android:text="特色推荐"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
 
@@ -86,10 +94,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_shoucang"
             android:drawablePadding="5dp"
             android:gravity="left|center"
-            android:text="应用推荐"
+            android:paddingTop="10dp"
+            android:text="我的收藏"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
 
@@ -98,10 +107,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_other"
             android:drawablePadding="5dp"
             android:gravity="left|center"
-            android:text="游戏推荐"
+            android:text="其它工具"
+            android:paddingTop="10dp"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
 
@@ -110,14 +120,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_meun_setting"
             android:drawablePadding="5dp"
             android:gravity="left|center"
+            android:paddingTop="10dp"
             android:text="系统设置"
             android:textColor="@color/xingren_bai"
             android:textSize="20sp" />
     </LinearLayout>
-
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -131,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_exit"
             android:drawablePadding="5dp"
             android:gravity="left|center_vertical"
             android:text="退出"
@@ -143,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:drawableLeft="@drawable/btn_personal"
+            android:drawableLeft="@drawable/icon_settings"
             android:drawablePadding="5dp"
             android:gravity="left|center_vertical"
             android:text="设置"

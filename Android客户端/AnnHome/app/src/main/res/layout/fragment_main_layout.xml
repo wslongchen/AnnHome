@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/list_bg_color"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <!--<include layout="@layout/top_bar" />-->
+    <include layout="@layout/top_bar" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -170,7 +171,20 @@
                 <!--android:layout_marginRight="5dp"-->
                 <!--android:layout_marginTop="15dp"-->
                 <!--layout="@layout/channel_others_layout" />-->
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".MyActivity"
+                    />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
