@@ -108,7 +108,7 @@ public class BitmapUtils {
 		String color = "#ffeeeade";
 		
 		Bitmap src = BitmapFactory.decodeResource(context.getResources(),
-				R.drawable.menu_btn_pressed);
+				R.mipmap.menu_btn_pressed);
 		int x = src.getWidth();
 		int y = src.getHeight();
 		Bitmap bmp = Bitmap.createBitmap(x, y, Bitmap.Config.ARGB_8888);

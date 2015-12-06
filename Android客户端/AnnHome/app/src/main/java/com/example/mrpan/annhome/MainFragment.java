@@ -9,6 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +23,15 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import http.HttpHelper;
 import http.HttpResponseCallBack;
+import utils.DateUtils;
 
 
 public class MainFragment extends Fragment implements OnClickListener {
-	public static final String TAG = "MainFragment";
-	public static final String Fliper = "fliper";
 
 	public static final int Fliper_ONE = 1001;
 	public static final int Fliper_TWO = 1002;
@@ -54,6 +58,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	FragmentTransaction transaction;
 
+	private MyAdapter myAdapter;
+
+	private RecyclerView mRecyclerView;
+
+	SwipeRefreshLayout mSwipeRefreshWidget;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -65,7 +75,40 @@ public class MainFragment extends Fragment implements OnClickListener {
 			parent.removeView(currentView);
 		}
 		mHandler.post(runnable);
+		initData();
 		return currentView;
+	}
+
+	private void initData() {
+		//下拉刷新
+		mSwipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
+		// 拿到RecyclerView
+		mRecyclerView = (RecyclerView)currentView.findViewById(R.id.news_list);
+		// 设置LinearLayoutManager
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		// 设置ItemAnimator
+		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		// 设置固定大小
+		mRecyclerView.setHasFixedSize(true);
+		// 初始化自定义的适配器
+		myAdapter = new MyAdapter(getActivity(), MainActivity.getItems());
+		// 为mRcyclerView设置适配器
+		mRecyclerView.setAdapter(myAdapter);
+
+//		this.myAdapter.setOnItemClickListener(new MyAdapter.MyItemClickListener() {
+//			@Override
+//			public void onItemClick(View view, int postion) {
+//				Toast.makeText(getActivity(), "11111111111111", Toast.LENGTH_SHORT).show();
+//			}
+//		});
+//		this.myAdapter.setOnItemLongClickListener(new MyAdapter.MyItemLongClickListener() {
+//			@Override
+//			public void onItemLongClick(View view, int postion) {
+//				Toast.makeText(getActivity(), "22222222222222", Toast.LENGTH_SHORT).show();
+//			}
+//		});
+
+
 	}
 
 	@Override
@@ -105,9 +148,9 @@ public class MainFragment extends Fragment implements OnClickListener {
 		displayRatio_selelct(currentPage);
 
 
-		top_bar_title.setText("111111");
-		date_TextView.setText("2222");
-		fliper_img_two.setImageResource(R.drawable.p);fliper_img_one.setImageResource(R.drawable.drawing012);
+		top_bar_title.setText("最新文章");
+		date_TextView.setText(DateUtils.getCurrentDateStr());
+		fliper_img_two.setImageResource(R.mipmap.p);fliper_img_one.setImageResource(R.mipmap.drawing012);
 	}
 
 
@@ -234,7 +277,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 			displayRatio_selelct(currentPage);
 			displayRatio_normal(currentPage - 1);
 		}
-		// Toast.makeText(context, TAG, Toast.LENGTH_SHORT).show();
 	}
 
 	private void displayRatio_normal(int id) {

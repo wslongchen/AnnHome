@@ -54,7 +54,7 @@ public class DetailActivity extends Activity {
         //TextView role = (TextView) findViewById(R.id.detail_role);
         ImageButton btn = (ImageButton) findViewById(R.id.detail_btn);
         pic.setTransitionName("1" + "pic");
-        pic.setImageDrawable(getDrawable(R.drawable.drawing012));
+        pic.setImageDrawable(getDrawable(R.mipmap.drawing012));
         //name.setText("姓名：11");
         //works.setText("代表作：22");
         //role.setText("饰演：33");
@@ -102,7 +102,7 @@ public class DetailActivity extends Activity {
      * exec second animation for pic view
      */
     private void doSecondAnim() {
-        pic.setImageDrawable(getDrawable(R.drawable.p));
+        pic.setImageDrawable(getDrawable(R.mipmap.p));
         Animator animator = createAnimation(pic, false);
         animator.start();
     }
@@ -138,7 +138,7 @@ public class DetailActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        pic.setImageDrawable(getDrawable(R.drawable.drawing012));
+        pic.setImageDrawable(getDrawable(R.mipmap.drawing012));
         finishAfterTransition();
     }
 

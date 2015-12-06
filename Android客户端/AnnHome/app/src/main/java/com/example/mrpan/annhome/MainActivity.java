@@ -57,7 +57,6 @@ public class MainActivity extends FragmentActivity {
         mainFragment = new MainFragment();
 
 
-
         init2();
 
     }
@@ -131,7 +130,7 @@ public class MainActivity extends FragmentActivity {
 //        // 将抽屉菜单与主页面关联起来
 //        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         // 拿到RecyclerView
-        mRecyclerView = (RecyclerView) findViewById(R.id.list2);
+        mRecyclerView = (RecyclerView) findViewById(R.id.news_list);
         // 设置LinearLayoutManager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 设置ItemAnimator

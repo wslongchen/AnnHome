@@ -13,7 +13,7 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg_slidingmenu_left" />
+            android:src="@mipmap/bg_slidingmenu_left" />
     </FrameLayout>
 
     <android.support.v4.widget.SlidingPaneLayout

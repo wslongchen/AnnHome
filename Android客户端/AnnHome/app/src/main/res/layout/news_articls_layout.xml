@@ -32,7 +32,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题0"
@@ -59,7 +59,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题1"
@@ -90,7 +90,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题2"
@@ -117,7 +117,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题2"
@@ -148,7 +148,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题3"
@@ -175,7 +175,7 @@
             <utils.ImageTextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="标题4"

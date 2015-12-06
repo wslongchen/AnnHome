@@ -8,7 +8,7 @@
         android:id="@+id/topBar"
         android:layout_width="fill_parent"
         android:layout_height="67dp"
-        android:background="@drawable/bg_topbar"
+        android:background="@mipmap/bg_topbar"
         android:visibility="gone">
 
         <Button
@@ -107,7 +107,7 @@
                 android:layout_height="30dp"
                 android:padding="5dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/p"
+                android:src="@mipmap/p"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:padding="5dp"
-                android:src="@drawable/p"
+                android:src="@mipmap/p"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:padding="5dp"
-                android:src="@drawable/p"
+                android:src="@mipmap/p"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:padding="5dp"
-                android:src="@drawable/p"
+                android:src="@mipmap/p"
                 />
             <TextView
                 android:layout_width="wrap_content"

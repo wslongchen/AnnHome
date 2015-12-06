@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/loading" />
+                        android:src="@mipmap/loading" />
 
                     <TextView
                         android:id="@+id/fliper_tx_one"
@@ -62,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/loading" />
+                        android:src="@mipmap/loading" />
 
                     <TextView
                         android:id="@+id/fliper_tx_two"
@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/loading" />
+                        android:src="@mipmap/loading" />
 
                     <TextView
                         android:id="@+id/fliper_tx_three"
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/loading" />
+                        android:src="@mipmap/loading" />
 
                     <TextView
                         android:id="@+id/fliper_tx_four"
@@ -142,16 +142,19 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="15dp"
                 layout="@layout/news_articls_layout" />
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:paddingTop="2dp"
+                tools:context=".MyActivity"
+                android:layout_marginTop="10dp">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/news_list"
                     android:layout_width="match_parent"
-                    android:paddingTop="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="300dp"
+                    android:layout_height="match_parent"
+                    tools:context=".MainActivity"
                     />
-
-
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

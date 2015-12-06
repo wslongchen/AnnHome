@@ -57,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         HashMap<String,Object> hm=items.get(position);
         holder.title.setText(hm.get("title").toString());
        // holder.mImageView.setImageDrawable(mContext.getDrawable(R.drawable.p));
-        holder.re.setBackground(mContext.getDrawable(R.drawable.drawing012));
+        holder.re.setBackground(mContext.getDrawable(R.mipmap.drawing012));
 
     }
 
