@@ -4,6 +4,7 @@
     <color name="list_bg_color">#ffeeeade</color>
     <color name="dark_gray">#ff636363</color>
     <color name="dark_brown">#ff4e0a13</color>
+    <color name="line_gray">#D7D7D7</color>
     <drawable name="clr_normal">#00000000</drawable>
     <drawable name="clr_pressed">#22c85555</drawable>
 

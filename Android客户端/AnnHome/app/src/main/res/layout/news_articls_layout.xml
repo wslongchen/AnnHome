@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ChannelItem"
+    android:background="@drawable/round_corner_item_single_bg"
+    android:gravity="start"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="最新文章"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/item_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/item_selector"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题0"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_one"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="0.01"
+            android:background="@color/line_gray" />
+
+        <LinearLayout
+            android:id="@+id/item_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题1"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_two"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/item_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/item_selector"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题2"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_three"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="0.01"
+            android:background="@color/line_gray" />
+
+        <LinearLayout
+            android:id="@+id/item_four"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题2"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_four"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/item_five"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题3"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_five"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="0.01"
+            android:background="@color/line_gray" />
+
+        <LinearLayout
+            android:id="@+id/item_six"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/item_selector"
+            android:padding="13dp" >
+
+            <utils.ImageTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableLeft="@drawable/ic_app_normal"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="标题4"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:id="@+id/item_article_six"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

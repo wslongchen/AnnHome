@@ -6,4 +6,5 @@
     <dimen name="slidingmenu_offset2">10dp</dimen>
     <dimen name="top_bar_height">36.0dip</dimen>
     <dimen name="round_corner_bg_item_padding">8.0dip</dimen>
+    <dimen name="more_bg_item_padding">12.0dip</dimen>
 </resources>
