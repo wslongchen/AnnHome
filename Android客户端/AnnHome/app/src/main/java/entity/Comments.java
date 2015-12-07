@@ -1,9 +1,12 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Comments {
+public class Comments extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String slug;
     private String name;

@@ -1,11 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Posts {
+public class Posts extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String type;
     private String slug;

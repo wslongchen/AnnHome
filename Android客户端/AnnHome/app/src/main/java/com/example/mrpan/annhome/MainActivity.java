@@ -55,8 +55,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mainFragment = new MainFragment();
-
-
         init2();
 
     }

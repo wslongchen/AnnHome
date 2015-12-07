@@ -1,22 +1,22 @@
 package http;
 
-import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Config;
+
+import com.example.mrpan.annhome.MyApplication;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import utils.MyLog;
+import utils.MySharePreference;
 import utils.Network;
 
 /**
@@ -38,14 +38,14 @@ public class HttpHelper {
 
     //
 
-    //MySharePreference appPreference = null;
+    MySharePreference appPreference = null;
 
     private HttpHelper() {
         //
         int size = Runtime.getRuntime().availableProcessors();
         threadPool = Executors.newFixedThreadPool(size);
-        //if (null != MyApplication.AppContext)
-            //appPreference = new MySharePreference(MyApplication.AppContext);
+        if (null != MyApplication.getInstance())
+            appPreference = new MySharePreference(MyApplication.getInstance());
     }
 
     //
@@ -57,31 +57,33 @@ public class HttpHelper {
     }
 
     public void asyHttpGetRequest(String url, HttpResponseCallBack httpCallBack) {
-//        //if (null != appPreference) {
-//            //int permission = appPreference.getInt(Config.TYPE_CONN, 0);
-//            Network netUtils ;//new Network();//MyApplication.AppContext);
-//            Network.NetWorkState state = netUtils.getConnectState();
-//            if (state.equals(Network.NetWorkState.MOBILE)) {
-//
-//                //if (permission == Config.TYPE_ALL) {
-//                    //threadPool.execute(getGetHttpThread(url, httpCallBack));
-//                //} else if (permission == Config.TYPE_WIFI) {
-//                   // httpCallBack.onFailure(0, Con_Permission,
-//                           // "请在设置中打开MOBILE连接 ");
-//                    ////MyLog.i(TAG, "未发送请求，用户设置了网络限制");
-//                }
-//                // 未知网络
-//                //else {
-//                    //threadPool.execute(getGetHttpThread(url, httpCallBack));
-//                //}
-//
-//            //} else {
-//                //threadPool.execute(getGetHttpThread(url, httpCallBack));
-//            //}
-//
-//       // } else {
-//        //    threadPool.execute(getGetHttpThread(url, httpCallBack));
-//       // }
+
+
+        if (null != appPreference) {
+            int permission = appPreference.getInt(com.example.mrpan.annhome.Config.TYPE_CONN, 0);
+            Network netUtils =new Network(MyApplication.getInstance());
+            Network.NetWorkState state = netUtils.getConnectState();
+            if (state.equals(Network.NetWorkState.MOBILE)) {
+
+                if (permission == com.example.mrpan.annhome.Config.TYPE_ALL) {
+                    threadPool.execute(getGetHttpThread(url, httpCallBack));
+                } else if (permission == com.example.mrpan.annhome.Config.TYPE_WIFI) {
+                    httpCallBack.onFailure(0, Con_Permission,
+                            "请在设置中打开MOBILE连接 ");
+                    MyLog.i(TAG, "未发送请求，用户设置了网络限制");
+                }
+                // 未知网络
+                else {
+                    threadPool.execute(getGetHttpThread(url, httpCallBack));
+                }
+
+            } else {
+                threadPool.execute(getGetHttpThread(url, httpCallBack));
+            }
+
+        } else {
+            threadPool.execute(getGetHttpThread(url, httpCallBack));
+        }
 
     }
 
@@ -134,7 +136,7 @@ public class HttpHelper {
                         } else {
                             httpCallBack.onFailure(responseCode,
                                     NULL_INPUTSTREAM, "读取数据失败！");
-                            //MyLog.i(TAG, "读取数据失败！");
+                            MyLog.i(TAG, "读取数据失败！");
                         }
 
                     } else {
@@ -145,23 +147,23 @@ public class HttpHelper {
                 } catch (MalformedURLException e) {
                     httpCallBack.onFailure(responseCode, URL_Exception,
                             e.getMessage());
-                    //MyLog.i(TAG, e.toString());
+                    MyLog.i(TAG, e.toString());
                 } catch (IOException e) {
                     httpCallBack.onFailure(responseCode, IO_Exception,
                             e.getMessage());
-                    //MyLog.i(TAG, e.toString());
+                    MyLog.i(TAG, e.toString());
                 } finally {
                     try {
                         if (null != reader)
                             reader.close();
                     } catch (IOException ex) {
-                        //MyLog.i(TAG, ex.toString());
+                        MyLog.i(TAG, ex.toString());
                     }
                     try {
                         if (null != inputStream)
                             inputStream.close();
                     } catch (IOException ex) {
-                        //MyLog.i(TAG, ex.toString());
+                        MyLog.i(TAG, ex.toString());
                     }
                 }
 
@@ -172,31 +174,39 @@ public class HttpHelper {
 
     }
 
+
     /**
-     * 获取网落图片资源
+     * 获取网络图片资源
      * @param url
      * @return
      */
-    public static Bitmap getHttpBitmap(String url) {
-        URL myFileUrl = null;
-        Bitmap bitmap = null;
-        try {
-            myFileUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
-            conn.setConnectTimeout(0);
+    public static Bitmap getHttpBitmap(String url){
+        URL myFileURL;
+        Bitmap bitmap=null;
+        try{
+            myFileURL = new URL(url);
+            //获得连接
+            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            //连接设置获得数据流
             conn.setDoInput(true);
-            conn.connect();
+            //不使用缓存
+            conn.setUseCaches(false);
+            //这句可有可无，没有影响
+            //conn.connect();
+            //得到数据流
             InputStream is = conn.getInputStream();
+            //解析得到图片
             bitmap = BitmapFactory.decodeStream(is);
+            //关闭数据流
             is.close();
-        } catch (IOException e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
+
         return bitmap;
+
     }
 
 }

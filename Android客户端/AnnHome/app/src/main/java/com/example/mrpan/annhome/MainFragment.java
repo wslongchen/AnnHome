@@ -1,9 +1,11 @@
 package com.example.mrpan.annhome;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,9 +28,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.google.gson.Gson;
+
+import entity.Datas;
+import entity.Posts;
 import http.HttpHelper;
 import http.HttpResponseCallBack;
 import utils.DateUtils;
+import utils.GsonUtils;
+import utils.MyLog;
+import utils.Network;
+import volley.VolleyLoadPicture;
 
 
 public class MainFragment extends Fragment implements OnClickListener {
@@ -37,6 +48,10 @@ public class MainFragment extends Fragment implements OnClickListener {
 	public static final int Fliper_TWO = 1002;
 	public static final int Fliper_THREE = 1003;
 	public static final int Fliper_FOUR = 1004;
+	public static final int DATA_SHOW=0012;
+	public static final int NET_ERROR=0013;
+
+	private MyHandler mHandler;
 
 	private View currentView = null;
 	private ImageButton m_toggle, m_setting;
@@ -64,18 +79,26 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	SwipeRefreshLayout mSwipeRefreshWidget;
 
+	//data
+	private Datas datas=null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		currentView = inflater.inflate(R.layout.fragment_main_layout,
 				container, false);
 		context = this.getActivity();
+		mHandler=new MyHandler();
 		ViewGroup parent = (ViewGroup) currentView.getParent();
 		if (parent != null) {
 			parent.removeView(currentView);
 		}
-		mHandler.post(runnable);
-		initData();
+		MyLog.i("111","22222222222222222"+Network.checkNetwork(getActivity()));
+		if(Network.checkNetwork(getActivity()))
+			initData();
+		else{
+			MyLog.i("111","22222222222222222");
+		}
 		return currentView;
 	}
 
@@ -107,10 +130,46 @@ public class MainFragment extends Fragment implements OnClickListener {
 //				Toast.makeText(getActivity(), "22222222222222", Toast.LENGTH_SHORT).show();
 //			}
 //		});
+		//http://www.mrpann.com/json=get_recent_posts
+		mHttpClient = HttpHelper.getInstance();
+		new FilpperHttpResponseCallBack(0);
+		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_recent_posts",
+				new FilpperHttpResponseCallBack(0));
 
 
 	}
+	private void showData(String result){
+		datas=(Datas)GsonUtils.getEntity(result,Datas.class);
+		//fliper_img_two.setImageResource(R.mipmap.p);fliper_img_one.setImageResource(R.mipmap.drawing012);
+		if(datas!=null)
+		{
+			List<Posts> posts=datas.getPosts();
+			fliper_tx_one.setText(posts.get(0).getTitle());
+			fliper_tx_two.setText(posts.get(1).getTitle());
+			fliper_tx_three.setText(posts.get(2).getTitle());
+			fliper_tx_four.setText(posts.get(3).getTitle());
+			if(posts.get(0).getThumbnail_images()!=null) {
+				//Bitmap b=HttpHelper.getHttpBitmap(posts.get(0).getAttachments().get(0).getUrl());
+				//fliper_img_one.setImageBitmap(b);
 
+				VolleyLoadPicture.getInstance().showNetImage(posts.get(0).getAttachments().get(0).getUrl(),fliper_img_one);
+			}
+			if(posts.get(1).getThumbnail_images()!=null) {
+				//Bitmap b=HttpHelper.getHttpBitmap(posts.get(1).getAttachments().get(0).getUrl());
+				//fliper_img_two.setImageBitmap(b);
+				VolleyLoadPicture.getInstance().showNetImage(posts.get(1).getAttachments().get(0).getUrl(), fliper_img_two);
+			}
+			if(posts.get(2).getThumbnail_images()!=null) {
+				Bitmap b=HttpHelper.getHttpBitmap(posts.get(2).getAttachments().get(0).getUrl());
+				fliper_img_three.setImageBitmap(b);
+			}
+			if(posts.get(3).getThumbnail_images()!=null) {
+				Bitmap b = HttpHelper.getHttpBitmap(posts.get(3).getAttachments().get(0).getUrl());
+				fliper_img_four.setImageBitmap(b);
+			}
+		}
+		mHandler.post(runnable);
+	}
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		initView();
@@ -150,14 +209,20 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		top_bar_title.setText("最新文章");
 		date_TextView.setText(DateUtils.getCurrentDateStr());
-		fliper_img_two.setImageResource(R.mipmap.p);fliper_img_one.setImageResource(R.mipmap.drawing012);
+
 	}
 
 
-	private Handler mHandler = new Handler() {
+	public class MyHandler extends  Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.arg1) {
+				case NET_ERROR:
+					mHandler.post(runnable);
+				case DATA_SHOW:
+					if(msg.obj!=null)
+						showData(msg.obj.toString());
+					break;
 			case SHOW_NEXT:
 				if (showNext) {
 					showNextView();
@@ -235,7 +300,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 			msg.arg1 = SHOW_NEXT;
 			mHandler.sendMessage(msg);
 			mHandler.postDelayed(runnable, 3000);
-
 		}
 	};
 
@@ -305,12 +369,23 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onSuccess(String url, String result) {
-
+			Message msg = new Message();
+			msg.arg1 = DATA_SHOW;
+			msg.obj=result;
+			mHandler.sendMessage(msg);
+			 MyLog.i("all", url);
 		}
 
 		@Override
 		public void onFailure(int httpResponseCode, int errCode, String err) {
+			if(httpResponseCode==-1)
+			{
+				Message msg = new Message();
+				msg.arg1 = NET_ERROR;
+				mHandler.sendMessage(msg);
+			}
 
+			MyLog.i("all", httpResponseCode + "---" + err);
 		}
 	}
 

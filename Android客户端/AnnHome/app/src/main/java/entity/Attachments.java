@@ -1,9 +1,13 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Attachments {
+public class Attachments extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private String url;
     private String slug;

@@ -1,11 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Datas {
+public class Datas extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String status;
     private int count;
     private int count_total;
