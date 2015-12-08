@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.example.mrpan.annhome.MyApplication;
+
 /**
  * Created by mrpan on 15/12/3.
  */
@@ -51,18 +53,33 @@ public class Network {
     }
 
 
-    public static boolean checkNetwork(Context context){
+    public static boolean isNetworkAvailable()
+    {
+        Context context = MyApplication.getInstance();
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        //3G
-        NetworkInfo.State mobile=manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
-        NetworkInfo.State wifi=manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        if (connectivityManager == null)
+        {
+            return false;
+        }
+        else
+        {
+            // 获取NetworkInfo对象
+            NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 
-        if(mobile== NetworkInfo.State.CONNECTED||mobile== NetworkInfo.State.CONNECTING)
-            return true;
-        if(wifi== NetworkInfo.State.CONNECTED||wifi== NetworkInfo.State.CONNECTING)
-            return true;
-
+            if (networkInfo != null && networkInfo.length > 0)
+            {
+                for (int i = 0; i < networkInfo.length; i++)
+                {
+                    // 判断当前网络状态是否为连接状态
+                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 }

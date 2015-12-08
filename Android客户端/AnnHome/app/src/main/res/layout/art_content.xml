@@ -103,7 +103,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="10dp"
-                        android:src="@mipmap/p"/>
+                        android:src="@mipmap/drawing012"/>
                 </LinearLayout>
 
             </LinearLayout>

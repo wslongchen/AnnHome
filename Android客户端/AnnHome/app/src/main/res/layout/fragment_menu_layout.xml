@@ -12,128 +12,173 @@
         android:layout_marginTop="30dp"
         android:orientation="horizontal" >
 
-        <ImageView
+        <utils.CircleImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/logo"/>
+            android:src="@mipmap/logo_app"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/vip"/>
+        </LinearLayout>
 
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/line_gray"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/maohao"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:text="@string/app_name"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp"
+            android:text="@string/appLogn"
+            android:textColor="@color/xingren_bai" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="10dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/appLogn"
-        android:textColor="@color/xingren_bai" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="2dp"
+        android:background="@color/line_gray"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         >
-    <LinearLayout
-        android:id="@+id/menu_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-        <Button
-            android:id="@+id/bt_shouye"
+        <LinearLayout
+            android:id="@+id/menu_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_other"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:text="最新文章"
-            android:paddingTop="10dp"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-        <Button
-            android:id="@+id/bt_xiaoqingxin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_pack"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:paddingTop="10dp"
-            android:text="日志发表"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/bt_shouye"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_other"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:text="最新文章"
+                android:paddingTop="10dp"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/bt_collect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_special"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:paddingTop="10dp"
-            android:text="特色推荐"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/bt_xiaoqingxin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_pack"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:paddingTop="10dp"
+                android:text="日志发表"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/showRecommendAppWall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_shoucang"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:paddingTop="10dp"
-            android:text="我的收藏"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/bt_collect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_special"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:paddingTop="10dp"
+                android:text="特色推荐"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/showRecommendGameWall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_other"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:text="其它工具"
-            android:paddingTop="10dp"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/showRecommendAppWall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_shoucang"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:paddingTop="10dp"
+                android:text="我的收藏"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/bt_systemSetting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@mipmap/icon_meun_setting"
-            android:drawablePadding="5dp"
-            android:gravity="left|center"
-            android:paddingTop="10dp"
-            android:text="系统设置"
-            android:textColor="@color/xingren_bai"
-            android:textSize="20sp" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/showRecommendGameWall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_other"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:text="其它工具"
+                android:paddingTop="10dp"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bt_systemSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/icon_meun_setting"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:paddingTop="10dp"
+                android:text="系统设置"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
+        </LinearLayout>
     </ScrollView>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/line_gray"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <Button
@@ -147,7 +192,12 @@
             android:gravity="left|center_vertical"
             android:text="退出"
             android:textColor="@color/xingren_bai" />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="0.01"
+            android:background="@color/line_gray" />
         <Button
             android:id="@+id/bt_setting"
             android:layout_width="0dp"
@@ -156,6 +206,7 @@
             android:background="@null"
             android:drawableLeft="@mipmap/icon_settings"
             android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
             android:gravity="left|center_vertical"
             android:text="设置"
             android:textColor="@color/xingren_bai" />

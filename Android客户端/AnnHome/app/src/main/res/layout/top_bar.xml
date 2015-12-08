@@ -20,15 +20,23 @@
             android:gravity="center_vertical"
             android:textColor="@color/dark_brown"
             android:textSize="20.0sp" />
-
-        <ImageButton
-            android:id="@+id/m_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <utils.CircleImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/logo"
             android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:background="@drawable/menu_btn"
-            android:contentDescription="@null" />
+            android:paddingLeft="25dp"
+            android:id="@+id/m_toggle"
+            />
+        <!--<ImageButton-->
+            <!--android:id="@+id/m_toggle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:paddingLeft="25dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:background="@drawable/menu_btn"-->
+            <!--android:contentDescription="@null" />-->
 
         <ImageButton
             android:id="@+id/m_setting"
@@ -42,5 +50,7 @@
     </RelativeLayout>
 
     <include layout="@layout/top_bar_shadow" />
+
+
 
 </LinearLayout>

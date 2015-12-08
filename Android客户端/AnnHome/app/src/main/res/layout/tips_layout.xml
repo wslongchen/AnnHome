@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_bar_height"
+    android:id="@+id/tips_layout"
+    android:visibility="gone"
+   >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/tips_colr"
+        android:paddingLeft="@dimen/round_corner_bg_item_padding"
+        android:paddingRight="@dimen/round_corner_bg_item_padding">
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="10dp"
+            android:src="@mipmap/exclamation"/>
+        <TextView
+            android:id="@+id/tips_title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/dark_brown"
+            android:textSize="17.0dp" />
+    </RelativeLayout>
+    <include layout="@layout/top_bar_shadow" />
+</LinearLayout>

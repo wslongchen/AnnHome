@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -54,28 +57,29 @@ public class MainFragment extends Fragment implements OnClickListener {
 	private MyHandler mHandler;
 
 	private View currentView = null;
-	private ImageButton m_toggle, m_setting;
-	private TextView top_bar_title, date_TextView;;
+	private ImageButton m_setting;
+	private ImageView m_toggle;
+	private TextView top_bar_title, date_TextView,top_tips;
 	private ViewFlipper viewFlipper;
 	private int currentPage = 0;
 	private Context context;
 	private static final int SHOW_NEXT = 0011;
 	private boolean showNext = true;
+
+	private LinearLayout tips_layout;
 	// 滚动 横幅
 	private ImageView fliper_img_one, fliper_img_two, fliper_img_three,
 			fliper_img_four;
 	private TextView fliper_tx_one, fliper_tx_two, fliper_tx_three,
 			fliper_tx_four;
-	private String fliper_str_one, fliper_str_two, fliper_str_three,
-			fliper_str_four;
+	private TextView item_article_one,item_article_two,item_article_three,item_article_four,
+			item_article_five,item_article_six;
+
 	// http
 	private HttpHelper mHttpClient;
 
 	FragmentTransaction transaction;
 
-	private MyAdapter myAdapter;
-
-	private RecyclerView mRecyclerView;
 
 	SwipeRefreshLayout mSwipeRefreshWidget;
 
@@ -93,95 +97,119 @@ public class MainFragment extends Fragment implements OnClickListener {
 		if (parent != null) {
 			parent.removeView(currentView);
 		}
-		MyLog.i("111","22222222222222222"+Network.checkNetwork(getActivity()));
-		if(Network.checkNetwork(getActivity()))
-			initData();
-		else{
-			MyLog.i("111","22222222222222222");
-		}
+
 		return currentView;
 	}
 
-	private void initData() {
-		//下拉刷新
-		mSwipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
-		// 拿到RecyclerView
-		mRecyclerView = (RecyclerView)currentView.findViewById(R.id.news_list);
-		// 设置LinearLayoutManager
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		// 设置ItemAnimator
-		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-		// 设置固定大小
-		mRecyclerView.setHasFixedSize(true);
-		// 初始化自定义的适配器
-		myAdapter = new MyAdapter(getActivity(), MainActivity.getItems());
-		// 为mRcyclerView设置适配器
-		mRecyclerView.setAdapter(myAdapter);
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-//		this.myAdapter.setOnItemClickListener(new MyAdapter.MyItemClickListener() {
-//			@Override
-//			public void onItemClick(View view, int postion) {
-//				Toast.makeText(getActivity(), "11111111111111", Toast.LENGTH_SHORT).show();
-//			}
-//		});
-//		this.myAdapter.setOnItemLongClickListener(new MyAdapter.MyItemLongClickListener() {
-//			@Override
-//			public void onItemLongClick(View view, int postion) {
-//				Toast.makeText(getActivity(), "22222222222222", Toast.LENGTH_SHORT).show();
-//			}
-//		});
-		//http://www.mrpann.com/json=get_recent_posts
+		super.onViewCreated(view, savedInstanceState);
+		initView();
+		mHandler.post(runnable);
+		if(Network.isNetworkAvailable())
+		{
+			initData();
+		}
+		else{
+			showNoConnect();
+		}
+		mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+
+				if (Network.isNetworkAvailable()) {
+					initData();
+					tips_layout.setVisibility(View.GONE);
+					mSwipeRefreshWidget.setRefreshing(false);
+				} else {
+					showNoConnect();
+					mSwipeRefreshWidget.setRefreshing(false);
+				}
+			}
+		});
+	}
+
+	//没网时候的显示
+	private void showNoConnect(){
+		tips_layout.setVisibility(View.VISIBLE);
+		top_tips.setText("世界上最遥远的距离就是没网。检查设置");
+	}
+	//加载要显示的数据
+	private void initData() {
+
 		mHttpClient = HttpHelper.getInstance();
 		new FilpperHttpResponseCallBack(0);
 		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_recent_posts",
 				new FilpperHttpResponseCallBack(0));
 
-
 	}
+
+	//拿到数据后进行的显示
 	private void showData(String result){
 		datas=(Datas)GsonUtils.getEntity(result,Datas.class);
-		//fliper_img_two.setImageResource(R.mipmap.p);fliper_img_one.setImageResource(R.mipmap.drawing012);
 		if(datas!=null)
 		{
 			List<Posts> posts=datas.getPosts();
 			fliper_tx_one.setText(posts.get(0).getTitle());
+
 			fliper_tx_two.setText(posts.get(1).getTitle());
 			fliper_tx_three.setText(posts.get(2).getTitle());
 			fliper_tx_four.setText(posts.get(3).getTitle());
-			if(posts.get(0).getThumbnail_images()!=null) {
-				//Bitmap b=HttpHelper.getHttpBitmap(posts.get(0).getAttachments().get(0).getUrl());
-				//fliper_img_one.setImageBitmap(b);
-
+			if(posts.get(0).getAttachments().size()>0) {
 				VolleyLoadPicture.getInstance().showNetImage(posts.get(0).getAttachments().get(0).getUrl(),fliper_img_one);
 			}
-			if(posts.get(1).getThumbnail_images()!=null) {
-				//Bitmap b=HttpHelper.getHttpBitmap(posts.get(1).getAttachments().get(0).getUrl());
-				//fliper_img_two.setImageBitmap(b);
+			else
+			{
+				fliper_img_one.setImageResource(R.mipmap.bg_image);
+			}
+			if(posts.get(1).getAttachments().size() > 0) {
 				VolleyLoadPicture.getInstance().showNetImage(posts.get(1).getAttachments().get(0).getUrl(), fliper_img_two);
 			}
-			if(posts.get(2).getThumbnail_images()!=null) {
-				Bitmap b=HttpHelper.getHttpBitmap(posts.get(2).getAttachments().get(0).getUrl());
-				fliper_img_three.setImageBitmap(b);
+			else
+			{
+				fliper_img_two.setImageResource(R.mipmap.bg_image);
 			}
-			if(posts.get(3).getThumbnail_images()!=null) {
-				Bitmap b = HttpHelper.getHttpBitmap(posts.get(3).getAttachments().get(0).getUrl());
-				fliper_img_four.setImageBitmap(b);
+			if(posts.get(2).getAttachments().size() > 0) {
+				VolleyLoadPicture.getInstance().showNetImage(posts.get(2).getAttachments().get(0).getUrl(), fliper_img_three);
+			}
+			else
+			{
+				fliper_img_three.setImageResource(R.mipmap.bg_image);
+			}
+			if(posts.get(3).getAttachments().size()>0) {
+				VolleyLoadPicture.getInstance().showNetImage(posts.get(3).getAttachments().get(0).getUrl(), fliper_img_four);
+			}
+			else
+			{
+				fliper_img_four.setImageResource(R.mipmap.bg_image);
+			}
+			if(posts.size()>6){
+				item_article_one.setText(posts.get(0).getTitle());
+				item_article_two.setText(posts.get(1).getTitle());
+				item_article_three.setText(posts.get(2).getTitle());
+				item_article_four.setText(posts.get(3).getTitle());
+				item_article_five.setText(posts.get(4).getTitle());
+				item_article_six.setText(posts.get(5).getTitle());
 			}
 		}
-		mHandler.post(runnable);
-	}
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		initView();
-		super.onViewCreated(view, savedInstanceState);
-	}
 
+	}
 	private void initView() {
-		m_toggle = (ImageButton) currentView.findViewById(R.id.m_toggle);
+		//下拉刷新
+		mSwipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
+
+		mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+
+		tips_layout =(LinearLayout)currentView.findViewById(R.id.tips_layout);
+		m_toggle = (ImageView) currentView.findViewById(R.id.m_toggle);
 		m_toggle.setOnClickListener(this);
 		m_setting = (ImageButton) currentView.findViewById(R.id.m_setting);
 		m_setting.setOnClickListener(this);
 		top_bar_title = (TextView) currentView.findViewById(R.id.top_bar_title);
+		top_tips = (TextView) currentView.findViewById(R.id.tips_title);
 
 		date_TextView = (TextView) currentView.findViewById(R.id.home_date_tv);
 
@@ -204,6 +232,20 @@ public class MainFragment extends Fragment implements OnClickListener {
 		fliper_tx_four = (TextView) currentView
 				.findViewById(R.id.fliper_tx_four);
 
+		item_article_one= (TextView) currentView
+				.findViewById(R.id.item_article_one);
+		item_article_two= (TextView) currentView
+				.findViewById(R.id.item_article_two);
+		item_article_three= (TextView) currentView
+				.findViewById(R.id.item_article_three);
+		item_article_four= (TextView) currentView
+				.findViewById(R.id.item_article_four);
+		item_article_five= (TextView) currentView
+						.findViewById(R.id.item_article_five);
+		item_article_six= (TextView) currentView
+						.findViewById(R.id.item_article_six);
+
+
 		displayRatio_selelct(currentPage);
 
 
@@ -218,10 +260,13 @@ public class MainFragment extends Fragment implements OnClickListener {
 		public void handleMessage(Message msg) {
 			switch (msg.arg1) {
 				case NET_ERROR:
-					mHandler.post(runnable);
+					showNoConnect();
 				case DATA_SHOW:
 					if(msg.obj!=null)
+					{
 						showData(msg.obj.toString());
+						tips_layout.setVisibility(View.GONE);
+					}
 					break;
 			case SHOW_NEXT:
 				if (showNext) {
@@ -280,11 +325,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.m_setting:
-			viewFlipper.setInAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.push_left_in));
-			viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(context,
-					R.anim.push_left_out));
-			viewFlipper.showNext();
+
 			break;
 		default:
 			break;
@@ -384,8 +425,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 				msg.arg1 = NET_ERROR;
 				mHandler.sendMessage(msg);
 			}
-
-			MyLog.i("all", httpResponseCode + "---" + err);
 		}
 	}
 
@@ -394,11 +433,15 @@ public class MainFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onPause() {
 		mHandler.removeCallbacks(runnable);
+		MyLog.i("MainFrame","暂停应用.");
 		super.onPause();
 	}
 
 	@Override
 	public void onResume() {
+		mHandler.post(runnable);
+		MyLog.i("MainFrame", "重新进入.");
 		super.onResume();
 	}
+
 }

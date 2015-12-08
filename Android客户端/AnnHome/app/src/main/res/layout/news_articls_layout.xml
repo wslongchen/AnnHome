@@ -35,7 +35,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题0"
+                android:text="小"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_one"/>
@@ -62,7 +62,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题1"
+                android:text="安"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_two"/>
@@ -93,7 +93,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题2"
+                android:text="安"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_three"/>
@@ -120,7 +120,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题2"
+                android:text="欢"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_four"/>
@@ -151,7 +151,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题3"
+                android:text="迎"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_five"/>
@@ -178,7 +178,7 @@
                 android:drawableLeft="@mipmap/ic_app_normal"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="标题4"
+                android:text="您"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
                 android:id="@+id/item_article_six"/>
