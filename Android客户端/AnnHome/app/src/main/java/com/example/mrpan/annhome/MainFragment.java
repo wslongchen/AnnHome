@@ -140,9 +140,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		mHttpClient = HttpHelper.getInstance();
 		new FilpperHttpResponseCallBack(0);
-		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_recent_posts",
-				new FilpperHttpResponseCallBack(0));
+//		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_recent_posts",
+//				new FilpperHttpResponseCallBack(0));
 
+
+		mHttpClient.asyHttpPostRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts","{\"status\":\"draft\",\"title\":\"the post title\" ,\"content\":\"the post content\",\"author\":\"vaelongchen\" ,\"categories\":[] ,\"tags\":[]}",new
+				FilpperHttpResponseCallBack(0));
 	}
 
 	//拿到数据后进行的显示
@@ -419,6 +422,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onFailure(int httpResponseCode, int errCode, String err) {
+			MyLog.i("al2l", err);
 			if(httpResponseCode==-1)
 			{
 				Message msg = new Message();

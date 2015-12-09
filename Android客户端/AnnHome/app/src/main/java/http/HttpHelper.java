@@ -6,12 +6,15 @@ import android.graphics.BitmapFactory;
 import com.example.mrpan.annhome.MyApplication;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -83,6 +86,37 @@ public class HttpHelper {
 
         } else {
             threadPool.execute(getGetHttpThread(url, httpCallBack));
+        }
+
+    }
+
+    public void asyHttpPostRequest(String url,String JsonStr, HttpResponseCallBack httpCallBack) {
+
+
+        if (null != appPreference) {
+            int permission = appPreference.getInt(com.example.mrpan.annhome.Config.TYPE_CONN, 0);
+            Network netUtils =new Network(MyApplication.getInstance());
+            Network.NetWorkState state = netUtils.getConnectState();
+            if (state.equals(Network.NetWorkState.MOBILE)) {
+
+                if (permission == com.example.mrpan.annhome.Config.TYPE_ALL) {
+                    threadPool.execute(getPostHttpThread(url, JsonStr, httpCallBack));
+                } else if (permission == com.example.mrpan.annhome.Config.TYPE_WIFI) {
+                    httpCallBack.onFailure(0, Con_Permission,
+                            "请在设置中打开MOBILE连接 ");
+                    MyLog.i(TAG, "未发送请求，用户设置了网络限制");
+                }
+                // 未知网络
+                else {
+                    threadPool.execute(getPostHttpThread(url, JsonStr, httpCallBack));
+                }
+
+            } else {
+                threadPool.execute(getPostHttpThread(url, JsonStr, httpCallBack));
+            }
+
+        } else {
+            threadPool.execute(getPostHttpThread(url, JsonStr, httpCallBack));
         }
 
     }
@@ -173,7 +207,79 @@ public class HttpHelper {
         };
 
     }
+    private Runnable getPostHttpThread(final String adress_Http, final String strJson, final HttpResponseCallBack httpCallBack){
 
+        return new Runnable() {
+            int responseCode = -1;
+            OutputStream outtStream = null;
+            String returnLine = "";
+            BufferedReader reader = null;
+            HttpURLConnection conn = null;
+            URL url = null;
+
+            @Override
+            public void run() {
+                try {
+                    url= new URL(adress_Http);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setUseCaches(false);
+                    conn.setInstanceFollowRedirects(true);
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.connect();
+                    DataOutputStream out = new DataOutputStream(conn
+                            .getOutputStream());
+                    byte[] content = strJson.getBytes("utf-8");
+                    out.write(content, 0, content.length);
+                   responseCode=conn.getResponseCode();
+                    if (responseCode == 200) {
+                        reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+                        String line = "";
+                        while ((line = reader.readLine()) != null) {
+                            // line = new String(line.getBytes(), "utf-8");
+                            returnLine += line;
+                        }
+                        httpCallBack.onSuccess(adress_Http,
+                                returnLine);
+
+                    } else {
+                        httpCallBack.onFailure(responseCode, REQUEST_FAIL,
+                                "请求失败！");
+                    }
+
+                } catch (MalformedURLException e) {
+                    httpCallBack.onFailure(responseCode, URL_Exception,
+                            e.getMessage());
+                    MyLog.i(TAG, e.toString());
+                } catch (IOException e) {
+                    httpCallBack.onFailure(responseCode, IO_Exception,
+                            e.getMessage());
+                    MyLog.i(TAG, e.toString());
+                } finally {
+                    try {
+                        if (null != reader)
+                            reader.close();
+                    } catch (IOException ex) {
+                        MyLog.i(TAG, ex.toString());
+                    }
+                    try {
+                        if (null != outtStream)
+                        {
+                            outtStream.flush();
+                            outtStream.close();
+                        }
+                    } catch (IOException ex) {
+                        MyLog.i(TAG, ex.toString());
+                    }
+                }
+
+                if (null != conn)
+                    conn.disconnect();
+            }
+        };
+    }
 
     /**
      * 获取网络图片资源
