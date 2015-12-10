@@ -150,15 +150,8 @@
                 android:layout_height="600dp"
                 android:paddingTop="2dp"
                 tools:context=".MyActivity"
-                android:visibility="gone"
                 android:layout_marginTop="10dp">
-                <android.support.v7.widget.RecyclerView
-
-                    android:id="@+id/news_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".MainActivity"
-                    />
+                <include layout="@layout/widget_joke"/>
             </LinearLayout>
         </LinearLayout>
 

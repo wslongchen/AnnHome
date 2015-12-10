@@ -30,8 +30,6 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		context = getActivity();
 		bt_xiaoqingxin = (Button) currentView.findViewById(R.id.bt_xiaoqingxin);
 		bt_collect = (Button) currentView.findViewById(R.id.bt_collect);
-		showRecommendGameWall = (Button) currentView
-				.findViewById(R.id.showRecommendGameWall);
 		showRecommendAppWall = (Button) currentView
 				.findViewById(R.id.showRecommendAppWall);
 		bt_shouye = (Button) currentView.findViewById(R.id.bt_shouye);
@@ -42,7 +40,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		bt_collect.setOnClickListener(this);
 		showRecommendAppWall.setOnClickListener(this);
 		bt_shouye.setOnClickListener(this);
-		showRecommendGameWall.setOnClickListener(this);
+
 		bt_exit = (Button) currentView.findViewById(R.id.bt_exit);
 		bt_exit.setOnClickListener(this);
 
@@ -92,9 +90,6 @@ public class MenuFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.showRecommendAppWall:
 			//DiyManager.showRecommendAppWall(getActivity());
-			break;
-		case R.id.showRecommendGameWall:
-			//DiyManager.showRecommendGameWall(getActivity());
 			break;
 		case R.id.bt_systemSetting:
 //			Intent inten = new Intent();
