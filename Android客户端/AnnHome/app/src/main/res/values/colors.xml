@@ -6,6 +6,7 @@
     <color name="dark_brown">#ff4e0a13</color>
     <color name="line_gray">#D7D7D7</color>
     <color name="tips_colr">#FFF5BA</color>
+    <color name="blue">#0000FF</color>
     <color name="settings_entry">#ff59493f</color>
     <color name="settings_attribute">#ff4d0c14</color>
     <drawable name="clr_normal">#00000000</drawable>

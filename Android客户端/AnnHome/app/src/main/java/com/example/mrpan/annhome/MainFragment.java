@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.opengl.Visibility;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ import volley.VolleyLoadPicture;
 
 
 public class MainFragment extends Fragment implements OnClickListener {
+
+	public static final String TAG = "MainFragment";
 
 	public static final int Fliper_ONE = 1001;
 	public static final int Fliper_TWO = 1002;
@@ -330,7 +333,9 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.m_setting:
-
+			Intent intent = new Intent();
+			intent.setClass(context, SettingActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

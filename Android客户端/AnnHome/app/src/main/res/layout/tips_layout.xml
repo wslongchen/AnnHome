@@ -16,17 +16,19 @@
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:paddingTop="10dp"
-            android:src="@mipmap/exclamation"/>
+            android:src="@mipmap/exclamation"
+            android:id="@+id/imageView3" />
         <TextView
             android:id="@+id/tips_title"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
             android:paddingLeft="10dp"
             android:paddingTop="2dp"
             android:gravity="center_vertical"
             android:textColor="@color/dark_brown"
-            android:textSize="17.0dp" />
+            android:textSize="17.0dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageView3" />
     </RelativeLayout>
     <include layout="@layout/top_bar_shadow" />
 </LinearLayout>

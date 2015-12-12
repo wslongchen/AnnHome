@@ -1,6 +1,7 @@
 package com.example.mrpan.annhome;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -14,42 +15,39 @@ import android.widget.FrameLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends FragmentActivity {
 
     public MenuFragment menuFragment;
-
-    private RecyclerView mRecyclerView;
-
-    private MyAdapter myAdapter;
+    private MainFragment mainFragment;
+    private AllFragment allFramgment;
 
     private SlidingMenu slidingMenu = null;
 
-    private SwipeRefreshLayout mSwipeRefreshWidget;
     private int maxMargin = 0;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
     private SlidingPaneLayout slidingPaneLayout;
     private FragmentTransaction transaction;
-    private MainFragment mainFragment;
+
+    public static Map<String, Fragment> fragmentMap = new HashMap<String, Fragment>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mainFragment = new MainFragment();
-        init2();
-
+        initData();
     }
-
     //第二种SlideView
-    private void init2(){
+    private void initData(){
         slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
         menuFragment = new MenuFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
+        mainFragment = new MainFragment();
 
-        transaction.replace(R.id.slidingpane_menu, menuFragment);
-        transaction.replace(R.id.slidingpane_content, mainFragment);
-        transaction.commit();
+        allFramgment=new AllFragment();
         maxMargin = displayMetrics.heightPixels / 10;
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
             @Override
@@ -61,6 +59,7 @@ public class MainActivity extends FragmentActivity {
                 contentParams.setMargins(0, contentMargin, 0, contentMargin);
 
                 mainFragment.setCurrentViewPararms(contentParams);
+
 
                 float scale = 1 - ((1 - slideOffset) * maxMargin * 3)
                         / (float) displayMetrics.heightPixels;
@@ -80,6 +79,17 @@ public class MainActivity extends FragmentActivity {
             public void onPanelClosed(View arg0) {
             }
         });
+
+
+
+
+        fragmentMap.put(AllFragment.TAG,allFramgment);
+        fragmentMap.put(MainFragment.TAG, mainFragment);
+        transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.slidingpane_menu, menuFragment);
+        transaction.replace(R.id.slidingpane_content, mainFragment);
+        transaction.commit();
     }
 
     public SlidingPaneLayout getSlidingPaneLayout() {

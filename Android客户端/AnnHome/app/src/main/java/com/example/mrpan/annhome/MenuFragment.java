@@ -13,10 +13,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
 public class MenuFragment extends Fragment implements OnClickListener {
+
+	public static final String TAG = "MenuFragment";
+
 	private View currentView = null;
-	private Button bt_xiaoqingxin, bt_collect, showRecommendGameWall,
-			showRecommendAppWall, bt_shouye, bt_systemSetting;
+	private Button bt_all, bt_favorite, bt_widget,
+			bt_skin, bt_systemSetting;
 
 	private Button bt_exit, bt_setting;
 
@@ -28,18 +32,18 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		currentView = inflater.inflate(R.layout.fragment_menu_layout,
 				container, false);
 		context = getActivity();
-		bt_xiaoqingxin = (Button) currentView.findViewById(R.id.bt_xiaoqingxin);
-		bt_collect = (Button) currentView.findViewById(R.id.bt_collect);
-		showRecommendAppWall = (Button) currentView
-				.findViewById(R.id.showRecommendAppWall);
-		bt_shouye = (Button) currentView.findViewById(R.id.bt_shouye);
+		bt_all = (Button) currentView.findViewById(R.id.bt_all);
+		bt_favorite = (Button) currentView.findViewById(R.id.bt_favorite);
+		bt_widget = (Button) currentView
+				.findViewById(R.id.bt_widget);
+		bt_skin = (Button) currentView.findViewById(R.id.bt_skin);
 		bt_systemSetting = (Button) currentView
 				.findViewById(R.id.bt_systemSetting);
 		bt_systemSetting.setOnClickListener(this);
-		bt_xiaoqingxin.setOnClickListener(this);
-		bt_collect.setOnClickListener(this);
-		showRecommendAppWall.setOnClickListener(this);
-		bt_shouye.setOnClickListener(this);
+		bt_all.setOnClickListener(this);
+		bt_favorite.setOnClickListener(this);
+		bt_widget.setOnClickListener(this);
+		bt_skin.setOnClickListener(this);
 
 		bt_exit = (Button) currentView.findViewById(R.id.bt_exit);
 		bt_exit.setOnClickListener(this);
@@ -70,31 +74,22 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		FragmentTransaction transaction = getActivity()
 				.getSupportFragmentManager().beginTransaction();
 		switch (v.getId()) {
-		case R.id.bt_shouye:
-//			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-//			transaction.replace(R.id.slidingpane_content,
-//					MainActivity.fragmentMap.get(MainFragment.TAG));
-//			transaction.commit();
+		case R.id.bt_all:
+			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+			transaction.replace(R.id.slidingpane_content,
+					MainActivity.fragmentMap.get(AllFragment.TAG));
+			transaction.commit();
 			break;
-		case R.id.bt_xiaoqingxin:
-//			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-//			transaction.replace(R.id.slidingpane_content,
-//					MainActivity.fragmentMap.get(AllmeinviFragment.TAG));
-//			transaction.commit();
+		case R.id.bt_favorite:
+
 			break;
-		case R.id.bt_collect:
-//			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-//			transaction.replace(R.id.slidingpane_content,
-//					MainActivity.fragmentMap.get(CollectFragment.TAG));
-//			transaction.commit();
-			break;
-		case R.id.showRecommendAppWall:
-			//DiyManager.showRecommendAppWall(getActivity());
-			break;
+		case R.id.bt_skin:
+
+				break;
+		case R.id.bt_widget:
+
+				break;
 		case R.id.bt_systemSetting:
-//			Intent inten = new Intent();
-//			inten.setClass(context, SettingActivity.class);
-//			startActivity(inten);
 			break;
 
 		case R.id.bt_exit:
@@ -102,9 +97,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_setting:
-//			Intent intent = new Intent();
-//			intent.setClass(context, SettingActivity.class);
-//			startActivity(intent);
+
 			break;
 		default:
 			break;

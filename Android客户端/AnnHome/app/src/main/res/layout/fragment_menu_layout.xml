@@ -88,10 +88,10 @@
             >
 
             <Button
-                android:id="@+id/bt_shouye"
+                android:id="@+id/bt_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_other"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
@@ -101,10 +101,10 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/bt_xiaoqingxin"
+                android:id="@+id/bt_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_pack"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
@@ -114,10 +114,10 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/bt_collect"
+                android:id="@+id/bt_skin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_special"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
@@ -127,10 +127,10 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/showRecommendAppWall"
+                android:id="@+id/bt_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_shoucang"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
@@ -143,7 +143,7 @@
                 android:id="@+id/bt_systemSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_meun_setting"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
