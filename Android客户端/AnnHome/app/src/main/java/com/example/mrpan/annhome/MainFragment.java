@@ -6,18 +6,12 @@ import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import entity.Datas;
 import entity.Posts;
@@ -62,9 +58,9 @@ public class MainFragment extends Fragment implements OnClickListener {
 	private View currentView = null;
 	private ImageButton m_setting;
 	private ImageView m_toggle;
-	private TextView top_bar_title, date_TextView,top_tips;
+	private TextView top_bar_title, date_TextView,top_tips,joke_content,joke_next;
 	private ViewFlipper viewFlipper;
-	private int currentPage = 0;
+	private int currentPage = 0,currentJoke=0;
 	private Context context;
 	private static final int SHOW_NEXT = 0011;
 	private boolean showNext = true;
@@ -88,6 +84,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	//data
 	private Datas datas=null;
+	private JSONArray jokeArray=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,6 +120,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 				if (Network.isNetworkAvailable()) {
 					initData();
+					currentJoke=0;
+					showJoke();
 					tips_layout.setVisibility(View.GONE);
 					mSwipeRefreshWidget.setRefreshing(false);
 				} else {
@@ -147,8 +146,10 @@ public class MainFragment extends Fragment implements OnClickListener {
 //				new FilpperHttpResponseCallBack(0));
 
 
-		mHttpClient.asyHttpPostRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts","{\"status\":\"draft\",\"title\":\"the post title\" ,\"content\":\"the post content\",\"author\":\"vaelongchen\" ,\"categories\":[] ,\"tags\":[]}",new
+		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts",new
 				FilpperHttpResponseCallBack(0));
+		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1",new
+				FilpperHttpResponseCallBack(1));
 	}
 
 	//拿到数据后进行的显示
@@ -258,7 +259,10 @@ public class MainFragment extends Fragment implements OnClickListener {
 		top_bar_title.setText("最新文章");
 		date_TextView.setText(DateUtils.getCurrentDateStr());
 
-		((TextView)currentView.findViewById(R.id.joke)).setText("一男子在闹市骑摩托撞昏了一个陌生的老汉！ 男子惊吓的不知所措！围观群众越来越多！突然，该男抱住老汉，声泪俱下的喊道：“爹，你等着我，我这就去给你找医生！”说后，就跑掉了。。。老汉挣扎着愤怒的喊道：“给老子回来！”众人纷纷感慨：“这儿子当的真孝顺！”");
+		joke_next=(TextView)currentView.findViewById(R.id.joke_next);
+		joke_content=(TextView)currentView.findViewById(R.id.joke_content);
+		joke_next.setOnClickListener(this);
+		//((TextView)currentView.findViewById(R.id.joke)).setText("一男子在闹市骑摩托撞昏了一个陌生的老汉！ 男子惊吓的不知所措！围观群众越来越多！突然，该男抱住老汉，声泪俱下的喊道：“爹，你等着我，我这就去给你找医生！”说后，就跑掉了。。。老汉挣扎着愤怒的喊道：“给老子回来！”众人纷纷感慨：“这儿子当的真孝顺！”");
 
 	}
 
@@ -272,8 +276,25 @@ public class MainFragment extends Fragment implements OnClickListener {
 				case DATA_SHOW:
 					if(msg.obj!=null)
 					{
-						showData(msg.obj.toString());
-						tips_layout.setVisibility(View.GONE);
+						switch (msg.arg2)
+						{
+							case 0:
+								showData(msg.obj.toString());
+								tips_layout.setVisibility(View.GONE);
+								break;
+							case 1:
+								try {
+									JSONObject jsonObject=new JSONObject(msg.obj.toString());
+									JSONObject showapi_res_body=jsonObject.getJSONObject("showapi_res_body");
+									if(showapi_res_body!=null) {
+										jokeArray=showapi_res_body.getJSONArray("contentlist");
+										showJoke();
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+								break;
+						}
 					}
 					break;
 			case SHOW_NEXT:
@@ -312,6 +333,23 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	};
 
+	private void showJoke(){
+		if(jokeArray.length()>0)
+		{
+			//MyLog.i("444",jokeArray.length()+"");
+			try {
+				if(currentJoke>=jokeArray.length())
+					currentJoke=0;
+				String content=jokeArray.getJSONObject(currentJoke).getString("text");
+				joke_content.setText(content);
+				currentJoke++;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	public LayoutParams getCurrentViewParams() {
 		return (LayoutParams) currentView.getLayoutParams();
 	}
@@ -328,17 +366,21 @@ public class MainFragment extends Fragment implements OnClickListener {
 				R.anim.push_left_out);
 
 		switch (view.getId()) {
-		case R.id.m_toggle:
-			((MainActivity) getActivity()).getSlidingPaneLayout().openPane();
+			case R.id.joke_next:
+				showJoke();
+				break;
 
-			break;
-		case R.id.m_setting:
-			Intent intent = new Intent();
-			intent.setClass(context, SettingActivity.class);
-			startActivity(intent);
-			break;
-		default:
-			break;
+			case R.id.m_toggle:
+				((MainActivity) getActivity()).getSlidingPaneLayout().openPane();
+
+				break;
+			case R.id.m_setting:
+				Intent intent = new Intent();
+				intent.setClass(context, SettingActivity.class);
+				startActivity(intent);
+				break;
+			default:
+				break;
 		}
 
 	}
@@ -423,6 +465,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 			Message msg = new Message();
 			msg.arg1 = DATA_SHOW;
 			msg.obj=result;
+			msg.arg2=position;
 			mHandler.sendMessage(msg);
 			 MyLog.i("all", url);
 		}

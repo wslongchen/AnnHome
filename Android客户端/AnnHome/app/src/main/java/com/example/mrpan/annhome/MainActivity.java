@@ -23,6 +23,7 @@ public class MainActivity extends FragmentActivity {
     public MenuFragment menuFragment;
     private MainFragment mainFragment;
     private AllFragment allFramgment;
+    private AriticleFragment ariticleFragment;
 
     private SlidingMenu slidingMenu = null;
 
@@ -48,6 +49,8 @@ public class MainActivity extends FragmentActivity {
         mainFragment = new MainFragment();
 
         allFramgment=new AllFragment();
+        ariticleFragment=new AriticleFragment();
+
         maxMargin = displayMetrics.heightPixels / 10;
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
             @Override
@@ -82,7 +85,7 @@ public class MainActivity extends FragmentActivity {
 
 
 
-
+        fragmentMap.put(AriticleFragment.TAG,ariticleFragment);
         fragmentMap.put(AllFragment.TAG,allFramgment);
         fragmentMap.put(MainFragment.TAG, mainFragment);
         transaction = getSupportFragmentManager().beginTransaction();

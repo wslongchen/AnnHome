@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -61,11 +62,23 @@ public class AllFragment extends Fragment implements OnClickListener {
         }
         myHandler=new MyHandler();
         initData();
-
+        transaction = getActivity().getSupportFragmentManager()
+                .beginTransaction();
+        transaction.setCustomAnimations(R.anim.push_left_in,
+                R.anim.push_left_out);
         m_toggle = (ImageView) currentView.findViewById(R.id.m_toggle);
         m_toggle.setOnClickListener(this);
         ptrlvHeadLineNews=(PullToRefreshListView)currentView.findViewById(R.id.ptrlvHeadLineNews);
+        ptrlvHeadLineNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+                transaction.replace(R.id.slidingpane_content,
+                        MainActivity.fragmentMap.get(AriticleFragment.TAG));
+                transaction.commit();
+            }
+        });
         return currentView;
     }
 

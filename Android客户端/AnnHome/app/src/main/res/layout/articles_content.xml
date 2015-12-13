@@ -66,9 +66,10 @@
                 android:layout_below="@+id/textView4"
                 android:layout_toEndOf="@+id/textView4"
                 android:id="@+id/textView5" />
-            <WebView
+            <com.handmark.pulltorefresh.library.extras.PullToRefreshWebView2
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/art_content"
                 android:layout_below="@+id/textView5"
                 android:background="@color/list_bg_color"
                 android:layout_alignParentStart="true" />

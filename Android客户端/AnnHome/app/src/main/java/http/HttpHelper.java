@@ -146,6 +146,8 @@ public class HttpHelper {
                     conn.setRequestProperty("User-agent", "Mozilla/5.0");
                     conn.setRequestProperty("Content-Type",
                             "application/x-www-form-urlencoded");
+                    conn.setRequestProperty("apikey",  "72d38003778488615e7024ea3893b088");
+                    conn.connect();
                     // outputStream = conn.getOutputStream();
                     // outputStream.write(params.toString().getBytes());
                     responseCode = conn.getResponseCode();
