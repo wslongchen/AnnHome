@@ -20,7 +20,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 	private View currentView = null;
 	private Button bt_all, bt_favorite, bt_widget,
-			bt_skin, bt_systemSetting;
+			bt_skin, bt_systemSetting,bt_index;
 
 	private Button bt_exit, bt_setting;
 
@@ -48,6 +48,9 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		bt_exit = (Button) currentView.findViewById(R.id.bt_exit);
 		bt_exit.setOnClickListener(this);
 
+		bt_index = (Button) currentView.findViewById(R.id.bt_index);
+		bt_index.setOnClickListener(this);
+
 		bt_setting = (Button) currentView.findViewById(R.id.bt_setting);
 		bt_setting.setOnClickListener(this);
 
@@ -74,7 +77,14 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		FragmentTransaction transaction = getActivity()
 				.getSupportFragmentManager().beginTransaction();
 		switch (v.getId()) {
-		case R.id.bt_all:
+
+			case R.id.bt_index:
+				((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+				transaction.replace(R.id.slidingpane_content,
+						MainActivity.fragmentMap.get(MainFragment.TAG));
+				transaction.commit();
+				break;
+			case R.id.bt_all:
 			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
 			transaction.replace(R.id.slidingpane_content,
 					MainActivity.fragmentMap.get(AllFragment.TAG));

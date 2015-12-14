@@ -9,6 +9,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SlidingPaneLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.view.View;
@@ -50,7 +52,6 @@ public class AllFragment extends Fragment implements OnClickListener {
     private Datas datas=null;
     MyHandler myHandler;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentView = inflater.inflate(R.layout.fragment_all_layout,
@@ -61,11 +62,14 @@ public class AllFragment extends Fragment implements OnClickListener {
             parent.removeView(currentView);
         }
         myHandler=new MyHandler();
+        ((MainActivity)getActivity()).setSlidingPaneLayout(currentView);
+        return currentView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initData();
-        transaction = getActivity().getSupportFragmentManager()
-                .beginTransaction();
-        transaction.setCustomAnimations(R.anim.push_left_in,
-                R.anim.push_left_out);
         m_toggle = (ImageView) currentView.findViewById(R.id.m_toggle);
         m_toggle.setOnClickListener(this);
         ptrlvHeadLineNews=(PullToRefreshListView)currentView.findViewById(R.id.ptrlvHeadLineNews);
@@ -79,15 +83,6 @@ public class AllFragment extends Fragment implements OnClickListener {
                 transaction.commit();
             }
         });
-        return currentView;
-    }
-
-    public FrameLayout.LayoutParams getCurrentViewParams() {
-        return (FrameLayout.LayoutParams) currentView.getLayoutParams();
-    }
-
-    public void setCurrentViewPararms(FrameLayout.LayoutParams layoutParams) {
-        currentView.setLayoutParams(layoutParams);
     }
 
     private void initData(){
@@ -166,6 +161,8 @@ public class AllFragment extends Fragment implements OnClickListener {
         switch (v.getId()){
             case R.id.m_toggle:
                 ((MainActivity) getActivity()).getSlidingPaneLayout().openPane();
+
+
 
                 break;
             default:

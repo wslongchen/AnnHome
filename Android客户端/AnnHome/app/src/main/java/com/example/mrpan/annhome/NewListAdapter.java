@@ -4,7 +4,6 @@ package com.example.mrpan.annhome;
  * Created by mrpan on 15/12/12.
  */
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,6 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.util.HashMap;
 import java.util.List;
 
-import http.HttpResponseCallBack;
-
 public class NewListAdapter extends BaseAdapter {
 
     private ImageLoader imageLoader = null;
@@ -29,9 +26,9 @@ public class NewListAdapter extends BaseAdapter {
 
     //容器
     static class ViewHolder {
-        ImageView ivPreview;
-        TextView tvTitle;
-        TextView tvContent;
+        ImageView img;
+        TextView title;
+        TextView author;
         TextView tvReview;
     }
 
@@ -71,11 +68,11 @@ public class NewListAdapter extends BaseAdapter {
 
         ViewHolder holder = null;
         if(convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_articles, null);
             holder = new ViewHolder();
-            holder.ivPreview = (ImageView) convertView.findViewById(R.id.ivPreview);
-            holder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            holder.tvContent = (TextView) convertView.findViewById(R.id.tvContent);
+            holder.img = (ImageView) convertView.findViewById(R.id.items_art_img);
+            holder.title = (TextView) convertView.findViewById(R.id.items_art_title);
+            holder.author = (TextView) convertView.findViewById(R.id.items_art_author);
             holder.tvReview = (TextView) convertView.findViewById(R.id.tvReview);
 
             convertView.setTag(holder);
@@ -84,10 +81,10 @@ public class NewListAdapter extends BaseAdapter {
         }
 
         //设置显示数据
-        imageLoader.displayImage(getItem(position).get("uri").toString(), holder.ivPreview, options);
+        imageLoader.displayImage(getItem(position).get("uri").toString(), holder.img, options);
         //holder.ivPreview.setImageBitmap((Bitmap)getItem(position).get("img"));
-        holder.tvTitle.setText(getItem(position).get("title").toString());
-        holder.tvContent.setText(getItem(position).get("content").toString());
+        holder.title.setText(getItem(position).get("title").toString());
+        holder.author.setText(getItem(position).get("content").toString());
 //        holder.tvReview.setText(getItem(position).get("review").toString());
 
         return convertView;

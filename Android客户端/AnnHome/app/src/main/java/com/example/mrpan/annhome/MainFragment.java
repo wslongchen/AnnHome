@@ -97,6 +97,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		if (parent != null) {
 			parent.removeView(currentView);
 		}
+		((MainActivity)getActivity()).setSlidingPaneLayout(currentView);
 
 		return currentView;
 	}

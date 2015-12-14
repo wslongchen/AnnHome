@@ -86,7 +86,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
+            <Button
+                android:id="@+id/bt_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menu_select"
+                android:drawableLeft="@mipmap/icon_other"
+                android:drawablePadding="5dp"
+                android:gravity="left|center"
+                android:text="首页"
+                android:padding="5dp"
+                android:textColor="@color/xingren_bai"
+                android:textSize="20sp" />
             <Button
                 android:id="@+id/bt_all"
                 android:layout_width="match_parent"
@@ -94,9 +105,9 @@
                 android:background="@drawable/menu_select"
                 android:drawableLeft="@mipmap/icon_other"
                 android:drawablePadding="5dp"
+                android:padding="5dp"
                 android:gravity="left|center"
                 android:text="全部文章"
-                android:paddingTop="10dp"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
 
@@ -108,7 +119,7 @@
                 android:drawableLeft="@mipmap/icon_pack"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
-                android:paddingTop="10dp"
+                android:padding="5dp"
                 android:text="我喜欢的"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
@@ -121,7 +132,7 @@
                 android:drawableLeft="@mipmap/icon_special"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
-                android:paddingTop="10dp"
+                android:padding="5dp"
                 android:text="主题皮肤"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
@@ -134,7 +145,7 @@
                 android:drawableLeft="@mipmap/icon_shoucang"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
-                android:paddingTop="10dp"
+                android:padding="5dp"
                 android:text="其他工具"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
@@ -147,7 +158,7 @@
                 android:drawableLeft="@mipmap/icon_meun_setting"
                 android:drawablePadding="5dp"
                 android:gravity="left|center"
-                android:paddingTop="10dp"
+                android:padding="5dp"
                 android:text="系统设置"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
