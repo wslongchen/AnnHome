@@ -37,64 +37,60 @@
             android:background="@drawable/setting_btn"
             android:contentDescription="@null" />
     </RelativeLayout>
-
     <include layout="@layout/top_bar_shadow" />
     <ScrollView
+        android:id="@+id/pull_refresh_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="389dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="title"
-                android:textSize="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/textView4" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="author"
-                android:textSize="20dp"
-                android:layout_below="@+id/textView4"
-                android:layout_toEndOf="@+id/textView4"
-                android:id="@+id/textView5" />
-            <com.handmark.pulltorefresh.library.extras.PullToRefreshWebView2
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/art_content"
-                android:layout_below="@+id/textView5"
+                android:layout_height="500dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title"
+                    android:textSize="24dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/art_title" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="author"
+                    android:textSize="18dp"
+
+                    android:id="@+id/art_author"
+                    android:layout_below="@+id/art_title"
+                    android:layout_centerHorizontal="true" />
+                <WebView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/art_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/art_author"
+                    android:background="@color/list_bg_color"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:background="@color/list_bg_color"
-                android:layout_alignParentStart="true" />
-        </RelativeLayout>
-
-    </LinearLayout>
+                android:paddingLeft="@dimen/round_corner_bg_item_padding"
+                android:paddingRight="@dimen/round_corner_bg_item_padding" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="20.0sp"
+                    android:text="share"/>
+            </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/list_bg_color"
-        android:paddingLeft="@dimen/round_corner_bg_item_padding"
-        android:paddingRight="@dimen/round_corner_bg_item_padding" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:textColor="@color/dark_brown"
-            android:textSize="20.0sp"
-            android:text="share"/>
-
-
-    </RelativeLayout>
-
 </LinearLayout>

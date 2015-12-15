@@ -263,6 +263,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		joke_next=(TextView)currentView.findViewById(R.id.joke_next);
 		joke_content=(TextView)currentView.findViewById(R.id.joke_content);
 		joke_next.setOnClickListener(this);
+
 		//((TextView)currentView.findViewById(R.id.joke)).setText("一男子在闹市骑摩托撞昏了一个陌生的老汉！ 男子惊吓的不知所措！围观群众越来越多！突然，该男抱住老汉，声泪俱下的喊道：“爹，你等着我，我这就去给你找医生！”说后，就跑掉了。。。老汉挣扎着愤怒的喊道：“给老子回来！”众人纷纷感慨：“这儿子当的真孝顺！”");
 
 	}
@@ -335,6 +336,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 	};
 
 	private void showJoke(){
+		if(jokeArray!=null)
+		{
 		if(jokeArray.length()>0)
 		{
 			//MyLog.i("444",jokeArray.length()+"");
@@ -349,6 +352,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 			}
 		}
 
+		}
 	}
 
 	public LayoutParams getCurrentViewParams() {

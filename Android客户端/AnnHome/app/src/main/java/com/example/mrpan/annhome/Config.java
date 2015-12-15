@@ -17,4 +17,5 @@ public class Config {
     public static int TYPE_WIFI = 1;
     public static String DIR_PATH = Environment.getExternalStorageDirectory()
             .toString() + "/Cache/images/";
+
 }

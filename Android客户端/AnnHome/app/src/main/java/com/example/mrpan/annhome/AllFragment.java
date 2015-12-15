@@ -69,6 +69,9 @@ public class AllFragment extends Fragment implements OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        transaction=getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
+
         initData();
         m_toggle = (ImageView) currentView.findViewById(R.id.m_toggle);
         m_toggle.setOnClickListener(this);
@@ -77,9 +80,13 @@ public class AllFragment extends Fragment implements OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-                transaction.replace(R.id.slidingpane_content,
-                        MainActivity.fragmentMap.get(AriticleFragment.TAG));
+
+                Fragment fragment=MainActivity.fragmentMap.get(AriticleFragment.TAG);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("posts",datas.getPosts().get(position-1));
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.slidingpane_content,fragment
+                        );
                 transaction.commit();
             }
         });

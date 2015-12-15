@@ -1,25 +1,37 @@
 package com.example.mrpan.annhome;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshHorizontalScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
+
+import entity.Posts;
+import utils.MyLog;
 
 /**
  * Created by mrpan on 15/12/13.
  */
-public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRefreshListener<WebView> {
+public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRefreshListener<WebView> ,View.OnClickListener{
 
     public static final String TAG = "AriticleFragment";
 
@@ -29,7 +41,13 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
 
     private TextView art_title,art_author;
 
-    private PullToRefreshWebView art_content;
+    private WebView art_content;
+
+    private ImageView m_toggle=null;
+
+    private FragmentTransaction fragmentTransaction;
+
+    ScrollView mScrollView;
 
 
     @Nullable
@@ -42,19 +60,84 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         if (parent != null) {
             parent.removeView(currentView);
         }
-        art_content=(PullToRefreshWebView)currentView.findViewById(R.id.art_content);
-        art_content.setOnRefreshListener(this);
+        initView();
+        Bundle bundle=getArguments();
+        Posts posts= (Posts)bundle.getSerializable("posts");
 
-        WebView webView = art_content.getRefreshableView();
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new SampleWebViewClient());
-
-        // We just load a prepared HTML page from the assets folder for this
-        // sample, see that file for the Javascript implementation
-        webView.loadData("<p>闲来无事，又给手抄本加了一首很喜欢的歌的谱子。</p><p><img alt=\"\" src=\"http://www.mrpann.com/wp-content/uploads/2015/11/7B00BBA286FE29E74BE6EA10A983DB47.jpg\" style=\"width: 860px; height: 780px\";/></p><p><a href=\"http://www.mrpann.com/?p=66#more-66\" class=\"more-link\">Read more</a></p>","text/html",null);
-
+        initData(posts);
         return currentView;
     }
+
+    private void initData(Posts posts){
+        if(posts!=null){
+            art_author.setText(posts.getAuthor().getName());
+            art_title.setText(posts.getTitle());
+            art_content.loadDataWithBaseURL(null, posts.getContent(), "text/html", "UTF-8", null);
+        }
+    }
+
+    private void initView(){
+        ((FrameLayout)((MainActivity)getActivity()).findViewById(R.id.slidingpane_menu)).setVisibility(View.GONE);
+        art_content=(WebView)currentView.findViewById(R.id.art_content);
+        art_title=(TextView)currentView.findViewById(R.id.art_title);
+        art_author=(TextView)currentView.findViewById(R.id.art_author);
+
+        art_content.setBackgroundColor(0);
+        m_toggle=(ImageView)currentView.findViewById(R.id.m_toggle);
+        m_toggle.setOnClickListener(this);
+        mScrollView = (ScrollView) currentView.findViewById(R.id.pull_refresh_scrollview);
+
+        WebSettings webSettings = art_content.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webSettings.setDefaultTextEncodingName("utf-8");
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int mDensity = metrics.densityDpi;
+        if (mDensity == 240) {
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        } else if (mDensity == 160) {
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        } else if(mDensity == 120) {
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+        }else if(mDensity == DisplayMetrics.DENSITY_XHIGH) {
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        }else if (mDensity == DisplayMetrics.DENSITY_TV){
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        }else{
+            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        }
+        // User settings
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setUseWideViewPort(true);//关键点
+
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLoadWithOverviewMode(true);
+
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setJavaScriptEnabled(true); // 设置支持javascript脚本
+        webSettings.setAllowFileAccess(true); // 允许访问文件
+        webSettings.setBuiltInZoomControls(true); // 设置显示缩放按钮
+        webSettings.setSupportZoom(true); // 支持缩放
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.push_left_in,R.anim.push_left_out);
+
+        switch (v.getId()){
+
+            case R.id.m_toggle:
+
+                break;
+        }
+    }
+
     private static class SampleWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

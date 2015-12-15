@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -50,6 +51,8 @@ public class MainActivity extends FragmentActivity {
         ariticleFragment=new AriticleFragment();
         mainFragment = new MainFragment();
         menuFragment = new MenuFragment();
+
+
         fragmentMap.put(AriticleFragment.TAG, ariticleFragment);
         fragmentMap.put(AllFragment.TAG, allFramgment);
         fragmentMap.put(MainFragment.TAG, mainFragment);
@@ -178,5 +181,25 @@ public class MainActivity extends FragmentActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                if (slidingPaneLayout.isOpen()) {
+                    slidingPaneLayout.closePane();
+                } else {
+
+//                    // slidingPaneLayout.openPane();
+//                    transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.setCustomAnimations(R.anim.push_right_in,
+//                            R.anim.push_right_out);
+//                    transaction.replace(R.id.slidingpane_content, mainFragment);
+//                    transaction.commit();
+                }
+                break;
+        }
+        return true;
     }
 }
