@@ -5,8 +5,7 @@ import java.io.Serializable;
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Categories extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Categories extends BaseEntity {
     private int id;
     private String slug;
     private String title;

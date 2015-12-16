@@ -72,7 +72,7 @@
         android:layout_marginTop="2dp"
         android:background="@color/line_gray"
         />
-    <ScrollView
+    <utils.MyScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -163,7 +163,7 @@
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
         </LinearLayout>
-    </ScrollView>
+    </utils.MyScrollView>
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"

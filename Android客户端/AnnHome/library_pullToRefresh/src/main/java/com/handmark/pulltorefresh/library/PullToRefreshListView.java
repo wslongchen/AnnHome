@@ -33,6 +33,21 @@ import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView> {
+	public LoadingLayout getmHeaderLoadingView() {
+		return mHeaderLoadingView;
+	}
+
+	public LoadingLayout getmFooterLoadingView() {
+		return mFooterLoadingView;
+	}
+
+	public FrameLayout getmLvFooterLoadingFrame() {
+		return mLvFooterLoadingFrame;
+	}
+
+	public boolean ismListViewExtrasEnabled() {
+		return mListViewExtrasEnabled;
+	}
 
 	private LoadingLayout mHeaderLoadingView;
 	private LoadingLayout mFooterLoadingView;

@@ -6,8 +6,7 @@ import java.util.List;
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Datas extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Datas extends BaseEntity {
     private String status;
     private int count;
     private int count_total;

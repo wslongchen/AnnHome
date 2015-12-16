@@ -5,8 +5,7 @@ import java.io.Serializable;
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Img extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Img extends BaseEntity {
     private String url;
     private int width;
 

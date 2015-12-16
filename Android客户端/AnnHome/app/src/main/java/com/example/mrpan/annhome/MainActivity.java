@@ -5,9 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-
-import android.support.v7.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -21,18 +18,23 @@ import java.util.Map;
 
 public class MainActivity extends FragmentActivity {
 
+    //界面
     public MenuFragment menuFragment;
     private MainFragment mainFragment;
     private AllFragment allFramgment;
     private AriticleFragment ariticleFragment;
 
+    //框架中的slidingMenu
     private SlidingMenu slidingMenu = null;
-
+    private SlidingPaneLayout slidingPaneLayout;
+    //缩放尺寸
     private int maxMargin = 0;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
-    private SlidingPaneLayout slidingPaneLayout;
+
+
     private FragmentTransaction transaction;
 
+    //界面容器
     public static Map<String, Fragment> fragmentMap = new HashMap<String, Fragment>();
 
 
@@ -41,22 +43,22 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        init();
-        initData();
+        initView();
     }
 
-    private void init(){
+
+    //初始化界面
+    private void initView(){
+
         slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
         allFramgment=new AllFragment();
         ariticleFragment=new AriticleFragment();
         mainFragment = new MainFragment();
         menuFragment = new MenuFragment();
 
-
         fragmentMap.put(AriticleFragment.TAG, ariticleFragment);
         fragmentMap.put(AllFragment.TAG, allFramgment);
         fragmentMap.put(MainFragment.TAG, mainFragment);
-
 
         transaction = getSupportFragmentManager().beginTransaction();
 
@@ -64,49 +66,13 @@ public class MainActivity extends FragmentActivity {
         transaction.replace(R.id.slidingpane_content, mainFragment);
         transaction.commit();
     }
-    //第二种SlideView
-    private void initData(){
 
-
-//        maxMargin = displayMetrics.heightPixels / 10;
-//        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
-//            @Override
-//            public void onPanelSlide(View panel, float slideOffset) {
-//                int contentMargin = (int) (slideOffset * maxMargin);
-//
-//                FrameLayout.LayoutParams contentParams = mainFragment
-//                        .getCurrentViewParams();
-//                contentParams.setMargins(0, contentMargin, 0, contentMargin);
-//
-//                mainFragment.setCurrentViewPararms(contentParams);
-//
-//
-//                float scale = 1 - ((1 - slideOffset) * maxMargin * 3)
-//                        / (float) displayMetrics.heightPixels;
-//                menuFragment.getCurrentView().setScaleX(scale);//设置缩放的基准点
-//                menuFragment.getCurrentView().setScaleY(scale);// 设置缩放的基准点
-//                menuFragment.getCurrentView().setPivotX(0);// 设置缩放和选择的点
-//                menuFragment.getCurrentView().setPivotY(
-//                        displayMetrics.heightPixels / 2);
-//                menuFragment.getCurrentView().setAlpha(slideOffset);
-//            }
-//
-//            @Override
-//            public void onPanelOpened(View arg0) {
-//            }
-//
-//            @Override
-//            public void onPanelClosed(View arg0) {
-//            }
-//        });
-
-
-    }
-
-
+    //公开侧边栏
     public SlidingPaneLayout getSlidingPaneLayout() {
         return slidingPaneLayout;
     }
+
+    //设置侧边栏缩放规格
     public void setSlidingPaneLayout(final View view) {
         maxMargin = displayMetrics.heightPixels / 10;
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
@@ -140,6 +106,8 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
+
+
     //第一种SlideView
     private void init2(){
 //        //绑定控件
@@ -163,24 +131,6 @@ public class MainActivity extends FragmentActivity {
 //        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 //        // 将抽屉菜单与主页面关联起来
 //        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-    }
-
-
-    public class MyOnClickListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.btnMenu:
-                    slidingMenu.showMenu();
-                    break;
-                case R.id.btnPerson:
-                    slidingMenu.showSecondaryMenu();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     @Override

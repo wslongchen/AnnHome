@@ -67,7 +67,7 @@
                 <TextView
                     style="@style/MoreItemTextStyle"
 
-                    android:text="clear_cache" />
+                    android:text="清除缓存" />
 
                 <TextView
                     android:id="@+id/cache_size"

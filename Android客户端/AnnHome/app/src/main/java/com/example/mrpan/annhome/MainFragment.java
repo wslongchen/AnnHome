@@ -1,8 +1,6 @@
 package com.example.mrpan.annhome;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,12 +16,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
@@ -35,6 +31,7 @@ import entity.Datas;
 import entity.Posts;
 import http.HttpHelper;
 import http.HttpResponseCallBack;
+import utils.CacheUtils;
 import utils.DateUtils;
 import utils.GsonUtils;
 import utils.MyLog;
@@ -46,26 +43,36 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	public static final String TAG = "MainFragment";
 
-	public static final int Fliper_ONE = 1001;
-	public static final int Fliper_TWO = 1002;
-	public static final int Fliper_THREE = 1003;
-	public static final int Fliper_FOUR = 1004;
 	public static final int DATA_SHOW=0012;
 	public static final int NET_ERROR=0013;
+	private static final int SHOW_NEXT = 0011;
+	private static final int CACHE_DATA_SHOW=0014;
 
 	private MyHandler mHandler;
 
 	private View currentView = null;
-	private ImageButton m_setting;
-	private ImageView m_toggle;
-	private TextView top_bar_title, date_TextView,top_tips,joke_content,joke_next;
-	private ViewFlipper viewFlipper;
-	private int currentPage = 0,currentJoke=0;
-	private Context context;
-	private static final int SHOW_NEXT = 0011;
+	private Context context=null;
 	private boolean showNext = true;
 
 	private LinearLayout tips_layout;
+	// http
+	private HttpHelper mHttpClient;
+
+	SwipeRefreshLayout mSwipeRefreshWidget;
+	FragmentTransaction transaction;
+
+	//data
+	private Datas datas=null;
+	private JSONArray jokeArray=null;
+
+	//顶部菜单
+	private ImageButton m_setting;
+	private ImageView m_toggle;
+	//相关控件
+	private TextView top_bar_title, date_TextView,top_tips,joke_content,joke_next;
+	private ViewFlipper viewFlipper;
+	private int currentPage = 0,currentJoke=0;
+
 	// 滚动 横幅
 	private ImageView fliper_img_one, fliper_img_two, fliper_img_three,
 			fliper_img_four;
@@ -73,18 +80,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 			fliper_tx_four;
 	private TextView item_article_one,item_article_two,item_article_three,item_article_four,
 			item_article_five,item_article_six;
-
-	// http
-	private HttpHelper mHttpClient;
-
-	FragmentTransaction transaction;
-
-
-	SwipeRefreshLayout mSwipeRefreshWidget;
-
-	//data
-	private Datas datas=null;
-	private JSONArray jokeArray=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,27 +97,32 @@ public class MainFragment extends Fragment implements OnClickListener {
 		return currentView;
 	}
 
+
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		super.onViewCreated(view, savedInstanceState);
 		initView();
-		mHandler.post(runnable);
 		if(Network.isNetworkAvailable())
 		{
 			initData();
 		}
 		else{
 			showNoConnect();
+			Message msg = new Message();
+			msg.arg1 = CACHE_DATA_SHOW;
+			mHandler.sendMessage(msg);
 		}
+
 		mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
 
 				if (Network.isNetworkAvailable()) {
 					initData();
-					currentJoke=0;
-					showJoke();
+//					currentJoke=0;
+//					showJoke(jokeArray);
 					tips_layout.setVisibility(View.GONE);
 					mSwipeRefreshWidget.setRefreshing(false);
 				} else {
@@ -138,26 +138,38 @@ public class MainFragment extends Fragment implements OnClickListener {
 		tips_layout.setVisibility(View.VISIBLE);
 		top_tips.setText("世界上最遥远的距离就是没网。检查设置");
 	}
+
 	//加载要显示的数据
 	private void initData() {
 
 		mHttpClient = HttpHelper.getInstance();
-		new FilpperHttpResponseCallBack(0);
-//		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_recent_posts",
-//				new FilpperHttpResponseCallBack(0));
 
-
-		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts",new
+		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts", new
 				FilpperHttpResponseCallBack(0));
-		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1",new
+
+		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1", new
 				FilpperHttpResponseCallBack(1));
+
+	}
+
+	//加载显示缓存数据
+	private void showCacheData(){
+		Datas cacheDatas=(Datas)CacheUtils.readHttpCache(Config.DIR_PATH,"datas_index");
+		showData(cacheDatas);
+		try {
+			jokeArray = new JSONArray(CacheUtils.readHttpCache(Config.DIR_PATH, "joke_index").toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		currentJoke=0;
+		showJoke(jokeArray);
 	}
 
 	//拿到数据后进行的显示
-	private void showData(String result){
-		datas=(Datas)GsonUtils.getEntity(result,Datas.class);
+	private void showData(Datas datas){
 		if(datas!=null)
 		{
+
 			List<Posts> posts=datas.getPosts();
 			fliper_tx_one.setText(posts.get(0).getTitle());
 
@@ -203,6 +215,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		}
 
 	}
+
 	private void initView() {
 		//下拉刷新
 		mSwipeRefreshWidget = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipe_refresh_widget);
@@ -257,14 +270,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 		displayRatio_selelct(currentPage);
 
 
-		top_bar_title.setText("最新文章");
+		top_bar_title.setText("首页");
 		date_TextView.setText(DateUtils.getCurrentDateStr());
 
 		joke_next=(TextView)currentView.findViewById(R.id.joke_next);
 		joke_content=(TextView)currentView.findViewById(R.id.joke_content);
 		joke_next.setOnClickListener(this);
-
-		//((TextView)currentView.findViewById(R.id.joke)).setText("一男子在闹市骑摩托撞昏了一个陌生的老汉！ 男子惊吓的不知所措！围观群众越来越多！突然，该男抱住老汉，声泪俱下的喊道：“爹，你等着我，我这就去给你找医生！”说后，就跑掉了。。。老汉挣扎着愤怒的喊道：“给老子回来！”众人纷纷感慨：“这儿子当的真孝顺！”");
 
 	}
 
@@ -275,13 +286,21 @@ public class MainFragment extends Fragment implements OnClickListener {
 			switch (msg.arg1) {
 				case NET_ERROR:
 					showNoConnect();
+				case CACHE_DATA_SHOW:
+					showCacheData();
 				case DATA_SHOW:
 					if(msg.obj!=null)
 					{
+
 						switch (msg.arg2)
 						{
 							case 0:
-								showData(msg.obj.toString());
+
+								datas=(Datas)GsonUtils.getEntity(msg.obj.toString(),Datas.class);
+								//作缓存
+								CacheUtils.saveHttpCache(Config.DIR_PATH,"datas_index",datas);
+
+								showData(datas);
 								tips_layout.setVisibility(View.GONE);
 								break;
 							case 1:
@@ -289,8 +308,10 @@ public class MainFragment extends Fragment implements OnClickListener {
 									JSONObject jsonObject=new JSONObject(msg.obj.toString());
 									JSONObject showapi_res_body=jsonObject.getJSONObject("showapi_res_body");
 									if(showapi_res_body!=null) {
-										jokeArray=showapi_res_body.getJSONArray("contentlist");
-										showJoke();
+										jokeArray= showapi_res_body.getJSONArray("contentlist");
+										CacheUtils.saveHttpCache(Config.DIR_PATH,"joke_index",jokeArray.toString());
+										currentJoke=0;
+										showJoke(jokeArray);
 									}
 								} catch (JSONException e) {
 									e.printStackTrace();
@@ -307,27 +328,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 				}
 				break;
 
-			case Fliper_ONE:
-				if (fliper_img_one != null) {
-				}
-
-				break;
-			case Fliper_TWO:
-				if (fliper_img_two != null) {
-				}
-
-				break;
-			case Fliper_THREE:
-				if (fliper_img_three != null) {
-
-
-				}
-				break;
-			case Fliper_FOUR:
-				if (fliper_img_four != null) {
-				}
-				break;
-
 			default:
 				break;
 			}
@@ -335,12 +335,12 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	};
 
-	private void showJoke(){
+	//显示笑话
+	private void showJoke(JSONArray jokeArray){
 		if(jokeArray!=null)
 		{
 		if(jokeArray.length()>0)
 		{
-			//MyLog.i("444",jokeArray.length()+"");
 			try {
 				if(currentJoke>=jokeArray.length())
 					currentJoke=0;
@@ -355,14 +355,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	public LayoutParams getCurrentViewParams() {
-		return (LayoutParams) currentView.getLayoutParams();
-	}
-
-	public void setCurrentViewPararms(LayoutParams layoutParams) {
-		currentView.setLayoutParams(layoutParams);
-	}
-
 	@Override
 	public void onClick(View view) {
 		transaction = getActivity().getSupportFragmentManager()
@@ -372,7 +364,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		switch (view.getId()) {
 			case R.id.joke_next:
-				showJoke();
+				showJoke(jokeArray);
+				MyLog.i("button", "333333");
 				break;
 
 			case R.id.m_toggle:

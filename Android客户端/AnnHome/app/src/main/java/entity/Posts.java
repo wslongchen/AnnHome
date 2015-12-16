@@ -6,8 +6,7 @@ import java.util.List;
 /**
  * Created by mrpan on 15/11/17.
  */
-public class Posts extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Posts extends BaseEntity {
     private int id;
     private String type;
     private String slug;
