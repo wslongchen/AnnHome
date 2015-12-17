@@ -1,5 +1,13 @@
 package com.example.mrpan.annhome;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,8 +21,17 @@ import android.widget.FrameLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import utils.LocationUtils;
+import utils.MyLog;
+
+import static android.location.LocationManager.NETWORK_PROVIDER;
 
 public class MainActivity extends FragmentActivity {
 
@@ -31,6 +48,13 @@ public class MainActivity extends FragmentActivity {
     private int maxMargin = 0;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
 
+    Context context = null;
+
+    LocationManager lm = null;
+
+    Location myLocation = null;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss.SSSZ");
 
     private FragmentTransaction transaction;
 
@@ -43,16 +67,18 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        context = this;
         initView();
+
     }
 
 
     //初始化界面
-    private void initView(){
-
+    private void initView() {
+        lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
-        allFramgment=new AllFragment();
-        ariticleFragment=new AriticleFragment();
+        allFramgment = new AllFragment();
+        ariticleFragment = new AriticleFragment();
         mainFragment = new MainFragment();
         menuFragment = new MenuFragment();
 
@@ -109,7 +135,7 @@ public class MainActivity extends FragmentActivity {
 
 
     //第一种SlideView
-    private void init2(){
+    private void init2() {
 //        //绑定控件
 //        Button btnMenu=(Button)findViewById(R.id.btnMenu);
 //        Button btnPerson=(Button)findViewById(R.id.btnPerson);
@@ -135,7 +161,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (slidingPaneLayout.isOpen()) {
                     slidingPaneLayout.closePane();
@@ -151,5 +177,97 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return true;
+    }
+
+    LocationListener listener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            // 实际上报时间
+            // String time = sdf.format(new Date(location.getTime()));
+            // timeText.setText("实际上报时间：" + time);
+
+            if (LocationUtils.isBetterLocation(location, myLocation)) {
+                // 获取纬度
+                double lat = location.getLatitude();
+                // 获取经度
+                double lon = location.getLongitude();
+                // 位置提供者
+                String provider = location.getProvider();
+                // 位置的准确性
+                float accuracy = location.getAccuracy();
+                // 高度信息
+                double altitude = location.getAltitude();
+                // 方向角
+                float bearing = location.getBearing();
+                // 速度 米/秒
+                float speed = location.getSpeed();
+
+                String locationTime = sdf.format(new Date(location.getTime()));
+                String currentTime = null;
+
+                if (myLocation != null) {
+                    currentTime = sdf.format(new Date(myLocation.getTime()));
+                    myLocation = location;
+
+                } else {
+                    myLocation = location;
+                }
+
+                // 获取当前详细地址
+                StringBuffer sb = new StringBuffer();
+                if (myLocation != null) {
+                    Geocoder gc = new Geocoder(context);
+                    List<Address> addresses = null;
+                    try {
+                        addresses = gc.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    if (addresses != null && addresses.size() > 0) {
+                        Address address = addresses.get(0);
+                        sb.append(address.getCountryName() + address.getLocality());
+                        sb.append(address.getSubThoroughfare());
+
+                    }
+                }
+
+                MyLog.i("dizhi", "经度：" + lon + "\n纬度：" + lat + "\n服务商：" + provider + "\n准确性：" + accuracy + "\n高度：" + altitude + "\n方向角：" + bearing
+                        + "\n速度：" + speed + "\n上次上报时间：" + currentTime + "\n最新上报时间：" + locationTime + "\n您所在的城市：" + sb.toString());
+
+            }
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lm.removeUpdates(listener);
     }
 }

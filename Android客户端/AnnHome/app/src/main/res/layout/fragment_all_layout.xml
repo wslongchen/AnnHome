@@ -19,6 +19,5 @@
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip"
         >
-        >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 </LinearLayout>
