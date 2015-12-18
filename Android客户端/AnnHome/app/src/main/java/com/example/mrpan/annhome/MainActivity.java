@@ -3,6 +3,7 @@ package com.example.mrpan.annhome;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +20,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.io.IOException;
@@ -58,20 +73,67 @@ public class MainActivity extends FragmentActivity {
 
     private FragmentTransaction transaction;
 
+    private MapView mMapView;
+    BaiduMap mBaiduMap;
     //界面容器
     public static Map<String, Fragment> fragmentMap = new HashMap<String, Fragment>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.baidumap_fragment);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         context = this;
-        initView();
+       // initView();
+        mMapView = (MapView) findViewById(R.id.bmapView);
+         BDLocation location = new BDLocation();
+        mBaiduMap=mMapView.getMap();
 
+
+        BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.mipmap.setting_btn_normal); // 自定义图标
+        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, true, mCurrentMarker));
+
+
+
+
+     //   mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+                // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+        MyLocationListenner myListener=new MyLocationListenner();
+        LocationClient mLocClient = new LocationClient(this);
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);// 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(5000);
+        mLocClient.setLocOption(option);
+        mLocClient.start();
+    // 当不需要定位图层时关闭定位图层
+        //mBaiduMap.setMyLocationEnabled(false);
     }
+    public class MyLocationListenner implements BDLocationListener {
 
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+
+            // map view 销毁后不在处理新接收的位置
+            if (location == null || mMapView == null)
+                return;
+            MyLocationData locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(100).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            mBaiduMap.setMyLocationData(locData);
+                LatLng ll = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+                mBaiduMap.animateMapStatus(u);
+        }
+
+        public void onReceivePoi(BDLocation poiLocation) {
+        }
+    }
 
     //初始化界面
     private void initView() {
@@ -261,13 +323,13 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+//        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+//        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        lm.removeUpdates(listener);
+ //       lm.removeUpdates(listener);
     }
 }
