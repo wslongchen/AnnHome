@@ -3,6 +3,7 @@ package com.example.mrpan.annhome;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -106,7 +107,9 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_setting:
-
+			Intent intent = new Intent();
+			intent.setClass(context, SettingActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

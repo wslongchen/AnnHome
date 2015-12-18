@@ -229,6 +229,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		m_toggle = (ImageView) currentView.findViewById(R.id.m_toggle);
 		m_toggle.setOnClickListener(this);
 		m_setting = (ImageButton) currentView.findViewById(R.id.m_setting);
+		m_setting.setBackgroundResource(R.drawable.location_btn);
 		m_setting.setOnClickListener(this);
 		top_bar_title = (TextView) currentView.findViewById(R.id.top_bar_title);
 		top_tips = (TextView) currentView.findViewById(R.id.tips_title);
@@ -375,7 +376,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.m_setting:
 				Intent intent = new Intent();
-				intent.setClass(context, SettingActivity.class);
+				intent.setClass(context, LocationActivity.class);
 				startActivity(intent);
 				break;
 			default:
