@@ -39,6 +39,7 @@ import utils.DateUtils;
 import utils.GsonUtils;
 import utils.ImageCacheUtils;
 import utils.MyLog;
+import utils.MySharePreference;
 import utils.Network;
 import volley.VolleyLoadPicture;
 
@@ -103,12 +104,18 @@ public class MainFragment extends Fragment implements OnClickListener {
 		return currentView;
 	}
 
-
+public void changeTheme(){
+	MySharePreference mySharePreference=new MySharePreference(getActivity());
+	int theme=mySharePreference.getInt("theme",0);
+	LinearLayout linearLayout= (LinearLayout) currentView.findViewById(R.id.main_bg);
+	linearLayout.setBackgroundResource(theme);
+}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		super.onViewCreated(view, savedInstanceState);
+		changeTheme();
 		initView();
 		if(Network.isNetworkAvailable())
 		{
@@ -505,7 +512,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onPause() {
 		mHandler.removeCallbacks(runnable);
-		MyLog.i("MainFrame","暂停应用.");
+		MyLog.i("MainFrame", "暂停应用.");
+		changeTheme();
 		super.onPause();
 	}
 
@@ -513,6 +521,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		mHandler.post(runnable);
 		MyLog.i("MainFrame", "重新进入.");
+		changeTheme();
 		super.onResume();
 	}
 

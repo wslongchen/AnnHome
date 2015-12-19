@@ -30,6 +30,7 @@ import java.util.Map;
 
 import utils.LocationUtils;
 import utils.MyLog;
+import utils.MySharePreference;
 
 public class MainActivity extends FragmentActivity {
 
@@ -69,6 +70,7 @@ public class MainActivity extends FragmentActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         context = this;
         initView();
+
     }
 
 

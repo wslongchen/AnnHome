@@ -76,6 +76,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		FragmentTransaction transaction = getActivity()
 				.getSupportFragmentManager().beginTransaction();
+		Intent intent=null;
 		switch (v.getId()) {
 
 			case R.id.bt_index:
@@ -94,7 +95,9 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_skin:
-
+			intent = new Intent();
+			intent.setClass(context, SkilActivity.class);
+			startActivity(intent);
 				break;
 		case R.id.bt_widget:
 
@@ -107,7 +110,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_setting:
-			Intent intent = new Intent();
+			intent = new Intent();
 			intent.setClass(context, SettingActivity.class);
 			startActivity(intent);
 			break;

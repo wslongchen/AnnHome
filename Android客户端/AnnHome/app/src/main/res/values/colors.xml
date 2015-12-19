@@ -9,6 +9,7 @@
     <color name="blue">#0000FF</color>
     <color name="settings_entry">#ff59493f</color>
     <color name="settings_attribute">#ff4d0c14</color>
+    <color name="transparent">#00000000</color>
     <drawable name="clr_normal">#00000000</drawable>
     <drawable name="clr_pressed">#22c85555</drawable>
 

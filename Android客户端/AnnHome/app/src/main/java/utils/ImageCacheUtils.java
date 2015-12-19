@@ -87,11 +87,12 @@ public class ImageCacheUtils {
         }
         String fileName = convertUrlToFileName(url);
         String dir = Config.DIR_IMAGE_PATH;
-        File dirFile = new File(dir);
-        if (!dirFile.exists()) {
-            dirFile.mkdirs();
-        }
-        File file = new File(dir + "/" +fileName);
+//        File dirFile = new File(dir);
+//        if (!dirFile.exists()) {
+//            dirFile.mkdirs();
+//        }
+        FileUtils.createDirFile(dir);
+        File file = new File(dir  +fileName);
         try {
             file.createNewFile();
             OutputStream outputStream = new FileOutputStream(file);

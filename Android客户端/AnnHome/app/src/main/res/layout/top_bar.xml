@@ -3,12 +3,13 @@
     android:id="@+id/top_bar"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/transparent">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:background="@color/list_bg_color"
+        android:background="@color/transparent"
         android:paddingLeft="@dimen/round_corner_bg_item_padding"
         android:paddingRight="@dimen/round_corner_bg_item_padding" >
 

@@ -27,6 +27,7 @@ public class CacheUtils {
      */
     public static boolean saveHttpCache(String cacheDir, String cacheKey,
                                         Object cacheValue) {
+        FileUtils.createDirFile(cacheDir);
         boolean flag = false;
         int cnt = 0;
         do {
