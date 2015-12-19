@@ -1,6 +1,7 @@
 package com.example.mrpan.annhome;
 
 import java.util.List;
+import java.util.Objects;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +37,7 @@ import http.HttpResponseCallBack;
 import utils.CacheUtils;
 import utils.DateUtils;
 import utils.GsonUtils;
+import utils.ImageCacheUtils;
 import utils.MyLog;
 import utils.Network;
 import volley.VolleyLoadPicture;
@@ -74,7 +78,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 	private int currentPage = 0,currentJoke=0;
 
 	// 滚动 横幅
-	private ImageView fliper_img_one, fliper_img_two, fliper_img_three,
+	private NetworkImageView fliper_img_one, fliper_img_two, fliper_img_three,
 			fliper_img_four;
 	private TextView fliper_tx_one, fliper_tx_two, fliper_tx_three,
 			fliper_tx_four;
@@ -86,6 +90,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		currentView = inflater.inflate(R.layout.fragment_main_layout,
 				container, false);
+
 		context = this.getActivity();
 		mHandler=new MyHandler();
 		ViewGroup parent = (ViewGroup) currentView.getParent();
@@ -155,15 +160,19 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	//加载显示缓存数据
 	private void showCacheData(){
-		Datas cacheDatas=(Datas)CacheUtils.readHttpCache(Config.DIR_PATH,"datas_index");
-		showData(cacheDatas);
-		try {
-			jokeArray = new JSONArray(CacheUtils.readHttpCache(Config.DIR_PATH, "joke_index").toString());
-		} catch (JSONException e) {
-			e.printStackTrace();
+		Object object=CacheUtils.readHttpCache(Config.DIR_PATH,"datas_index");
+		if(object!=null)
+		{
+			showData((Datas)object);
+
+			try {
+				jokeArray = new JSONArray(CacheUtils.readHttpCache(Config.DIR_PATH, "joke_index").toString());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			currentJoke=0;
+			showJoke(jokeArray);
 		}
-		currentJoke=0;
-		showJoke(jokeArray);
 	}
 
 	//拿到数据后进行的显示
@@ -178,28 +187,28 @@ public class MainFragment extends Fragment implements OnClickListener {
 			fliper_tx_three.setText(posts.get(2).getTitle());
 			fliper_tx_four.setText(posts.get(3).getTitle());
 			if(posts.get(0).getAttachments().size()>0) {
-				VolleyLoadPicture.getInstance().showNetImage(posts.get(0).getAttachments().get(0).getUrl(),fliper_img_one);
+				ImageCacheUtils.getInstance().showNetImage(posts.get(0).getAttachments().get(0).getUrl(),fliper_img_one);
 			}
 			else
 			{
 				fliper_img_one.setImageResource(R.mipmap.bg_image);
 			}
 			if(posts.get(1).getAttachments().size() > 0) {
-				VolleyLoadPicture.getInstance().showNetImage(posts.get(1).getAttachments().get(0).getUrl(), fliper_img_two);
+				ImageCacheUtils.getInstance().showNetImage(posts.get(1).getAttachments().get(0).getUrl(), fliper_img_two);
 			}
 			else
 			{
 				fliper_img_two.setImageResource(R.mipmap.bg_image);
 			}
 			if(posts.get(2).getAttachments().size() > 0) {
-				VolleyLoadPicture.getInstance().showNetImage(posts.get(2).getAttachments().get(0).getUrl(), fliper_img_three);
+				ImageCacheUtils.getInstance().showNetImage(posts.get(2).getAttachments().get(0).getUrl(), fliper_img_three);
 			}
 			else
 			{
 				fliper_img_three.setImageResource(R.mipmap.bg_image);
 			}
 			if(posts.get(3).getAttachments().size()>0) {
-				VolleyLoadPicture.getInstance().showNetImage(posts.get(3).getAttachments().get(0).getUrl(), fliper_img_four);
+				ImageCacheUtils.getInstance().showNetImage(posts.get(3).getAttachments().get(0).getUrl(), fliper_img_four);
 			}
 			else
 			{
@@ -239,14 +248,23 @@ public class MainFragment extends Fragment implements OnClickListener {
 		viewFlipper = (ViewFlipper) currentView
 				.findViewById(R.id.mViewFliper_vf);
 
-		fliper_img_one = (ImageView) currentView
+		fliper_img_one = (NetworkImageView) currentView
 				.findViewById(R.id.fliper_img_one);
-		fliper_img_two = (ImageView) currentView
+		fliper_img_two = (NetworkImageView) currentView
 				.findViewById(R.id.fliper_img_two);
-		fliper_img_three = (ImageView) currentView
+		fliper_img_three = (NetworkImageView) currentView
 				.findViewById(R.id.fliper_img_three);
-		fliper_img_four = (ImageView) currentView
+		fliper_img_four = (NetworkImageView) currentView
 				.findViewById(R.id.fliper_img_four);
+
+		fliper_img_one.setDefaultImageResId(R.mipmap.loading);
+		fliper_img_one.setErrorImageResId(R.mipmap.loading);
+		fliper_img_two.setDefaultImageResId(R.mipmap.loading);
+		fliper_img_two.setErrorImageResId(R.mipmap.loading);
+		fliper_img_three.setDefaultImageResId(R.mipmap.loading);
+		fliper_img_three.setErrorImageResId(R.mipmap.loading);
+		fliper_img_four.setDefaultImageResId(R.mipmap.loading);
+		fliper_img_four.setErrorImageResId(R.mipmap.loading);
 
 		fliper_tx_one = (TextView) currentView.findViewById(R.id.fliper_tx_one);
 		fliper_tx_two = (TextView) currentView.findViewById(R.id.fliper_tx_two);

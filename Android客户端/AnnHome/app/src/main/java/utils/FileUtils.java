@@ -51,4 +51,13 @@ public class FileUtils {
 		return file;
 	}
 
+	/**
+	 * 修改文件的最后修改时间
+	 * @param path
+	 */
+	public static void updateFileTime(String path) {
+		File file = new File(path);
+		long newModeifyTime = System.currentTimeMillis();
+		file.setLastModified(newModeifyTime);
+	}
 }

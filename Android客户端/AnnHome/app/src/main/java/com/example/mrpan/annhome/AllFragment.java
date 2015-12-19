@@ -32,6 +32,7 @@ import http.HttpResponseCallBack;
 import utils.BitmapUtils;
 import utils.CacheUtils;
 import utils.GsonUtils;
+import utils.ImageCacheUtils;
 import utils.MyLog;
 import utils.Network;
 
@@ -179,10 +180,11 @@ public class AllFragment extends Fragment implements OnClickListener {
         {
             HashMap<String, Object> hm;
             List<Posts> posts=datas.getPosts();
+            int i=0;
             for(Posts p :posts){
                 hm = new HashMap<String, Object>();
                 if(p.getAttachments().size()>0) {
-                    hm.put("uri", "http://images.china.cn/attachement/jpg/site1000/20131029/001fd04cfc4813d9af0118.jpg");
+                    hm.put("uri",posts.get(i).getAttachments().get(i).getUrl());
                 }
                 else{
                     hm.put("uri",
@@ -191,6 +193,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                 hm.put("title", p.getTitle());
                 hm.put("content", p.getAuthor().getNickname());
                 ret.add(hm);
+                i++;
             }
 
         }

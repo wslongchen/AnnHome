@@ -1,10 +1,12 @@
-package utils;
+package view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import utils.BitmapUtils;
 
 public class ImageTextView extends TextView {
 	private Bitmap bitmap;

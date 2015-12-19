@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:padding="2dp" >
 	
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/items_art_img"
         android:layout_width="80dp"
         android:layout_height="60dp"

@@ -100,7 +100,7 @@
                         android:padding="1dp"
                         android:textColor="@android:color/black"
                         />
-                    <utils.CircleImageView
+                    <view.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="10dp"

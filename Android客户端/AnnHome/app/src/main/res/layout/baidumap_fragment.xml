@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+<include layout="@layout/top_bar"
+    android:id="@+id/include" />
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true" />
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:layout_below="@+id/include" />
 
     <Button
         android:id="@+id/button1"
@@ -16,6 +18,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="10dip" />
+        android:layout_marginTop="80dip" />
 
 </RelativeLayout>

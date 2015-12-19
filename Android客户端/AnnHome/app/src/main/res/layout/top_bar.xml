@@ -20,7 +20,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/dark_brown"
             android:textSize="20.0sp" />
-        <utils.CircleImageView
+        <view.CircleImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@mipmap/logo"

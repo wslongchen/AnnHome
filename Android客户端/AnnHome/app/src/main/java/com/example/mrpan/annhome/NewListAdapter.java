@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -19,6 +20,8 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.util.HashMap;
 import java.util.List;
 
+import utils.ImageCacheUtils;
+
 public class NewListAdapter extends BaseAdapter {
 
     private ImageLoader imageLoader = null;
@@ -26,7 +29,7 @@ public class NewListAdapter extends BaseAdapter {
 
     //容器
     static class ViewHolder {
-        ImageView img;
+        NetworkImageView img;
         TextView title;
         TextView author;
         TextView tvReview;
@@ -70,7 +73,7 @@ public class NewListAdapter extends BaseAdapter {
         if(convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_articles, null);
             holder = new ViewHolder();
-            holder.img = (ImageView) convertView.findViewById(R.id.items_art_img);
+            holder.img = (NetworkImageView) convertView.findViewById(R.id.items_art_img);
             holder.title = (TextView) convertView.findViewById(R.id.items_art_title);
             holder.author = (TextView) convertView.findViewById(R.id.items_art_author);
             holder.tvReview = (TextView) convertView.findViewById(R.id.tvReview);
@@ -81,9 +84,10 @@ public class NewListAdapter extends BaseAdapter {
         }
 
         //设置显示数据
-        imageLoader.displayImage(getItem(position).get("uri").toString(), holder.img, options);
-        //holder.ivPreview.setImageBitmap((Bitmap)getItem(position).get("img"));
-        holder.title.setText(getItem(position).get("title").toString());
+        //imageLoader.displayImage(getItem(position).get("uri").toString(), holder.img, options);
+        ImageCacheUtils.getInstance().showNetImage(getItem(position).get("uri").toString(),holder.img);
+                //holder.ivPreview.setImageBitmap((Bitmap)getItem(position).get("img"));
+                holder.title.setText(getItem(position).get("title").toString());
         holder.author.setText(getItem(position).get("content").toString());
 //        holder.tvReview.setText(getItem(position).get("review").toString());
 
