@@ -2,6 +2,8 @@ package utils;
 
 import android.content.Context;
 
+import com.example.mrpan.annhome.Config;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -140,6 +142,10 @@ public class CacheUtils {
         String cacheSize = "0KB";
         File filesDir = context.getFilesDir();
         File cacheDir = context.getCacheDir();
+        File netCache= new File(Config.DIR_PATH);
+        File imgCache=new File(Config.DIR_IMAGE_PATH);
+        fileSize += getDirSize(netCache);
+        fileSize+=getDirSize(imgCache);
         fileSize += getDirSize(filesDir);
         fileSize += getDirSize(cacheDir);
 //		fileSize += getDirSize(ImageLoader.getInstance().getDiscCache()

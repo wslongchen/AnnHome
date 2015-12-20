@@ -18,7 +18,7 @@ public class SettingActivity extends FragmentActivity implements View.OnClickLis
 
     private MySharePreference appPreference;
 
-    private TextView cache_size,item_out;
+    private TextView cache_size,item_out,title;
 
 
     @Override
@@ -27,12 +27,14 @@ public class SettingActivity extends FragmentActivity implements View.OnClickLis
         setContentView(R.layout.activity_settings);
         appPreference = new MySharePreference(this);
         int theme=appPreference.getInt("theme",0);
-        LinearLayout linearLayout= (LinearLayout) this.findViewById(R.id.main_bg);
+        LinearLayout linearLayout= (LinearLayout) this.findViewById(R.id.setting_bg);
         linearLayout.setBackgroundResource(theme);
         cache_size= (TextView) findViewById(R.id.cache_size);
-
+        item_out=(TextView)findViewById(R.id.item_out);
+        item_out.setOnClickListener(this);
         cache_size.setText(CacheUtils.getHttpCacheSize(this));
-
+        title=(TextView)findViewById(R.id.top_bar_title);
+        title.setText("系统设置");
 
     }
 
