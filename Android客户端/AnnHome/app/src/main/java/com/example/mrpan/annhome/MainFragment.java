@@ -48,11 +48,6 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 	public static final String TAG = "MainFragment";
 
-	public static final int DATA_SHOW=0012;
-	public static final int NET_ERROR=0013;
-	private static final int SHOW_NEXT = 0011;
-	private static final int CACHE_DATA_SHOW=0014;
-
 	private MyHandler mHandler;
 
 	private View currentView = null;
@@ -124,7 +119,7 @@ public void changeTheme(){
 		else{
 			showNoConnect();
 			Message msg = new Message();
-			msg.arg1 = CACHE_DATA_SHOW;
+			msg.arg1 = Config.CACHE_DATA_SHOW;
 			mHandler.sendMessage(msg);
 		}
 
@@ -311,11 +306,11 @@ public void changeTheme(){
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.arg1) {
-				case NET_ERROR:
+				case Config.NET_ERROR:
 					showNoConnect();
-				case CACHE_DATA_SHOW:
+				case Config.CACHE_DATA_SHOW:
 					showCacheData();
-				case DATA_SHOW:
+				case Config.DATA_SHOW:
 					if(msg.obj!=null)
 					{
 
@@ -347,7 +342,7 @@ public void changeTheme(){
 						}
 					}
 					break;
-			case SHOW_NEXT:
+			case Config.SHOW_NEXT:
 				if (showNext) {
 					showNextView();
 				} else {
@@ -400,6 +395,7 @@ public void changeTheme(){
 
 				break;
 			case R.id.m_setting:
+				((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
 				Intent intent = new Intent();
 				intent.setClass(context, LocationActivity.class);
 				startActivity(intent);
@@ -415,7 +411,7 @@ public void changeTheme(){
 		@Override
 		public void run() {
 			Message msg = new Message();
-			msg.arg1 = SHOW_NEXT;
+			msg.arg1 = Config.SHOW_NEXT;
 			mHandler.sendMessage(msg);
 			mHandler.postDelayed(runnable, 3000);
 		}
@@ -488,7 +484,7 @@ public void changeTheme(){
 		@Override
 		public void onSuccess(String url, String result) {
 			Message msg = new Message();
-			msg.arg1 = DATA_SHOW;
+			msg.arg1 = Config.DATA_SHOW;
 			msg.obj=result;
 			msg.arg2=position;
 			mHandler.sendMessage(msg);
@@ -501,7 +497,7 @@ public void changeTheme(){
 			if(httpResponseCode==-1)
 			{
 				Message msg = new Message();
-				msg.arg1 = NET_ERROR;
+				msg.arg1 = Config.NET_ERROR;
 				mHandler.sendMessage(msg);
 			}
 		}

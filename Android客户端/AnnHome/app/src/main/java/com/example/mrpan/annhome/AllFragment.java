@@ -126,7 +126,7 @@ public class AllFragment extends Fragment implements OnClickListener {
 
             @Override
             public void onFailure(int httpResponseCode, int errCode, String err) {
-                myHandler.sendEmptyMessage(MainFragment.NET_ERROR);
+                myHandler.sendEmptyMessage(Config.NET_ERROR);
                 MyLog.i("error",err);
             }
         });
@@ -144,7 +144,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                         ptrlvHeadLineNews.setAdapter(newAdapter);
             }
                     break;
-                case MainFragment.NET_ERROR:
+                case Config.NET_ERROR:
                     showNoConnect();
                     break;
                 default:
@@ -180,11 +180,11 @@ public class AllFragment extends Fragment implements OnClickListener {
         {
             HashMap<String, Object> hm;
             List<Posts> posts=datas.getPosts();
-            int i=0;
+            //int i=1;
             for(Posts p :posts){
                 hm = new HashMap<String, Object>();
                 if(p.getAttachments().size()>0) {
-                    hm.put("uri",posts.get(i).getAttachments().get(i).getUrl());
+                    hm.put("uri",p.getAttachments().get(0).getUrl());
                 }
                 else{
                     hm.put("uri",
@@ -193,7 +193,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                 hm.put("title", p.getTitle());
                 hm.put("content", p.getAuthor().getNickname());
                 ret.add(hm);
-                i++;
+               // i++;
             }
 
         }
@@ -264,34 +264,33 @@ public class AllFragment extends Fragment implements OnClickListener {
         @Override
         protected Integer doInBackground(String... params) {
 
-            return 1;
-            // if (CommonUtil.isWifiConnected(MainActivity.this)) {
-            // try {
-            // Thread.sleep(1000);
-            // return HTTP_REQUEST_SUCCESS;
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
-            // }
-            // return HTTP_REQUEST_SUCCESS;
+             if (Network.isNetworkAvailable()) {
+             try {
+             Thread.sleep(1000);
+                return Config.HTTP_REQUEST_SUCCESS;
+             } catch (InterruptedException e) {
+             e.printStackTrace();
+             }
+             }
+             return Config.HTTP_REQUEST_ERROR;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
             switch (result) {
-                case 1:// HTTP_REQUEST_SUCCESS:
+                case Config.HTTP_REQUEST_SUCCESS:
 //                    newAdapter.addNews(getSimulationNews(10));
 //                    newAdapter.notifyDataSetChanged();
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(3000);
+                          initData();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
-                case 2:// HTTP_REQUEST_ERROR:
-                    //Toast.makeText(MainActivity.this, "请检查网络", Toast.LENGTH_SHORT)
-                      //      .show();
+                case Config.HTTP_REQUEST_ERROR:
+                    showNoConnect();
                     break;
             }
             mPtrlv.onRefreshComplete();

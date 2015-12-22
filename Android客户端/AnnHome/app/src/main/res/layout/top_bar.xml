@@ -21,13 +21,14 @@
             android:gravity="center_vertical"
             android:textColor="@color/dark_brown"
             android:textSize="20.0sp" />
-        <view.CircleImageView
+        <ImageButton
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@mipmap/logo"
+            android:background="@mipmap/logo"
             android:layout_centerVertical="true"
             android:paddingLeft="25dp"
             android:id="@+id/m_toggle"
+            android:contentDescription="@null"
             />
         <!--<ImageButton-->
             <!--android:id="@+id/m_toggle"-->

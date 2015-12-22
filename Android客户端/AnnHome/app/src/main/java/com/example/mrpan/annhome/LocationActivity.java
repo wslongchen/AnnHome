@@ -1,9 +1,12 @@
 package com.example.mrpan.annhome;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,13 +35,18 @@ import java.util.ArrayList;
 /**
  * Created by mrpan on 15/12/18.
  */
-public class LocationActivity extends FragmentActivity {
+public class LocationActivity extends FragmentActivity implements View.OnClickListener{
+
+
+    private ImageButton m_toggle,m_setting;
 
     // 定位相关
     LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
+
+    private Context context;
 
     private Marker mMarkerA;
     BitmapDescriptor bdA = BitmapDescriptorFactory
@@ -56,6 +64,12 @@ public class LocationActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baidumap_fragment);
+        m_toggle=(ImageButton)findViewById(R.id.m_toggle);
+        context=this;
+        m_toggle.setOnClickListener(this);
+        m_toggle.setBackgroundResource(R.drawable.menu_btn);
+        m_setting=(ImageButton)findViewById(R.id.m_setting);
+        m_setting.setVisibility(View.GONE);
         requestLocButton = (Button) findViewById(R.id.button1);
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
         requestLocButton.setText("普通");
@@ -147,10 +161,21 @@ public class LocationActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.m_toggle:
+                finish();
+            default:
+                break;
+        }
+    }
+
     /**
      * 定位SDK监听函数
      */
     public class MyLocationListenner implements BDLocationListener {
+
 
         @Override
         public void onReceiveLocation(BDLocation location) {
@@ -172,9 +197,6 @@ public class LocationActivity extends FragmentActivity {
                 initOverlay(ll);
                 mBaiduMap.animateMapStatus(u);
             }
-        }
-
-        public void onReceivePoi(BDLocation poiLocation) {
         }
     }
 
@@ -241,70 +263,3 @@ public class LocationActivity extends FragmentActivity {
         super.onResume();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-//        // initView();
-//        mMapView = (MapView) findViewById(R.id.bmapView);
-//        BDLocation location = new BDLocation();
-//        mBaiduMap=mMapView.getMap();
-//
-//        // 隐藏logo
-//        View child = mMapView.getChildAt(1);
-//        if (child != null && (child instanceof ImageView || child instanceof ZoomControls)){
-//            child.setVisibility(View.INVISIBLE);
-//        }
-//        //地图上比例尺
-//        mMapView.showScaleControl(false);
-//        // 隐藏缩放控件
-//        mMapView.showZoomControls(false);
-//
-//        // 自定义图标
-//        BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.mipmap.logo_app);
-//        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker));
-//
-//        // 开启定位图层
-//        mBaiduMap.setMyLocationEnabled(true);
-//        MyLocationListenner myListener=new MyLocationListenner();
-//        LocationClient mLocClient = new LocationClient(this);
-//        mLocClient.registerLocationListener(myListener);
-//        LocationClientOption option = new LocationClientOption();
-//        option.setOpenGps(true);// 打开gps
-//        option.setCoorType("bd09ll"); // 设置坐标类型
-//        option.setScanSpan(5000);
-//        mLocClient.setLocOption(option);
-//        mLocClient.start();
-//        // 当不需要定位图层时关闭定位图层
-//        //mBaiduMap.setMyLocationEnabled(false);
-
-//    public class MyLocationListenner implements BDLocationListener {
-//
-//        @Override
-//        public void onReceiveLocation(BDLocation location) {
-//
-//            // map view 销毁后不在处理新接收的位置
-//            if (location == null || mMapView == null)
-//                return;
-//            MyLocationData locData = new MyLocationData.Builder()
-//                    .accuracy(location.getRadius())
-//                            // 此处设置开发者获取到的方向信息，顺时针0-360
-//                    .direction(100).latitude(location.getLatitude())
-//                    .longitude(location.getLongitude()).build();
-//            mBaiduMap.setMyLocationData(locData);
-//            LatLng ll = new LatLng(location.getLatitude(),
-//                    location.getLongitude());
-//            MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-//            mBaiduMap.animateMapStatus(u);
-//        }
-//
-//        public void onReceivePoi(BDLocation poiLocation) {
-//        }
-//    }

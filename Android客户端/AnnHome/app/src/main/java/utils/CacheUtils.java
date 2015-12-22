@@ -91,6 +91,10 @@ public class CacheUtils {
         context.deleteDatabase("webviewCache.db-shm");
         context.deleteDatabase("webviewCache.db-wal");
         // 清除数据缓存
+        File netCache= new File(Config.DIR_PATH);
+        File imgCache=new File(Config.DIR_IMAGE_PATH);
+        clearFolder(netCache,System.currentTimeMillis());
+        clearFolder(imgCache,System.currentTimeMillis());
         clearFolder(context.getFilesDir(), System.currentTimeMillis());
         clearFolder(context.getCacheDir(), System.currentTimeMillis());
     }

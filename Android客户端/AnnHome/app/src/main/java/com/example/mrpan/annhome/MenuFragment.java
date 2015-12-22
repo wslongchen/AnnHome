@@ -95,8 +95,9 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_skin:
+			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
 			intent = new Intent();
-			intent.setClass(context, SkilActivity.class);
+			intent.setClass(context, SkinActivity.class);
 			startActivity(intent);
 				break;
 		case R.id.bt_widget:
@@ -110,6 +111,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.bt_setting:
+			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
 			intent = new Intent();
 			intent.setClass(context, SettingActivity.class);
 			startActivity(intent);

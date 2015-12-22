@@ -50,6 +50,8 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
     ScrollView mScrollView;
 
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,12 +80,14 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
 
     private void initView(){
         ((FrameLayout)((MainActivity)getActivity()).findViewById(R.id.slidingpane_menu)).setVisibility(View.GONE);
+
         art_content=(WebView)currentView.findViewById(R.id.art_content);
         art_title=(TextView)currentView.findViewById(R.id.art_title);
         art_author=(TextView)currentView.findViewById(R.id.art_author);
 
         art_content.setBackgroundColor(0);
         m_toggle=(ImageView)currentView.findViewById(R.id.m_toggle);
+        m_toggle.setBackgroundResource(R.drawable.btn_menu);
         m_toggle.setOnClickListener(this);
         mScrollView = (ScrollView) currentView.findViewById(R.id.pull_refresh_scrollview);
 
@@ -133,7 +137,10 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         switch (v.getId()){
 
             case R.id.m_toggle:
-
+                ((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+                fragmentTransaction.replace(R.id.slidingpane_content,
+                        MainActivity.fragmentMap.get(MainFragment.TAG));
+                fragmentTransaction.commit();
                 break;
         }
     }
