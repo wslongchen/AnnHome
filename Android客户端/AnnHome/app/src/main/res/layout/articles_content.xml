@@ -18,7 +18,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/dark_brown"
             android:textSize="20.0sp" />
-        <view.CircleImageView
+        <ImageButton
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@mipmap/logo"
@@ -28,7 +28,7 @@
             />
 
         <ImageButton
-            android:id="@+id/m_setting"
+            android:id="@+id/m_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -38,10 +38,10 @@
             android:contentDescription="@null" />
     </RelativeLayout>
     <include layout="@layout/top_bar_shadow" />
-    <ScrollView
-        android:id="@+id/pull_refresh_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:id="@+id/pull_refresh_scrollview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,7 +71,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/art_content"
-                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/art_author"
                     android:background="@color/list_bg_color"
                     android:layout_alignParentStart="true" />
@@ -92,5 +91,5 @@
                     android:text="share"/>
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 </LinearLayout>
