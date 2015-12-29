@@ -38,10 +38,10 @@
             android:contentDescription="@null" />
     </RelativeLayout>
     <include layout="@layout/top_bar_shadow" />
-    <!--<ScrollView-->
-        <!--android:id="@+id/pull_refresh_scrollview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <view.MyScrollView
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -91,5 +91,5 @@
                     android:text="share"/>
             </RelativeLayout>
         </LinearLayout>
-    <!--</ScrollView>-->
+    </view.MyScrollView>
 </LinearLayout>

@@ -98,7 +98,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("posts", datas.getPosts().get(position - 1));
                 fragment.setArguments(bundle);
-                transaction.replace(R.id.slidingpane_content, fragment);
+                transaction.add(R.id.slidingpane_content, fragment);
                 transaction.commit();
 
             }

@@ -493,7 +493,7 @@ public void changeTheme(){
 
 		@Override
 		public void onFailure(int httpResponseCode, int errCode, String err) {
-			MyLog.i("al2l", err);
+			MyLog.i("all", err);
 			if(httpResponseCode==-1)
 			{
 				Message msg = new Message();

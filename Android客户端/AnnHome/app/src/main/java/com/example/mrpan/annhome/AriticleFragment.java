@@ -99,8 +99,8 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
 
       // mScrollView = (ScrollView) currentView.findViewById(R.id.pull_refresh_scrollview);
 
-//        WebSettings webSettings = art_content.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
+        WebSettings webSettings = art_content.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 //
 //        webSettings.setDefaultTextEncodingName("utf-8");
 //
@@ -131,8 +131,8 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
 //        webSettings.setDisplayZoomControls(false);
 //        webSettings.setJavaScriptEnabled(true); // 设置支持javascript脚本
 //        webSettings.setAllowFileAccess(true); // 允许访问文件
-//        webSettings.setBuiltInZoomControls(true); // 设置显示缩放按钮
-//        webSettings.setSupportZoom(true); // 支持缩放
+        webSettings.setBuiltInZoomControls(false); // 设置显示缩放按钮
+        webSettings.setSupportZoom(false); // 支持缩放
 
     }
 
@@ -145,12 +145,12 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         switch (v.getId()){
 
             case R.id.m_toggle:
-//                ((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-//                fragmentTransaction.replace(R.id.slidingpane_content,
-//                        MainActivity.fragmentMap.get(AllFragment.TAG));
-//                fragmentTransaction.commit();
-//                break;
-                 getActivity().finish();
+                Fragment fragment = MainActivity.fragmentMap.get(AllFragment.TAG);
+
+                fragmentTransaction.replace(R.id.slidingpane_content,fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;
             case R.id.m_settings:
                 QQShared qq=new QQShared(getActivity(),context);
                 Share share=new Share();
@@ -160,6 +160,8 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
                 share.setTITLE(posts.getTitle());
                 share.setTARGET_URL(posts.getUrl());
                 qq.ShareSimple(share);
+                break;
+            default:
                 break;
         }
     }
