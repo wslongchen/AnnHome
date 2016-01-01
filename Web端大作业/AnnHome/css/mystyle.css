@@ -5,3 +5,14 @@ body { padding: 70px; }
 	border-radius: 20px;
 	padding-left: 40px;
 }
+#banner{
+	margin-top: 5px;
+}
+
+#index_logo{
+	height: 50px;
+	width: 50px;	
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
