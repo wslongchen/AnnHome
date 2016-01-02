@@ -12,7 +12,7 @@
 							<div class="panel-body">-->
 								<div class="page-header">
 									<h3 class="panel-title">
-										<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a><small><?php the_excerpt(); ?></small></h2>
+										<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a><small><?php the_author(); ?></small></h2>
 										<small><?php the_time('Y年n月j日') ?>   <?php comments_popup_link('0 条评论', '1 条评论', '% 条评论', '', '评论已关闭'); ?></small>
 									</h3>
 								</div>
@@ -36,10 +36,8 @@
 						<!--评论-->
 						<?php comments_template(); ?>
 					</div>
-					<div class="col-xs-6 col-md-4">
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>
-					</div>
 					<div class="clearfix visible-xs-block"></div>
 				</div>
 			</div>

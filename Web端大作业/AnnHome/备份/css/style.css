@@ -30,6 +30,12 @@ body {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
+img{
+max-width:590px;
+width:e­xpression(this.width>590?"590px":this.width);
+max-height:590px;
+height:e­xpression(this.height>590?"590px":this.height);
+}
 
 footer{
 	margin-top: 20px;
