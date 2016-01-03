@@ -1,42 +1,108 @@
+@charset "utf-8";
 /*
-Theme Name: 拯救世界
-Theme URI: www.mrpann.com
-Description: 最适合你的一片天地
+Theme Name: Ann
+Theme URI: http://www.mrpann.com
+
+Author:  MrPan
+Author URI: http://mrpann.com
+/
+Description: Ann主题是一款简洁博客主题。
 Version: 1.0
-Author: 潘安
-Author URI: www.mrpann.com
-Tags: 小安安,博客
 */
 
-body { 
-	padding-top: 70px;
-	padding-left: 150px;
-	padding-right: 150px;	
+
+* {
+    box-sizing: border-box;
+}
+*:before, *:after {
+    box-sizing: border-box;
 }
 
-#hello{
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block;
+}
+html, body {
+    overflow-x: hidden;
+}
+body,h1,h2,h3,h4,h5,h6,blockquote,p{
+	margin:0;
+	padding:0;
+}
+h1,.h1,h2,.h2,h3,.h3 {
+    margin-top: 20px;
+    margin-bottom: 10px
+}
 
+img{ 
+	height: auto;
+	max-width: 100%; 
+	display: block;
+	padding-top:10px;
+	padding-bottom:10px
+}
+
+
+span{
+	display: inline-block;
+}
+
+body {
+    color: #333;
+    font-family: Arial,Helvetica,Georgia,Sans-seriff;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 70px;
+    text-align: left;
+    background-color: #FFFFFF;
+    vertical-align: top;
+}
+.container{
+	margin-left:auto;
+	margin-right:auto;
+	padding-left:15px;
+	padding-right:15px;
+}
+
+@media (min-width: 768px) {
+.container{
+    width: 750px;
+}
+}
+@media (min-width: 992px) {
+.container{
+    width: 970px;
+}
+}
+@media (min-width: 1200px) {
+.container{
+    width: 1170px;
+}
+}
+
+#hello {
 	border-radius: 20px;
 	padding-left: 40px;
 }
-#banner{
+
+#banner {
 	margin-top: 5px;
 }
 
-#index_logo{
+#index_logo {
 	height: 50px;
-	width: 50px;	
+	width: 50px;
 	margin-left: 20px;
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-img{
-max-width:590px;
-width:e­xpression(this.width>590?"590px":this.width);
-max-height:590px;
-height:e­xpression(this.height>590?"590px":this.height);
+
+img {
+	max-width: 590px;
+	width: e­xpression(this.width>590?"590px": this.width);
+	max-height: 590px;
+	height: e­xpression(this.height>590?"590px": this.height);
 }
 
-footer{
+footer {
 	margin-top: 20px;
 }

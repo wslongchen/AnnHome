@@ -1,11 +1,15 @@
 <div class="col-xs-6 col-md-4">
-<div class="panel panel-default">
+	<div class="panel panel-default">
 	<div class="panel-body">
 		<span class="label label-default">小安安</span>
 		<span class="label label-success">WordPress</span>
 		<span class="label label-info">潘安</span>
 		<span class="label label-warning">个人博客</span>
 		<span class="label label-danger">mrpan</span>
+	</div>
+	</div>
+<div class="panel panel-default">
+	<div class="panel-body">
 		<h3>
 			潘安<small>偶尔卖唱的小码农</small></h2>
 			<ul>

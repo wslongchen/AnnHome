@@ -1,9 +1,8 @@
 <?php get_header(); ?>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="alert alert-info alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				加入我们，一起交流，一起成长。</div>
-			<div class="row-fluid">
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 col-md-8">
 						<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
@@ -38,9 +37,7 @@
 					</div>
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>
-					<div class="clearfix visible-xs-block"></div>
 				</div>
-			</div>
 		</div>
 		
 		<!--底部-->
