@@ -44,6 +44,7 @@ img{
 
 span{
 	display: inline-block;
+	
 }
 
 body {
@@ -51,7 +52,7 @@ body {
     font-family: Arial,Helvetica,Georgia,Sans-seriff;
     font-size: 16px;
     line-height: 1.6;
-    margin-top: 70px;
+    margin-top: 50px;
     text-align: left;
     background-color: #FFFFFF;
     vertical-align: top;

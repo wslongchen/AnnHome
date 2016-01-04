@@ -1,11 +1,11 @@
 <?php
 /*
-Template Name: Page without sidebar
+Template Name: 无侧边栏页面
 */
 ?>
 	<?php get_header(); ?>
 		<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
-			<div>
+			<div class="container">
 				<div class="page-header">
 					<h1><?php the_title(); ?></h1>
 				</div>
@@ -16,6 +16,6 @@ Template Name: Page without sidebar
 				<div>
 					没有文章
 				</div>
-				<?php endif; ?>
+			<?php endif; ?>
 					<!--底部-->
-					<?php get_footer(); ?>
+<?php get_footer(); ?>

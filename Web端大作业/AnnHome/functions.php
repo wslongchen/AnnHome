@@ -2,32 +2,20 @@
 /** widgets */
 if( function_exists('register_sidebar') ) {
 	register_sidebar(array(
-		'name' => 'First_sidebar',
-		'before_widget' => '',
-		'after_widget' => '',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>'
+		'name' => '侧边栏1',
+		'description' => '警告的侧边栏',
+		'before_widget' => '<div class="panel panel-danger">',
+		'after_widget' => '</div></div>',
+		'before_title' => '<div class="panel-heading"><h3 class="panel-title">',
+		'after_title' => '</h3></div><div class="panel-body">'
 	));
 	register_sidebar(array(
-		'name' => 'Second_sidebar',
-		'before_widget' => '',
-		'after_widget' => '',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>'
-	));
-	register_sidebar(array(
-		'name' => 'Third_sidebar',
-		'before_widget' => '',
-		'after_widget' => '',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>'
-	));
-	register_sidebar(array(
-		'name' => 'Fourth_sidebar',
-		'before_widget' => '',
-		'after_widget' => '',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>'
+		'name' => '侧边栏2',
+		'description' => '正常的侧边栏',
+		'before_widget' => '<div class="panel panel-default">',
+		'after_widget' => '</div></div>',
+		'before_title' => '<div class="panel-heading"><h3 class="panel-title">',
+		'after_title' => '</h3></div><div class="panel-body">'
 	));
 }
 

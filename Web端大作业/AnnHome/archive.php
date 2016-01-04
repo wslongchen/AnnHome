@@ -1,8 +1,7 @@
 <?php get_header(); ?>
 
 		<!--内容-->
-		<div class="container-fluid">
-			<div class="row-fluid">
+		<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 col-md-8">
 						<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -44,9 +43,7 @@
 					</div>
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>
-					<div class="clearfix visible-xs-block"></div>
 				</div>
-			</div>
 		</div>
 		
 		<?php get_footer(); ?>

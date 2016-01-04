@@ -11,10 +11,15 @@
 						<!--<div class="panel panel-default">
 							<div class="panel-body">-->
 								<div class="page-header">
-									<h3 class="panel-title">
-										<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a><small><?php the_author(); ?></small></h2>
+									<div class="panel-title">
+										<h2><?php the_title(); ?><small>作者：<?php the_author(); ?></small></h2>
+										<?php
+										if (is_single()) {
+											the_tags('<h4>标签：', ' , ', '</h4>');
+										}
+			?>
 										<small><?php the_time('Y年n月j日') ?>   <?php comments_popup_link('0 条评论', '1 条评论', '% 条评论', '', '评论已关闭'); ?></small>
-									</h3>
+									</div>
 								</div>
 								<p class="text-justify">
 									<?php the_content(); ?>
@@ -29,8 +34,20 @@
 						<!--翻页-->
 						<nav>
 							<ul class="pager">
-								<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> 上一篇</a></li>
-								<li class="next"><a href="#">下一篇 <span aria-hidden="true">&rarr;</span></a></li>
+								<?php
+									$next_post = get_next_post();
+									if (!empty( $next_post )): ?>
+  									<li class="previous"><a href="<?php echo get_permalink( $next_post->ID ); ?>"><span aria-hidden="true">&larr;</span>上一篇，<?php echo $next_post->post_title; ?> </a></li>
+  								<?php else :?>
+  									 <li class="previous disabled"><a><span aria-hidden="true"></span> -.-木有了，已经是最新文章</a></li>
+								<?php endif; ?>
+								<?php
+									$prev_post = get_previous_post();
+									if (!empty( $prev_post )): ?>
+  									<li class="next"><a href="<?php echo get_permalink( $prev_post->ID ); ?>"><?php echo $prev_post->post_title; ?>，下一篇<span aria-hidden="true">&rarr;</span></a></li>
+								<?php else :?>
+									<li class="next disabled"><a>-.-木有了，已经是最后一篇<span aria-hidden="true"></span></a></li>
+								<?php endif; ?>
 							</ul>
 						</nav>
 						<!--评论-->
