@@ -1,4 +1,4 @@
-## 小安安自留地
+## 小安安の自留地
 ####by : www.mrpann.com
 
 *****************************************************************************                            
@@ -28,6 +28,21 @@
 
 **********************************************************
 
+####简介
+
++ 此项目为[小安安の自留地](http://www.mrpann.com)的各个客户端
++ 分别是基于[android技术的移动客户端](https://github.com/wslongchen/AnnHome/tree/master/Android客户端)、使用[wpf技术的PC客户端](https://github.com/wslongchen/AnnHome/tree/master/WPF客户端)以及基于[wordpress的web端](https://github.com/wslongchen/AnnHome/tree/master/Web客户端)（已做成wordpress主题模版）
++ 本项目主要为了分享在技术以及生活上的一些点点滴滴的被自己所记录下来的东西
+
+**********************************************************
+
+####涉及的技术
++ c# wpf
++ java android
++ html php
+
+**********************************************************
 ######更新于2016/01/06
+
 
 &copy; 2016 MrPan
