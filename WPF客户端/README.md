@@ -14,6 +14,6 @@
 
 **********************************************************
 ### 涉及的技术
-+ 本项目采用wpf完成，采用了第三方的开源框架[Material Design In XAML Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit)
++ 本项目采用wpf完成，基于第三方的开源ui框架[Material Design In XAML Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit)
 + 网络方面知识
 + 一些杂七杂八的技术
