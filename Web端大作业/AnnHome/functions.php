@@ -20,6 +20,11 @@ if( function_exists('register_sidebar') ) {
 }
 
 
+if( function_exists( 'register_sidebar_widget' ) ) {
+	include(TEMPLATEPATH . "/widget/diytips.php");   
+   register_widget('My_Widget');   
+}  
+
 function curPageURL() {
 	$pageURL = 'http://';
 
@@ -53,4 +58,5 @@ function aurelius_comment($comment, $args, $depth)
         <?php comment_text(); ?>
             </div>
         </div>
-<?php } ?>
+<?php } 
+	?>

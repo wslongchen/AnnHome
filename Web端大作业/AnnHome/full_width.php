@@ -17,5 +17,5 @@ Template Name: 无侧边栏页面
 					没有文章
 				</div>
 			<?php endif; ?>
-					<!--底部-->
+<!--底部-->
 <?php get_footer(); ?>
