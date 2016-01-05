@@ -10,12 +10,11 @@ Template Name: 无侧边栏页面
 					<h1><?php the_title(); ?></h1>
 				</div>
 				<?php the_content(); ?>
-					<?php comments_template(); ?>
+				<?php else : ?>
+ 						   <div class="errorbox">
+ 						       没有文章！
+ 						   </div>
+    						<?php endif; ?>
 			</div>
-			<?php else : ?>
-				<div>
-					没有文章
-				</div>
-			<?php endif; ?>
 <!--底部-->
-<?php get_footer(); ?>
+		<?php get_footer(); ?>

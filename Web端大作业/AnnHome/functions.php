@@ -17,6 +17,14 @@ if( function_exists('register_sidebar') ) {
 		'before_title' => '<div class="panel-heading"><h3 class="panel-title">',
 		'after_title' => '</h3></div><div class="panel-body">'
 	));
+	register_sidebar(array(
+		'name' => '顶部栏',
+		'description' => '某些页面的顶部栏，只能',
+		'before_widget' => '',
+		'after_widget' => '',
+		'before_title' => '',
+		'after_title' => ''
+	));
 }
 
 

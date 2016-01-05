@@ -1,5 +1,5 @@
 <div class="col-xs-6 col-md-4">
-<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('侧边栏1') ) :
+	<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('侧边栏1') ) :
 	?>
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<?php else: ?>
-	<?php endif; ?>
+		<?php endif; ?>
 	<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('侧边栏2') ) :
 	?>
 	<div class="panel panel-default">
@@ -47,7 +47,7 @@
 			}
 			?>
 		</ul>
+	</div>
 	<?php else: ?>
 		<?php endif; ?>
-	</div>
 </div>

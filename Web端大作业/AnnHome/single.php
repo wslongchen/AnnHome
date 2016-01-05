@@ -1,9 +1,13 @@
 <?php get_header(); ?>
 		<!--内容-->
 		<div class="container">
+			<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('顶部栏') ) :
+	?>
 			<div class="alert alert-danger alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				＝.＝请发现bug的亲们联系我～</div>
+				<?php else: ?>
+		<?php endif; ?>
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 col-md-8">
 						<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
