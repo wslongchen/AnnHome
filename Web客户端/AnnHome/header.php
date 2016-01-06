@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="<?php bloginfo('template_url'); ?>/js/myjs.js" type="text/javascript"></script>
 		<link href="<?php bloginfo('template_url'); ?>/style.css" rel="stylesheet" />
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 		<title>
@@ -79,11 +80,15 @@ echo ' </li>';
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分享<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Tencent</a></li>
-								<li><a href="#">Sina</a></li>
-								<li><a href="#">Wechat</a></li>
+								<li><a href="#" id="tencent">QQ空间</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a href="#">Github</a></li>
+								<li><a href="#" id="qq">QQ</a></li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',w=450,h=330,x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width='+w+',height='+h+',left='+(screen.width-w)/2+',top='+(screen.height-h)/2))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img src="http://img3.douban.com/pics/fw2douban1.png" alt="推荐到豆瓣" /></a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#" id="sina">Github</a></li>
 							</ul>
 						</li>
 					</ul>
