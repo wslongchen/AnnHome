@@ -1,3 +1,33 @@
+//返回顶部图标开始
+$(document).ready(function() {
+	//首先将#back-to-top隐藏
+	$("#back-to-top").hide();
+	//当滚动条的位置处于距顶部50像素以下时，跳转链接出现，否则消失
+	$(function() {
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > 400) {
+				$("#back-to-top").fadeIn(200);
+			} else {
+				$("#back-to-top").fadeOut(500);
+			}
+		});
+		//当点击跳转链接后，回到页面顶部位置
+		$("#back-to-top").click(function() {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 1000);
+			return false;
+		});
+		$("#back-to-top").mouseenter(function() {
+				$(this).css('background-position', '0 -75px');
+			})
+			.mouseleave(function() {
+				$(this).css('background-position', '0 0px');
+			});
+	});
+});
+//返回顶部图标结束
+
 window.onload = function() {
 	var p = {
 		url: location.href,
@@ -45,18 +75,18 @@ window.onload = function() {
 	for (var i in p) {
 		s.push(i + '=' + encodeURIComponent(p[i] || ''));
 	}
-	document.getElementById("qq").href ="http://connect.qq.com/widget/shareqq/index.html?"+ s.join("&");
+	document.getElementById("qq").href = "http://connect.qq.com/widget/shareqq/index.html?" + s.join("&");
 }
-window.onload=function(){
-	var p={
-		title:'小安安の自留地',
-		url:'http://www.mrpann.com',
+window.onload = function() {
+	var p = {
+		title: '小安安の自留地',
+		url: 'http://www.mrpann.com',
 		appkey: '2683370438',
-		content:''
+		content: ''
 	};
 	var s = [];
 	for (var i in p) {
 		s.push(i + '=' + encodeURIComponent(p[i] || ''));
 	}
-	document.getElementById("sina").href ="http://v.t.sina.com.cn/share/share.php?"+s.join("&");
+	document.getElementById("sina").href = "http://v.t.sina.com.cn/share/share.php?" + s.join("&");
 }

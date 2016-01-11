@@ -14,7 +14,7 @@
 						<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 						<!--文章内容-->
 						<div class="post">
-						<div class="panel panel-default">
+						<article class="panel panel-default">
 							<div class="panel-heading">
 								<div class="panel-title">
 									<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a><small>作者：<?php the_author(); ?></small></h2>
@@ -26,11 +26,9 @@
 								</div>
 							</div>
 							<div class="panel-body">
-								<p class="text-justify">
 									<?php the_content(); ?>
-								</p>
 							</div>
-						</div>
+						</article>
 						</div>
 						<?php endwhile; ?>
 						<?php else : ?>
@@ -50,7 +48,7 @@
 								<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 							</ul>
 						</nav>
-						
+						<div id="page"><?php par_pagenavi(5); ?></div>
 					</div>			
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>

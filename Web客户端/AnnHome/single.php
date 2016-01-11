@@ -12,8 +12,8 @@
 					<div class="col-xs-12 col-sm-6 col-md-8">
 						<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
 						<!--文章内容-->
-						<!--<div class="panel panel-default">
-							<div class="panel-body">-->
+						<div class="panel panel-default">
+							<div class="panel-body">
 								<div class="page-header">
 									<div class="panel-title">
 										<h2><?php the_title(); ?><small>作者：<?php the_author(); ?></small></h2>
@@ -28,8 +28,27 @@
 								<p class="text-justify">
 									<?php the_content(); ?>
 								</p>
-							<!--</div>
-						</div>-->
+							</div>
+						</div>
+						<div class="panel panel-default">
+  					<div class="panel-body">
+   						 <div class="col-sm-2">
+								<img src="<?php bloginfo('template_url'); ?>/img/logo.png" alt="" class="img-circle">
+							</div>
+							<div class="col-sm-10">
+								<span class="label label-default">Default</span>
+								<span class="label label-primary">Primary</span>
+								<span class="label label-success">Success</span>
+								<span class="label label-info">Info</span>
+								<span class="label label-warning">Warning</span>
+								<span class="label label-danger">Danger</span>
+								<br /> <br />
+								<h5>少年不识愁滋味，爱上层楼。爱上层楼。为赋新词强说愁。
+而今识尽愁滋味，欲说还休。欲说还休。却道天凉好个秋。</h5>
+							</div>
+  					</div>
+  				<div class="panel-footer">博主：潘安</div>
+				</div>
 						<?php else : ?>
  						   <div class="errorbox">
  						       没有文章！

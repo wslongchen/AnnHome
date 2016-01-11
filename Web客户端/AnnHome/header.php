@@ -7,7 +7,7 @@
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="<?php bloginfo('template_url'); ?>/js/myjs.js" type="text/javascript"></script>
-		<link href="<?php bloginfo('template_url'); ?>/style.css" rel="stylesheet" />
+		<link  rel="stylesheet" href="<?php bloginfo('template_url'); ?>/style.css" />
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 		<title>
 			<?php
@@ -64,11 +64,12 @@
 								$categories = get_categories($args);
 								foreach ($categories as $category) {
 									if (get_category_children($category->term_id) != "") {
-										$args2 = array('orderby' => 'name', 'child_of' => $category->term_id);
+										$args2 = array('orderby' => 'name', 'parent' => $category->term_id);
 										$categories2 = get_categories($args2);
-											echo '<li class="dropdown">
-												<a href="'.get_category_link($category -> term_id).'" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$category->name.'<span class="badge">'.$category->count.'</span><span class="caret"></span></a>';
+											echo '<li class="dropdown" role="presentation">
+												<a href="'.get_category_link($category -> term_id).'" role="button" class="dropdown-toggle" data-toggle="dropdown">'.$category->name.'<span class="badge">'.$category->count.'</span><b class="caret"></b></a>';
 											echo '<ul class="dropdown-menu">';
+											echo '<li><a href="'.get_category_link($category -> term_id).'" id="tencent">'.$category->name.'<span class="badge">'.$category->count.'</span></a></li>';
 										foreach ($categories2 as $category2) {
 											echo '<li><a href="'.get_category_link($category2 -> term_id).'" id="tencent">'.$category2->name.'<span class="badge">'.$category2->count.'</span></a></li>';
 										}
@@ -81,21 +82,32 @@
 									
 								}
 							?>
-							<?php wp_list_pages('depth=1&title_li=0&sort_column=menu_order'); ?>
+							<?php wp_list_pages('depth=1&exclude=136&title_li=0&sort_column=menu_order'); ?>
 						</ul>
 					</ul>
+					
 					<ul class="nav navbar-nav navbar-right">
+						<?php wp_nav_menu(
+								array(
+								'theme_location'  => 'header-menu' ,//指定显示的导航名，如果没有设置，则显示第一个
+								'container'       => 'nav', //最外层容器标签名
+								'container_class' => 'nav navbar-nav', //最外层容器class名
+								'menu_class'      => 'nav navbar-nav navbar-right', //ul标签class
+								'items_wrap' => '%3$s',
+								'depth'=>1
+								)); 
+							?>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分享<span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">分享<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#" id="tencent">QQ空间</a></li>
-								<li role="separator" class="divider"></li>
+								<li class="divider"></li>
 								<li><a href="#" id="qq">QQ</a></li>
-								<li role="separator" class="divider"></li>
+								<li class="divider"></li>
 								<li>
 									<a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',w=450,h=330,x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width='+w+',height='+h+',left='+(screen.width-w)/2+',top='+(screen.height-h)/2))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img src="http://img3.douban.com/pics/fw2douban1.png" alt="推荐到豆瓣" /></a>
 								</li>
-								<li role="separator" class="divider"></li>
+								<li class="divider"></li>
 								<li><a href="#" id="sina">新浪微博</a></li>
 							</ul>
 						</li>

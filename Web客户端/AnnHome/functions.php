@@ -27,7 +27,6 @@ if( function_exists('register_sidebar') ) {
 	));
 }
 
-
 if( function_exists( 'register_sidebar_widget' ) ) {
 	include(TEMPLATEPATH . "/widget/diytips.php");   
    register_widget('My_Widget');   
@@ -45,26 +44,27 @@ function curPageURL() {
 	return $pageURL;
 }
 
+if(function_exists('register_nav_menus')){
+register_nav_menus( array(
+'header-menu' => __( '导航自定义菜单' ),
+'footer-menu' => __( '页角自定义菜单' ),
+'sider-menu' => __('侧边栏菜单')
+) );
+}
 
-function aurelius_comment($comment, $args, $depth) 
-{
-   $GLOBALS['comment'] = $comment; ?>
-   <li class="comment" id="li-comment-<?php comment_ID(); ?>">
-        <div class="gravatar"> <?php if (function_exists('get_avatar') && get_option('show_avatars')) { echo get_avatar($comment, 48); } ?>
- <?php comment_reply_link(array_merge( $args, array('reply_text' => '回复','depth' => $depth, 'max_depth' => $args['max_depth']))) ?> </div>
-        <div class="comment_content" id="comment-<?php comment_ID(); ?>">   
-            <div class="clearfix">
-                    <?php printf(__('<cite class="author_name">%s</cite>'), get_comment_author_link()); ?>
-                    <div class="comment-meta commentmetadata">发表于：<?php echo get_comment_time('Y-m-d H:i'); ?></div>
-                    &nbsp;&nbsp;&nbsp;<?php edit_comment_link('修改'); ?>
-            </div>
+$defaults = array(
+    'default-color'          => '',
+    'default-image'          => '',
+    'wp-head-callback'       => '_custom_background_cb',
+    'admin-head-callback'    => '',
+    'admin-preview-callback' => ''
+);
 
-            <div class="comment_text">
-                <?php if ($comment->comment_approved == '0') : ?>
-                    <em>你的评论正在审核，稍后会显示出来！</em><br />
-        <?php endif; ?>
-        <?php comment_text(); ?>
-            </div>
-        </div>
-<?php } 
-	?>
+global $wp_version;
+if ( version_compare( $wp_version, '3.4', '>=' ) )
+    add_theme_support( 'custom-background', $defaults );
+else
+    add_custom_background( $args );
+
+?>
+

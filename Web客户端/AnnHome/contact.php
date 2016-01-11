@@ -5,6 +5,10 @@
 <?php get_header(); ?>
 		<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
 <div class="container">
+	<ol class="breadcrumb">
+ 		<li><a href="<?php echo get_option('home'); ?>/">首页</a></li>
+		<li class="active"><?php the_title(); ?></li>	 
+		</ol>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-title">
