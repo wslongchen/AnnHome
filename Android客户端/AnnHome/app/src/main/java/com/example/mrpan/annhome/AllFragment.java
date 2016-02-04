@@ -1,6 +1,7 @@
 package com.example.mrpan.annhome;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -94,12 +95,18 @@ public class AllFragment extends Fragment implements OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Fragment fragment = MainActivity.fragmentMap.get(AriticleFragment.TAG);
+//                Fragment fragment = MainActivity.fragmentMap.get(AriticleFragment.TAG);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("posts", datas.getPosts().get(position - 1));
+//                fragment.setArguments(bundle);
+//                transaction.add(R.id.slidingpane_content, fragment);
+//                transaction.commit();
+                Intent intent=new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("posts", datas.getPosts().get(position - 1));
-                fragment.setArguments(bundle);
-                transaction.add(R.id.slidingpane_content, fragment);
-                transaction.commit();
+                bundle.putSerializable("posts", datas.getPosts().get(position-1));
+                intent.putExtras(bundle);
+                intent.setClass(context,ArticleActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -139,7 +146,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                 case 1:
                     if(datas!=null) {
                         newAdapter = new NewListAdapter(getActivity(), getSimulationNews(0));
-                        MyLog.i("!!!!!", getSimulationNews(9) + "");
+//                        MyLog.i("!!!!!", getSimulationNews(9) + "");
                        ptrlvHeadLineNews.setOnRefreshListener(new MyOnRefreshListener(ptrlvHeadLineNews));
                         ptrlvHeadLineNews.setAdapter(newAdapter);
             }
@@ -211,8 +218,6 @@ public class AllFragment extends Fragment implements OnClickListener {
         switch (v.getId()){
             case R.id.m_toggle:
                 ((MainActivity) getActivity()).getSlidingPaneLayout().openPane();
-
-
 
                 break;
             default:

@@ -21,10 +21,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.cache.disc.impl.TotalSizeLimitedDiscCache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +37,7 @@ import org.json.JSONObject;
 
 import entity.Datas;
 import entity.Posts;
+import entity.Student;
 import http.HttpHelper;
 import http.HttpResponseCallBack;
 import utils.CacheUtils;
@@ -80,6 +86,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 			fliper_tx_four;
 	private TextView item_article_one,item_article_two,item_article_three,item_article_four,
 			item_article_five,item_article_six;
+	private LinearLayout item_one,item_two,item_three,item_four,item_five,item_six;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,9 +100,7 @@ public class MainFragment extends Fragment implements OnClickListener {
 		if (parent != null) {
 			parent.removeView(currentView);
 		}
-
 		((MainActivity)getActivity()).setSlidingPaneLayout(currentView);
-
 		return currentView;
 	}
 
@@ -112,15 +117,14 @@ public void changeTheme(){
 		super.onViewCreated(view, savedInstanceState);
 		changeTheme();
 		initView();
+		((MainActivity)getActivity()).setSlidingPaneLayout(view);
 		if(Network.isNetworkAvailable())
 		{
 			initData();
 		}
 		else{
 			showNoConnect();
-			Message msg = new Message();
-			msg.arg1 = Config.CACHE_DATA_SHOW;
-			mHandler.sendMessage(msg);
+			showCacheData();
 		}
 
 		mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -152,7 +156,7 @@ public void changeTheme(){
 
 		mHttpClient = HttpHelper.getInstance();
 
-		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=get_noce&method=create_post&controller=posts", new
+		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=1", new
 				FilpperHttpResponseCallBack(0));
 
 		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1", new
@@ -163,6 +167,7 @@ public void changeTheme(){
 	//加载显示缓存数据
 	private void showCacheData(){
 		Object object=CacheUtils.readHttpCache(Config.DIR_PATH,"datas_index");
+		datas=(Datas)object;
 		if(object!=null)
 		{
 			showData((Datas)object);
@@ -268,6 +273,12 @@ public void changeTheme(){
 		fliper_img_four.setDefaultImageResId(R.mipmap.loading);
 		fliper_img_four.setErrorImageResId(R.mipmap.loading);
 
+		fliper_img_one.setOnClickListener(this);
+		fliper_img_two.setOnClickListener(this);
+		fliper_img_three.setOnClickListener(this);
+		fliper_img_four.setOnClickListener(this);
+
+
 		fliper_tx_one = (TextView) currentView.findViewById(R.id.fliper_tx_one);
 		fliper_tx_two = (TextView) currentView.findViewById(R.id.fliper_tx_two);
 		fliper_tx_three = (TextView) currentView
@@ -287,8 +298,23 @@ public void changeTheme(){
 						.findViewById(R.id.item_article_five);
 		item_article_six= (TextView) currentView
 						.findViewById(R.id.item_article_six);
+		item_one=(LinearLayout)currentView.findViewById(R.id.item_one);
 
+		item_two=(LinearLayout)currentView.findViewById(R.id.item_two);
 
+		item_three=(LinearLayout)currentView.findViewById(R.id.item_three);
+
+		item_four=(LinearLayout)currentView.findViewById(R.id.item_four);
+
+		item_five=(LinearLayout)currentView.findViewById(R.id.item_five);
+
+		item_six=(LinearLayout)currentView.findViewById(R.id.item_six);
+		item_six.setOnClickListener(this);
+		item_one.setOnClickListener(this);
+		item_two.setOnClickListener(this);
+		item_three.setOnClickListener(this);
+		item_four.setOnClickListener(this);
+		item_five.setOnClickListener(this);
 		displayRatio_selelct(currentPage);
 
 
@@ -308,16 +334,15 @@ public void changeTheme(){
 			switch (msg.arg1) {
 				case Config.NET_ERROR:
 					showNoConnect();
+					break;
 				case Config.CACHE_DATA_SHOW:
-					showCacheData();
+					break;
 				case Config.DATA_SHOW:
 					if(msg.obj!=null)
 					{
-
 						switch (msg.arg2)
 						{
 							case 0:
-
 								datas=(Datas)GsonUtils.getEntity(msg.obj.toString(),Datas.class);
 								//作缓存
 								CacheUtils.saveHttpCache(Config.DIR_PATH,"datas_index",datas);
@@ -327,7 +352,8 @@ public void changeTheme(){
 								break;
 							case 1:
 								try {
-									JSONObject jsonObject=new JSONObject(msg.obj.toString());
+									JSONObject jsonObject=new JSONObject(msg.obj.toString().trim());
+									System.out.println(msg.obj.toString());
 									JSONObject showapi_res_body=jsonObject.getJSONObject("showapi_res_body");
 									if(showapi_res_body!=null) {
 										jokeArray= showapi_res_body.getJSONArray("contentlist");
@@ -383,16 +409,12 @@ public void changeTheme(){
 				.beginTransaction();
 		transaction.setCustomAnimations(R.anim.push_left_in,
 				R.anim.push_left_out);
-
 		switch (view.getId()) {
 			case R.id.joke_next:
 				showJoke(jokeArray);
-				MyLog.i("button", "333333");
 				break;
-
 			case R.id.m_toggle:
 				((MainActivity) getActivity()).getSlidingPaneLayout().openPane();
-
 				break;
 			case R.id.m_setting:
 				((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
@@ -400,10 +422,59 @@ public void changeTheme(){
 				intent.setClass(context, LocationActivity.class);
 				startActivity(intent);
 				break;
+			case R.id.item_one:
+				setDataIntent(0);
+				break;
+			case R.id.item_two:
+				setDataIntent(1);
+				break;
+			case R.id.item_three:
+				setDataIntent(2);
+				break;
+			case R.id.item_four:
+				setDataIntent(3);
+				break;
+			case R.id.item_five:
+				setDataIntent(4);
+				break;
+			case R.id.item_six:
+				setDataIntent(5);
+				break;
+			case R.id.fliper_img_one:
+				setDataIntent(0);
+				break;
+			case R.id.fliper_img_two:
+				setDataIntent(1);
+				break;
+			case R.id.fliper_img_three:
+				setDataIntent(2);
+				break;
+			case R.id.fliper_img_four:
+				setDataIntent(3);
+				break;
 			default:
 				break;
 		}
 
+	}
+
+	private void setDataIntent(int num){
+		((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+//		Fragment fragment = MainActivity.fragmentMap.get(AriticleFragment.TAG);
+//		if(!fragment.isAdded()){
+//			Bundle bundle = new Bundle();
+//			bundle.putSerializable("posts", datas.getPosts().get(num));
+//			fragment.setArguments(bundle);
+//			transaction.add(R.id.slidingpane_content, fragment);
+//		}
+//		transaction.addToBackStack(null);
+//		transaction.commit();
+		Intent intent=new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("posts", datas.getPosts().get(num));
+		intent.putExtras(bundle);
+		intent.setClass(context,ArticleActivity.class);
+		startActivity(intent);
 	}
 
 	Runnable runnable = new Runnable() {

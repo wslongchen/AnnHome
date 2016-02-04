@@ -1,5 +1,7 @@
 package entity;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,10 +9,16 @@ import java.util.List;
  * Created by mrpan on 15/11/17.
  */
 public class Datas extends BaseEntity {
+
+    @Expose
     private String status;
+    @Expose
     private int count;
+    @Expose
     private int count_total;
+    @Expose
     private int pages;
+    @Expose
     private List<Posts> posts;
 
     public String getStatus() {

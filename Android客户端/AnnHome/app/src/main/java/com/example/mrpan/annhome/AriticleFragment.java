@@ -145,9 +145,10 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         switch (v.getId()){
 
             case R.id.m_toggle:
-                Fragment fragment = MainActivity.fragmentMap.get(AllFragment.TAG);
-
-                fragmentTransaction.replace(R.id.slidingpane_content,fragment);
+                Fragment fragment=MainActivity.fragmentMap.get(MainFragment.TAG);
+                ((FrameLayout)((MainActivity)getActivity()).findViewById(R.id.slidingpane_menu)).setVisibility(View.VISIBLE);
+                fragmentTransaction.replace(R.id.slidingpane_content, fragment);
+             //   fragmentTransaction.add(R.id.slidingpane_menu,MainActivity.fragmentMap.get(MenuFragment.TAG));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 break;
@@ -163,14 +164,6 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
                 break;
             default:
                 break;
-        }
-    }
-
-    private static class SampleWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
         }
     }
 

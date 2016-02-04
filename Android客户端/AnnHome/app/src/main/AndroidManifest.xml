@@ -63,6 +63,7 @@
         <activity android:name=".SettingActivity"/>
         <activity android:name=".LocationActivity"/>
         <activity android:name=".SkinActivity"/>
+        <activity android:name=".ArticleActivity"/>
     </application>
 
 </manifest>

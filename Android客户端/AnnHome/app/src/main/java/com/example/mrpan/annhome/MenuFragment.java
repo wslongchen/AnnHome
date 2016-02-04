@@ -81,7 +81,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 			case R.id.bt_index:
 				((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-				transaction.add(R.id.slidingpane_content,
+				transaction.replace(R.id.slidingpane_content,
 						MainActivity.fragmentMap.get(MainFragment.TAG));
 
 				transaction.addToBackStack(null);
@@ -89,7 +89,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.bt_all:
 			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-			transaction.add(R.id.slidingpane_content,
+			transaction.replace(R.id.slidingpane_content,
 					MainActivity.fragmentMap.get(AllFragment.TAG));
 				transaction.addToBackStack(null);
 			transaction.commit();

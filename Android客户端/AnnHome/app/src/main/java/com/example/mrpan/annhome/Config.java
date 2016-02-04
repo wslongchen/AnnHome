@@ -25,4 +25,5 @@ public class Config {
     public static final int CACHE_DATA_SHOW=0014;
     public static final int HTTP_REQUEST_SUCCESS=1001;
     public static final int HTTP_REQUEST_ERROR=1002;
+
 }

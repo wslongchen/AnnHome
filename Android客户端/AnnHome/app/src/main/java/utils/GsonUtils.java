@@ -19,7 +19,7 @@ public class GsonUtils {
         Gson gson = new Gson();
 
         try {
-            BaseEntity baseEntity = (BaseEntity) gson.fromJson(content, clazz);
+            BaseEntity baseEntity = (BaseEntity) gson.fromJson(content.replace("\uFEFF\uFEFF\uFEFF",""), clazz);
             return baseEntity;
         } catch (Exception e) {
             e.printStackTrace();

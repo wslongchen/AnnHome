@@ -91,6 +91,7 @@ public class MainActivity extends FragmentActivity {
 
         transaction.replace(R.id.slidingpane_menu, menuFragment);
         transaction.replace(R.id.slidingpane_content, mainFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
