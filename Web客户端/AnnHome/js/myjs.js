@@ -22,7 +22,7 @@ $(document).ready(function() {
 				$(this).css('background-position', '0 -75px');
 			})
 			.mouseleave(function() {
-				$(this).css('background-position', '0 0px');
+				$(this).css('background-position', '0 0');
 			});
 	});
 });

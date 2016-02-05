@@ -29,27 +29,6 @@
 	</ul>
 	</div>
 	</div>
-	<?php else: ?>
-	<?php endif; ?>
-	<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('侧边栏2') ) :
-	?>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			分类
-		</div>
-		<!-- List group -->
-		<ul class="list-group">
-			<?php $args = array('orderby' => 'name', 'order' => 'ASC', 'parent' => 0);
-			$categories = get_categories($args);
-			foreach ($categories as $category) {
-				echo ' <li class="list-group-item list-group-item-info" role="presentation">';
-				echo '<span class="badge">' . $category -> count . '</span>';
-				echo ' <a href="' . get_category_link($category -> term_id) . '">' . $category -> name . ' </a>';
-				echo ' </li>';
-			}
-			?>
-		</ul>
-	</div>
 	<div class="well">
 		<?php
 			global $wpdb;
@@ -106,6 +85,28 @@
 		<p class="text-warning text-right">
 			小安安一共被访问了<?php echo $count; ?>次
 		</p>
+	</div>
+	<?php else: ?>
+	<?php endif; ?>
+		
+	<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('侧边栏2') ) :
+	?>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			分类
+		</div>
+		<!-- List group -->
+		<ul class="list-group">
+			<?php $args = array('orderby' => 'name', 'order' => 'ASC', 'parent' => 0);
+			$categories = get_categories($args);
+			foreach ($categories as $category) {
+				echo ' <li class="list-group-item list-group-item-info" role="presentation">';
+				echo '<span class="badge">' . $category -> count . '</span>';
+				echo ' <a href="' . get_category_link($category -> term_id) . '">' . $category -> name . ' </a>';
+				echo ' </li>';
+			}
+			?>
+		</ul>
 	</div>
 	<?php else: ?>
 	<?php endif; ?>

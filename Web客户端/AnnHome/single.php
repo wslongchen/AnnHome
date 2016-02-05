@@ -54,6 +54,11 @@
  						       没有文章！
  						   </div>
     						<?php endif; ?>
+    						<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('文章广告栏') ) :
+	?>
+	
+	<?php else: ?>
+	<?php endif; ?>
 						<!--翻页-->
 						<nav>
 							<ul class="pager">

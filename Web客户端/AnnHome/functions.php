@@ -19,7 +19,15 @@ if( function_exists('register_sidebar') ) {
 	));
 	register_sidebar(array(
 		'name' => '顶部栏',
-		'description' => '某些页面的顶部栏，只能',
+		'description' => '首页及某些页面的顶部栏，提供提示',
+		'before_widget' => '<div class="panel panel-default">',
+		'after_widget' => '</div></div>',
+		'before_title' => '',
+		'after_title' => '<div class="panel-body">'
+	));
+	register_sidebar(array(
+		'name' => '文章广告栏',
+		'description' => '文章放置广告的地方',
 		'before_widget' => '',
 		'after_widget' => '',
 		'before_title' => '',
