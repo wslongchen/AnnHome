@@ -1,10 +1,10 @@
 package com.example.mrpan.annhome;
 
 import java.util.List;
-import java.util.Objects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,24 +12,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.cache.disc.impl.TotalSizeLimitedDiscCache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +37,6 @@ import org.json.JSONObject;
 
 import entity.Datas;
 import entity.Posts;
-import entity.Student;
 import http.HttpHelper;
 import http.HttpResponseCallBack;
 import utils.CacheUtils;
@@ -47,7 +46,7 @@ import utils.ImageCacheUtils;
 import utils.MyLog;
 import utils.MySharePreference;
 import utils.Network;
-import volley.VolleyLoadPicture;
+import view.KCalendar;
 
 
 public class MainFragment extends Fragment implements OnClickListener {
@@ -115,16 +114,17 @@ public void changeTheme(){
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
 		super.onViewCreated(view, savedInstanceState);
-		changeTheme();
+
 		initView();
+		changeTheme();
 		((MainActivity)getActivity()).setSlidingPaneLayout(view);
+		showCacheData();
 		if(Network.isNetworkAvailable())
 		{
 			initData();
 		}
 		else{
 			showNoConnect();
-			showCacheData();
 		}
 
 		mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -156,7 +156,7 @@ public void changeTheme(){
 
 		mHttpClient = HttpHelper.getInstance();
 
-		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=1", new
+		mHttpClient.asyHttpGetRequest("http://www.mrpann.com/?json=1&count=6", new
 				FilpperHttpResponseCallBack(0));
 
 		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1", new
@@ -221,7 +221,7 @@ public void changeTheme(){
 			{
 				fliper_img_four.setImageResource(R.mipmap.bg_image);
 			}
-			if(posts.size()>6){
+			if(posts.size()>=6){
 				item_article_one.setText(posts.get(0).getTitle());
 				item_article_two.setText(posts.get(1).getTitle());
 				item_article_three.setText(posts.get(2).getTitle());
@@ -320,6 +320,7 @@ public void changeTheme(){
 
 		top_bar_title.setText("首页");
 		date_TextView.setText(DateUtils.getCurrentDateStr());
+		date_TextView.setOnClickListener(this);
 
 		joke_next=(TextView)currentView.findViewById(R.id.joke_next);
 		joke_content=(TextView)currentView.findViewById(R.id.joke_content);
@@ -451,6 +452,9 @@ public void changeTheme(){
 				break;
 			case R.id.fliper_img_four:
 				setDataIntent(3);
+				break;
+			case R.id.home_date_tv:
+				new PopupWindows(getActivity(), currentView);
 				break;
 			default:
 				break;
@@ -590,6 +594,134 @@ public void changeTheme(){
 		MyLog.i("MainFrame", "重新进入.");
 		changeTheme();
 		super.onResume();
+	}
+
+	/**
+	 * 日历
+	 **/
+	public class PopupWindows extends PopupWindow {
+
+		public PopupWindows(Context mContext, View parent) {
+
+			View view = View.inflate(mContext, R.layout.popupwindow_calendar,
+					null);
+			view.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.fade_in));
+			LinearLayout ll_popup = (LinearLayout) view
+					.findViewById(R.id.ll_popup);
+			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
+					R.anim.push_bottom_in_1));
+
+			setWidth(ViewGroup.LayoutParams.FILL_PARENT);
+			setHeight(ViewGroup.LayoutParams.FILL_PARENT);
+			setBackgroundDrawable(new BitmapDrawable());
+			setFocusable(true);
+			setOutsideTouchable(true);
+			setContentView(view);
+			showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+			update();
+
+			final TextView popupwindow_calendar_month = (TextView) view
+					.findViewById(R.id.popupwindow_calendar_month);
+			final KCalendar calendar = (KCalendar) view
+					.findViewById(R.id.popupwindow_calendar);
+//			Button popupwindow_calendar_bt_enter = (Button) view
+//					.findViewById(R.id.popupwindow_calendar_bt_enter);
+
+			popupwindow_calendar_month.setText(calendar.getCalendarYear() + "年"
+					+ calendar.getCalendarMonth() + "月");
+
+//			if (null != date) {
+//
+//				int years = Integer.parseInt(date.substring(0,
+//						date.indexOf("-")));
+//				int month = Integer.parseInt(date.substring(
+//						date.indexOf("-") + 1, date.lastIndexOf("-")));
+//				popupwindow_calendar_month.setText(years + "年" + month + "月");
+//
+//				calendar.showCalendar(years, month);
+//				calendar.setCalendarDayBgColor(date,
+//						R.drawable.calendar_date_focused);
+//			}
+
+//			List<String> list = new ArrayList<String>(); // 设置标记列表
+//			list.add("2014-04-01");
+//			list.add("2014-04-02");
+//			calendar.addMarks(list, 0);
+
+			// 监听所选中的日期
+			calendar.setOnCalendarClickListener(new KCalendar.OnCalendarClickListener() {
+
+				public void onCalendarClick(int row, int col, String dateFormat) {
+					int month = Integer.parseInt(dateFormat.substring(
+							dateFormat.indexOf("-") + 1,
+							dateFormat.lastIndexOf("-")));
+
+					if (calendar.getCalendarMonth() - month == 1// 跨年跳转
+							|| calendar.getCalendarMonth() - month == -11) {
+						calendar.lastMonth();
+
+					} else if (month - calendar.getCalendarMonth() == 1 // 跨年跳转
+							|| month - calendar.getCalendarMonth() == -11) {
+						calendar.nextMonth();
+
+					} else {
+						calendar.removeAllBgColor();
+						calendar.setCalendarDayBgColor(dateFormat,
+								R.drawable.calendar_date_focused);
+						//date = dateFormat;// 最后返回给全局 date
+					}
+				}
+			});
+
+			// 监听当前月份
+			calendar.setOnCalendarDateChangedListener(new KCalendar.OnCalendarDateChangedListener() {
+				public void onCalendarDateChanged(int year, int month) {
+					popupwindow_calendar_month
+							.setText(year + "年" + month + "月");
+				}
+			});
+
+			// 上月监听按钮
+			RelativeLayout popupwindow_calendar_last_month = (RelativeLayout) view
+					.findViewById(R.id.popupwindow_calendar_last_month);
+			popupwindow_calendar_last_month
+					.setOnClickListener(new OnClickListener() {
+
+						public void onClick(View v) {
+							calendar.lastMonth();
+						}
+
+					});
+
+			// 下月监听按钮
+			RelativeLayout popupwindow_calendar_next_month = (RelativeLayout) view
+					.findViewById(R.id.popupwindow_calendar_next_month);
+			popupwindow_calendar_next_month
+					.setOnClickListener(new OnClickListener() {
+
+						public void onClick(View v) {
+							calendar.nextMonth();
+						}
+					});
+
+			// 关闭窗口
+//			popupwindow_calendar_bt_enter
+//					.setOnClickListener(new OnClickListener() {
+//
+//						public void onClick(View v) {
+//							//tv.setText(date);
+//							dismiss();
+//						}
+//					});
+			view.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					dismiss();
+					return false;
+				}
+			});
+		}
 	}
 
 }

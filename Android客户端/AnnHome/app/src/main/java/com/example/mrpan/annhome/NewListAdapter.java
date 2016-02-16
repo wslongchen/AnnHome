@@ -85,7 +85,7 @@ public class NewListAdapter extends BaseAdapter {
 
         //设置显示数据
         //imageLoader.displayImage(getItem(position).get("uri").toString(), holder.img, options);
-        ImageCacheUtils.getInstance().showNetImage(getItem(position).get("uri").toString(),holder.img);
+//        ImageCacheUtils.getInstance().showNetImage(getItem(position).get("uri").toString(),holder.img);
                 //holder.ivPreview.setImageBitmap((Bitmap)getItem(position).get("img"));
                 holder.title.setText(getItem(position).get("title").toString());
         holder.author.setText(getItem(position).get("content").toString());

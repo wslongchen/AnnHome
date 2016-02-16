@@ -81,6 +81,7 @@ public class AllFragment extends Fragment implements OnClickListener {
         transaction=getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
         initView();
+        showCacheData();
         if(Network.isNetworkAvailable())
         {
             initData();
@@ -145,6 +146,7 @@ public class AllFragment extends Fragment implements OnClickListener {
             switch (msg.what) {
                 case 1:
                     if(datas!=null) {
+                        CacheUtils.saveHttpCache(Config.DIR_PATH, "datas_all", datas);
                         newAdapter = new NewListAdapter(getActivity(), getSimulationNews(0));
 //                        MyLog.i("!!!!!", getSimulationNews(9) + "");
                        ptrlvHeadLineNews.setOnRefreshListener(new MyOnRefreshListener(ptrlvHeadLineNews));
@@ -153,6 +155,7 @@ public class AllFragment extends Fragment implements OnClickListener {
                     break;
                 case Config.NET_ERROR:
                     showNoConnect();
+                    showCacheData();
                     break;
                 default:
                     break;
@@ -173,12 +176,15 @@ public class AllFragment extends Fragment implements OnClickListener {
 //        }
 //    };
 
+    private void showCacheData(){
+        datas=(Datas) CacheUtils.readHttpCache(Config.DIR_PATH, "datas_all");
+        myHandler.sendEmptyMessage(1);
+    }
+
     //没网时候的显示
     private void showNoConnect(){
         tips_layout.setVisibility(View.VISIBLE);
         top_tips.setText("世界上最遥远的距离就是没网。检查设置");
-         datas=(Datas) CacheUtils.readHttpCache(Config.DIR_PATH, "datas_index");
-        myHandler.sendEmptyMessage(1);
     }
 
     public ArrayList<HashMap<String, Object>> getSimulationNews(int n) {
@@ -270,12 +276,7 @@ public class AllFragment extends Fragment implements OnClickListener {
         protected Integer doInBackground(String... params) {
 
              if (Network.isNetworkAvailable()) {
-             try {
-             Thread.sleep(1000);
                 return Config.HTTP_REQUEST_SUCCESS;
-             } catch (InterruptedException e) {
-             e.printStackTrace();
-             }
              }
              return Config.HTTP_REQUEST_ERROR;
         }
@@ -289,6 +290,7 @@ public class AllFragment extends Fragment implements OnClickListener {
 //                    newAdapter.notifyDataSetChanged();
 //                    try {
 //                        Thread.sleep(3000);
+                         tips_layout.setVisibility(View.GONE);
                           initData();
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();

@@ -8,4 +8,6 @@
     <dimen name="round_corner_bg_item_padding">8.0dip</dimen>
     <dimen name="round_corner_item_height">51.299988dip</dimen>
     <dimen name="more_bg_item_padding">12.0dip</dimen>
+    <dimen name="category_tab_text">24sp</dimen>
+    <dimen name="historyscore_tb">10dp</dimen>
 </resources>
