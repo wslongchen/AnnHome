@@ -68,6 +68,9 @@ $defaults = array(
     'admin-preview-callback' => ''
 );
 
+add_theme_support('post-thumbnails');
+set_post_thumbnail_size(130, 100, true); // 图片宽度与高度，图片的长宽可以自行修改
+
 function mrpan_paginate( $wp_query='' ){
   
   if ( empty($wp_query) )
