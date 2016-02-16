@@ -71,6 +71,7 @@
 							</ul>
 						</nav>-->
 						<?php if( function_exists( 'Bing_get_pagenavi' ) ) Bing_get_pagenavi(); ?>
+							<div id="page"><?php mrpan_paginate();?></div>
 					</div>
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>

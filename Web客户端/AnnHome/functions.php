@@ -55,7 +55,7 @@ function curPageURL() {
 if(function_exists('register_nav_menus')){
 register_nav_menus( array(
 'header-menu' => __( '导航自定义菜单' ),
-'footer-menu' => __( '页角自定义菜单' ),
+'header_right_menu' => __( '页角自定义菜单' ),
 'sider-menu' => __('侧边栏菜单')
 ) );
 }
@@ -67,6 +67,43 @@ $defaults = array(
     'admin-head-callback'    => '',
     'admin-preview-callback' => ''
 );
+
+function mrpan_paginate( $wp_query='' ){
+  
+  if ( empty($wp_query) )
+    global $wp_query;
+    
+  $pages = $wp_query->max_num_pages;
+  if ( $pages < 2 )
+    return;
+  
+  $big = 999999999;
+  $paginate = paginate_links( array(
+    'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+    'format' => '?paged=%#%',
+    'current' => max( 1, get_query_var('paged') ),
+    'total' => $pages,
+    'type' => 'array'
+  ) );
+  echo '<div id="pagination"><ul class="pagination" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">';
+  foreach ($paginate as $value) {
+    echo '<li itemprop="name">'.$value.'</li>';
+  }
+  echo '</ul></div>';
+}
+
+function mrpan_post_page_nav( $echo=true ) {
+
+  return wp_link_pages( array(
+    'before'      => '<nav class="pager" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement"><span>'.__('分页','dmeng').'</span>',
+    'after'       => '</nav>',
+    'link_before' => '<span itemprop="name">',
+    'link_after'  => '</span>',
+    'pagelink' => __('%','mrpan'),
+    'echo' => $echo
+  ) );
+
+}
 
 global $wp_version;
 if ( version_compare( $wp_version, '3.4', '>=' ) )

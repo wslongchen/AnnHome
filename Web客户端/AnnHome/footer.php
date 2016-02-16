@@ -59,6 +59,30 @@
 		</div>
 	</div>
 </footer>
+<div id="float-nav">
+    <ul id="float-nav-menu" style="display:none">
+      <li id="pageShare" title="分享">
+        <span class="glyphicon glyphicon-share"></span>
+        <div id="shareBox" class="floatBoxWrapper">
+          <div class="floatBox">
+            <div id="shareNotice" data-friend-text="已改为您的推广链接">本页二维码</div>
+            <img id="shareQrcode" class="ldbg" width="130" height="130" alt="本页二维码" data-api="//open.dmeng.net/qrcode.png?text=" />
+            <a href="javascript:;" id="sharePrompt" data-notice="快捷键：同时按下 Ctrl 和 C 然后按下 Enter 即可">点击复制网址</a>
+          </div>
+        </div>
+      </li>
+      <?php
+        if ( is_singular() && comments_open() ) {
+          ?>
+      <li id="goComments" title="评论"><span class="glyphicon glyphicon-comment"></span></li>
+      <?php
+      }
+      ?>
+      <li id="goTop" style="display:none" title="返回顶部">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+       </li>
+    </ul>
+  </div>
 <div >
 	<a href="#" style="background: url(<?php bloginfo('template_url'); ?>/img/back-logo.png);" id="back-to-top">
 	</a>

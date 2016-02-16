@@ -1,4 +1,5 @@
-<?php get_header(); ?>
+<?php get_header(); 
+get_header( 'masthead' ); ?>
 		<!--内容-->
 		<div class="container">
 			<?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar('顶部栏') ) :
@@ -48,7 +49,7 @@
 								<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 							</ul>
 						</nav>
-						<div id="page"><?php par_pagenavi(5); ?></div>
+						<div id="page"><?php mrpan_paginate();?></div>
 					</div>			
 						<!--侧边栏-->
 						<?php get_sidebar(); ?>
