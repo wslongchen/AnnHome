@@ -35,6 +35,7 @@ import utils.CacheUtils;
 import utils.GsonUtils;
 import utils.ImageCacheUtils;
 import utils.MyLog;
+import utils.MySharePreference;
 import utils.Network;
 
 /**
@@ -80,6 +81,7 @@ public class AllFragment extends Fragment implements OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         transaction=getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out);
+        changeTheme();
         initView();
         showCacheData();
         if(Network.isNetworkAvailable())
@@ -102,11 +104,11 @@ public class AllFragment extends Fragment implements OnClickListener {
 //                fragment.setArguments(bundle);
 //                transaction.add(R.id.slidingpane_content, fragment);
 //                transaction.commit();
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("posts", datas.getPosts().get(position-1));
+                bundle.putSerializable("posts", datas.getPosts().get(position - 1));
                 intent.putExtras(bundle);
-                intent.setClass(context,ArticleActivity.class);
+                intent.setClass(context, ArticleActivity.class);
                 startActivity(intent);
 
             }
@@ -138,6 +140,13 @@ public class AllFragment extends Fragment implements OnClickListener {
                 MyLog.i("error",err);
             }
         });
+    }
+
+    public void changeTheme(){
+        MySharePreference mySharePreference=new MySharePreference(getActivity());
+        int theme=mySharePreference.getInt("theme",0);
+        LinearLayout linearLayout= (LinearLayout) currentView.findViewById(R.id.main_bg);
+        linearLayout.setBackgroundResource(theme);
     }
 
     public class MyHandler extends Handler {

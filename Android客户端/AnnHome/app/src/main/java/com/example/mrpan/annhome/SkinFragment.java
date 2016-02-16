@@ -75,7 +75,7 @@ public class SkinFragment extends Fragment implements OnClickListener {
     public void changeTheme(){
         MySharePreference mySharePreference=new MySharePreference(getActivity());
         int theme=mySharePreference.getInt("theme",0);
-        LinearLayout linearLayout= (LinearLayout)currentView.findViewById(R.id.skin_color);
+        LinearLayout linearLayout= (LinearLayout) currentView.findViewById(R.id.main_bg);
         linearLayout.setBackgroundResource(theme);
     }
     private void init()

@@ -32,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //设置布局文件
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.articles, parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_favorites, parent,false);
         ViewHolder vh = new ViewHolder(itemView,mItemClickListener,mItemLongClickListener);
         return vh;
     }
@@ -95,8 +95,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder( View v ,MyItemClickListener listener,MyItemLongClickListener longClickListener) {
             super(v);
             //绑定并设置监听事件
-            title = (TextView) v.findViewById(R.id.title);
-            mImageView = (ImageView) v.findViewById(R.id.pic);
+            title = (TextView) v.findViewById(R.id.favorites_title);
+            mImageView = (ImageView) v.findViewById(R.id.favorites_pic);
             re=(RelativeLayout)v.findViewById(R.id.picture);
             this.mListener = listener;
             this.mLongClickListener = longClickListener;

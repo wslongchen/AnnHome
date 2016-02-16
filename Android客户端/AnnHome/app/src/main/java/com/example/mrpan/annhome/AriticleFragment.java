@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import entity.Posts;
 import entity.Share;
 import tencent.QQShared;
 import utils.MyLog;
+import utils.MySharePreference;
 
 /**
  * Created by mrpan on 15/12/13.
@@ -69,7 +71,7 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         initView();
         Bundle bundle=getArguments();
         posts= (Posts)bundle.getSerializable("posts");
-
+        changeTheme();
         initData(posts);
         return currentView;
     }
@@ -136,6 +138,12 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
 
     }
 
+    public void changeTheme(){
+        MySharePreference mySharePreference=new MySharePreference(getActivity());
+        int theme=mySharePreference.getInt("theme",0);
+        LinearLayout linearLayout= (LinearLayout) currentView.findViewById(R.id.main_bg);
+        linearLayout.setBackgroundResource(theme);
+    }
 
     @Override
     public void onClick(View v) {

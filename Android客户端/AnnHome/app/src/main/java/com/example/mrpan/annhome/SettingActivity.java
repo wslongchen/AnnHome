@@ -19,8 +19,6 @@ import view.CircleImageView;
  */
 public class SettingActivity extends FragmentActivity implements View.OnClickListener{
 
-    private MySharePreference appPreference;
-
     private TextView cache_size,item_out,title;
 
     Context context;
@@ -33,10 +31,7 @@ public class SettingActivity extends FragmentActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         context=this;
-        appPreference = new MySharePreference(this);
-        int theme=appPreference.getInt("theme",0);
-        LinearLayout linearLayout= (LinearLayout) this.findViewById(R.id.setting_bg);
-        linearLayout.setBackgroundResource(theme);
+        changeTheme();
         cache_size= (TextView) findViewById(R.id.cache_size);
         item_out=(TextView)findViewById(R.id.item_out);
         item_out.setOnClickListener(this);
@@ -48,6 +43,13 @@ public class SettingActivity extends FragmentActivity implements View.OnClickLis
         m_toggle.setBackgroundResource(R.drawable.menu_btn);
         m_setting=(ImageButton)findViewById(R.id.m_setting);
         m_setting.setVisibility(View.GONE);
+    }
+
+    public void changeTheme(){
+        MySharePreference mySharePreference=new MySharePreference(this);
+        int theme=mySharePreference.getInt("theme",0);
+        LinearLayout linearLayout= (LinearLayout)findViewById(R.id.main_bg);
+        linearLayout.setBackgroundResource(theme);
     }
 
     protected void exitiDalog() {

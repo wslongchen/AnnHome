@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/list_bg_color"
     android:orientation="vertical"
-    android:id="@+id/setting_bg">
+    android:id="@+id/main_bg">
 
     <include layout="@layout/top_bar" />
 

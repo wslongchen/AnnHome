@@ -95,7 +95,11 @@ public class MenuFragment extends Fragment implements OnClickListener {
 			transaction.commit();
 			break;
 		case R.id.bt_favorite:
-
+			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
+			transaction.replace(R.id.slidingpane_content,
+					MainActivity.fragmentMap.get(FavoriteFragment.TAG));
+			transaction.addToBackStack(null);
+			transaction.commit();
 			break;
 		case R.id.bt_skin:
 			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
