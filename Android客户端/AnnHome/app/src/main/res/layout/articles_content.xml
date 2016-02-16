@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/list_bg_color">
     <RelativeLayout
@@ -19,36 +20,36 @@
             android:textColor="@color/dark_brown"
             android:textSize="20.0sp" />
         <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/logo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@mipmap/logo"
             android:layout_centerVertical="true"
             android:paddingLeft="25dp"
             android:id="@+id/m_toggle"
             />
 
         <ImageButton
-            android:id="@+id/m_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/art_shares"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
-            android:background="@drawable/setting_btn"
+            android:background="@mipmap/shares"
             android:contentDescription="@null" />
     </RelativeLayout>
     <include layout="@layout/top_bar_shadow" />
-    <view.MyScrollView
-        android:id="@+id/pull_refresh_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <!--<view.MyScrollView-->
+        <!--android:id="@+id/pull_refresh_scrollview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp">
+                android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,29 +68,25 @@
                     android:id="@+id/art_author"
                     android:layout_below="@+id/art_title"
                     android:layout_centerHorizontal="true" />
+
                 <WebView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/art_content"
                     android:layout_below="@+id/art_author"
                     android:background="@color/list_bg_color"
-                    android:layout_alignParentStart="true" />
+                     />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageButton"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="400dp"
+                    android:layout_marginRight="100dp"
+                    />
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/list_bg_color"
-                android:paddingLeft="@dimen/round_corner_bg_item_padding"
-                android:paddingRight="@dimen/round_corner_bg_item_padding" >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/dark_brown"
-                    android:textSize="20.0sp"
-                    android:text="share"/>
-            </RelativeLayout>
-        </LinearLayout>
-    </view.MyScrollView>
+
+    <!--</LinearLayout>-->
+    <!--</view.MyScrollView>-->
 </LinearLayout>

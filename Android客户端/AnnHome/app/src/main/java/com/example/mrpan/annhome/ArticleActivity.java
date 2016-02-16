@@ -67,7 +67,7 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
         m_toggle=(ImageButton)findViewById(R.id.m_toggle);
         m_toggle.setBackgroundResource(R.drawable.btn_menu);
         m_toggle.setOnClickListener(this);
-        m_settings=(ImageButton)findViewById(R.id.m_settings);
+        m_settings=(ImageButton)findViewById(R.id.art_shares);
         m_settings.setOnClickListener(this);
 
         WebSettings webSettings = art_content.getSettings();
@@ -84,7 +84,7 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
             case R.id.m_toggle:
                 finish();
                 break;
-            case R.id.m_settings:
+            case R.id.art_shares:
                 QQShared qq=new QQShared(this,context);
                 Share share=new Share();
                 share.setAPP_NAME("Ann");

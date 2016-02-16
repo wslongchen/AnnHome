@@ -38,6 +38,7 @@ public class MainActivity extends FragmentActivity {
     public MenuFragment menuFragment;
     private MainFragment mainFragment;
     private AllFragment allFramgment;
+    private SkinFragment skinFragment;
     private AriticleFragment ariticleFragment;
 
     //框架中的slidingMenu
@@ -82,10 +83,12 @@ public class MainActivity extends FragmentActivity {
         ariticleFragment = new AriticleFragment();
         mainFragment = new MainFragment();
         menuFragment = new MenuFragment();
+        skinFragment=new SkinFragment();
 
         fragmentMap.put(AriticleFragment.TAG, ariticleFragment);
         fragmentMap.put(AllFragment.TAG, allFramgment);
         fragmentMap.put(MainFragment.TAG, mainFragment);
+        fragmentMap.put(SkinFragment.TAG,skinFragment);
 
         transaction = getSupportFragmentManager().beginTransaction();
 

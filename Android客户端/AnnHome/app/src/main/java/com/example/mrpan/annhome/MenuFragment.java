@@ -99,9 +99,13 @@ public class MenuFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.bt_skin:
 			((MainActivity) getActivity()).getSlidingPaneLayout().closePane();
-			intent = new Intent();
-			intent.setClass(context, SkinActivity.class);
-			startActivity(intent);
+//			intent = new Intent();
+//			intent.setClass(context, SkinActivity.class);
+//			startActivity(intent);
+			transaction.replace(R.id.slidingpane_content,
+					MainActivity.fragmentMap.get(SkinFragment.TAG));
+			transaction.addToBackStack(null);
+			transaction.commit();
 				break;
 		case R.id.bt_widget:
 
