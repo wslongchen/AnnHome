@@ -482,14 +482,18 @@ public void changeTheme(){
 	}
 
 	Runnable runnable = new Runnable() {
-
+		int count=0;
 		@Override
 		public void run() {
-			Message msg = new Message();
-			msg.arg1 = Config.SHOW_NEXT;
-			mHandler.sendMessage(msg);
-			mHandler.postDelayed(runnable, 3000);
+			if(count>0) {
+				Message msg = new Message();
+				msg.arg1 = Config.SHOW_NEXT;
+				mHandler.sendMessage(msg);
+			}
+			mHandler.postDelayed(runnable, 4000);
+			count++;
 		}
+
 	};
 
 

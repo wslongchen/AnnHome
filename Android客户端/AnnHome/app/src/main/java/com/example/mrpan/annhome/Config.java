@@ -23,6 +23,8 @@ public class Config {
     public static final int NET_ERROR=0013;
     public static final int SHOW_NEXT = 0011;
     public static final int CACHE_DATA_SHOW=0014;
+    public static final int SHOW_AD=0015;
+
     public static final int HTTP_REQUEST_SUCCESS=1001;
     public static final int HTTP_REQUEST_ERROR=1002;
 

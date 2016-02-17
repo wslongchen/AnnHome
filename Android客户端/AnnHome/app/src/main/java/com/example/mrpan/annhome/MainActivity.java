@@ -9,6 +9,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +21,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.baidu.mobads.BaiduManager;
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.io.IOException;
@@ -63,7 +68,9 @@ public class MainActivity extends FragmentActivity {
     //界面容器
     public static Map<String, Fragment> fragmentMap = new HashMap<String, Fragment>();
 
+    InterstitialAd interAd;
 
+    private AdHandler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +78,56 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main2);
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         context = this;
+        BaiduManager.init(this);
         initView();
-
+        initAd();
     }
 
+    private void initAd(){
+
+        String adPlaceId = "2403633"; // 重要：请填上您的广告位ID，代码位错误会导致无法请求到广告
+        interAd = new InterstitialAd(this, adPlaceId);
+        interAd.setListener(new InterstitialAdListener() {
+
+            @Override
+            public void onAdClick(InterstitialAd arg0) {
+
+            }
+
+            @Override
+            public void onAdDismissed() {
+                interAd.loadAd();
+            }
+
+            @Override
+            public void onAdFailed(String arg0) {
+
+            }
+
+            @Override
+            public void onAdPresent() {
+
+            }
+
+            @Override
+            public void onAdReady() {
+
+            }
+
+        });
+        interAd.loadAd();
+        mHandler=new AdHandler();
+    }
+    Runnable runnable=new Runnable() {
+
+        @Override
+        public void run() {
+            Message msg = new Message();
+            msg.arg1 = Config.SHOW_AD;
+            mHandler.sendMessage(msg);
+            mHandler.postDelayed(runnable, 10000);
+        }
+    };
 
     //初始化界面
     private void initView() {
@@ -277,5 +330,22 @@ public class MainActivity extends FragmentActivity {
     protected void onPause() {
         super.onPause();
  //       lm.removeUpdates(listener);
+    }
+
+    public class AdHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.arg1) {
+                case Config.SHOW_AD:
+                    if (interAd.isAdReady()) {
+                        interAd.showAd(MainActivity.this);
+                    } else {
+                        interAd.loadAd();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
