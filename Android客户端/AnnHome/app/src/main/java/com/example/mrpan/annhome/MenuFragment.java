@@ -13,6 +13,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
+
 
 public class MenuFragment extends Fragment implements OnClickListener {
 
@@ -26,12 +29,15 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 	private Context context;
 
+	InterstitialAd interAd;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		currentView = inflater.inflate(R.layout.fragment_menu_layout,
 				container, false);
 		context = getActivity();
+		initAd();
 		bt_all = (Button) currentView.findViewById(R.id.bt_all);
 		bt_favorite = (Button) currentView.findViewById(R.id.bt_favorite);
 		bt_widget = (Button) currentView
@@ -77,6 +83,11 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		FragmentTransaction transaction = getActivity()
 				.getSupportFragmentManager().beginTransaction();
 		Intent intent=null;
+		if (interAd.isAdReady()) {
+                        interAd.showAd(getActivity());
+                    } else {
+                        interAd.loadAd();
+                    }
 		switch (v.getId()) {
 
 			case R.id.bt_index:
@@ -130,6 +141,42 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+
+	private void initAd(){
+
+		String adPlaceId = "2412058"; // 重要：请填上您的广告位ID，代码位错误会导致无法请求到广告
+		interAd = new InterstitialAd(getActivity(), adPlaceId);
+		interAd.setListener(new InterstitialAdListener() {
+
+			@Override
+			public void onAdClick(InterstitialAd arg0) {
+
+			}
+
+			@Override
+			public void onAdDismissed() {
+				interAd.loadAd();
+			}
+
+			@Override
+			public void onAdFailed(String arg0) {
+
+			}
+
+			@Override
+			public void onAdPresent() {
+
+			}
+
+			@Override
+			public void onAdReady() {
+
+			}
+
+		});
+		interAd.loadAd();
 	}
 
 	protected void exitiDalog() {

@@ -10,7 +10,7 @@
         android:layout_height="@dimen/top_bar_height"
         android:background="@color/list_bg_color"
         android:paddingLeft="@dimen/round_corner_bg_item_padding"
-        android:paddingRight="@dimen/round_corner_bg_item_padding" >
+        android:paddingRight="@dimen/round_corner_bg_item_padding">
 
         <TextView
             android:id="@+id/top_bar_title"
@@ -40,6 +40,13 @@
             android:contentDescription="@null" />
     </RelativeLayout>
     <include layout="@layout/top_bar_shadow" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:visibility="gone"
+        android:id="@+id/article_ad_layout">
+
+    </RelativeLayout>
     <!--<view.MyScrollView-->
         <!--android:id="@+id/pull_refresh_scrollview"-->
         <!--android:layout_width="match_parent"-->
@@ -50,7 +57,8 @@
             <!--android:orientation="vertical">-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +95,6 @@
                     android:layout_marginRight="100dp"
                     />
             </RelativeLayout>
-
     <!--</LinearLayout>-->
     <!--</view.MyScrollView>-->
 </LinearLayout>

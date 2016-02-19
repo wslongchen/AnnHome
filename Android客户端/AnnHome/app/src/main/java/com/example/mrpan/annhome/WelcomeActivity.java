@@ -47,7 +47,7 @@ public class WelcomeActivity extends Activity{
             }
         };
 
-        String adPlaceId = "2410714";//代码位ID
+        String adPlaceId = "2412017";//代码位ID
         new SplashAd(this, adsParent, listener, adPlaceId, true);
 
     }

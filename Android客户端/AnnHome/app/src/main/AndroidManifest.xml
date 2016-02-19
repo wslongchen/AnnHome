@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mrpan.annhome"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="2.0" >
 
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -45,11 +45,6 @@
             android:name="com.baidu.mobads.AppActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- 信息流广告必须添加 -->
-        <activity
-            android:name="com.baidu.mobad.feeds.BaiduActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation" />
         <activity
             android:name=".MainActivity">
         </activity>

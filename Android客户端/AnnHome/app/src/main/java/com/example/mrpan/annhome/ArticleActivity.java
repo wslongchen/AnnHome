@@ -10,9 +10,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mobads.AdView;
+import com.baidu.mobads.AdViewListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+
+import org.json.JSONObject;
 
 import entity.Posts;
 import entity.Share;
@@ -31,8 +36,9 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
 
     private ImageButton m_toggle=null;
     private ImageButton m_settings=null;
+    RelativeLayout relativeLayout;
 
-
+    AdView adView;
 
     Posts posts=null;
 
@@ -46,7 +52,42 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
         posts= (Posts)bundle.getSerializable("posts");
 
         initData(posts);
+        initAd();
     }
+
+
+    void initAd(){
+        // 创建广告View
+        String adPlaceId = "2412095"; //  重要：请填上您的广告位ID，代码位错误会导致无法请求到广告
+        adView = new AdView(this, adPlaceId);
+        // 设置监听器
+        adView.setListener(new AdViewListener() {
+            public void onAdSwitch() {
+            }
+
+            public void onAdShow(JSONObject info) {
+                relativeLayout.setVisibility(View.VISIBLE);
+            }
+
+            public void onAdReady(AdView adView) {
+            }
+
+            public void onAdFailed(String reason) {
+            }
+
+            public void onAdClick(JSONObject info) {
+
+            }
+        });
+        relativeLayout = (RelativeLayout)findViewById(R.id.article_ad_layout);
+        //relativeLayout.setVisibility(View.VISIBLE);
+        // 将adView添加到父控件中(注：该父控件不一定为您的根控件，只要该控件能通过addView能添加广告视图即可)
+        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        rllp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        relativeLayout.addView(adView, rllp);
+    }
+
 
     private void initData(Posts posts){
         if(posts!=null){
@@ -102,5 +143,11 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
     @Override
     public void onRefresh(PullToRefreshBase<WebView> refreshView) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        adView.destroy();
+        super.onDestroy();
     }
 }

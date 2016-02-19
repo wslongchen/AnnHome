@@ -2,13 +2,21 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:orientation="vertical"
+    style="@style/ChannelItem"
+    android:background="@drawable/round_corner_item_single_bg"
     card_view:cardCornerRadius="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="wrap_content"
         >
     <TextView
         android:layout_width="wrap_content"
@@ -38,35 +46,38 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentBottom="true" />
+            android:layout_below="@+id/textView" />
+    </RelativeLayout>
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
+            android:layout_marginTop="5dp"
             android:background="@color/line_gray"
             android:layout_alignBottom="@+id/joke_content"
             android:layout_alignStart="@+id/joke_content"
             android:id="@+id/view" />
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="内容来源:互联网"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignStart="@+id/textView" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="换一个"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/blue"
-            android:id="@+id/joke_next"
-            android:layout_alignEnd="@+id/imageView" />
-    </RelativeLayout>
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="内容来源:互联网"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textView3" />
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="换一个"
+                android:layout_marginStart="190dp"
+                android:textColor="@color/blue"
+                android:id="@+id/joke_next" />
+        </LinearLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
