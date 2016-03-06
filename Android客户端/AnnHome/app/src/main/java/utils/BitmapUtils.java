@@ -1,10 +1,17 @@
 package utils;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import android.content.Context;
@@ -14,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.PixelFormat;
@@ -30,7 +38,7 @@ import com.example.mrpan.annhome.R;
 public class BitmapUtils {
 	// 保存 bitmap 到SD卡F
 	public static boolean saveBitmapToSDCard(Bitmap bitmap, String filePath,
-			String fileName) {
+											 String fileName) {
 		boolean flag = false;
 		if (null != bitmap) {
 			try {
@@ -60,7 +68,6 @@ public class BitmapUtils {
 	}
 
 	/**
-	 * 
 	 * @param drawable
 	 * @return bitmap
 	 */
@@ -70,7 +77,6 @@ public class BitmapUtils {
 	}
 
 	/**
-	 * 
 	 * @param bitmap
 	 * @return
 	 */
@@ -100,13 +106,13 @@ public class BitmapUtils {
 
 	/**
 	 * 根据文字获取图片
-	 * 
+	 *
 	 * @param text
 	 * @return
 	 */
 	public static Bitmap getIndustry(Context context, String text) {
 		String color = "#ffeeeade";
-		
+
 		Bitmap src = BitmapFactory.decodeResource(context.getResources(),
 				R.mipmap.menu_btn_pressed);
 		int x = src.getWidth();
@@ -151,7 +157,7 @@ public class BitmapUtils {
 
 	/**
 	 * 获取圆角图片
-	 * 
+	 *
 	 * @param bitmap
 	 * @param pixels
 	 * @return
@@ -181,9 +187,8 @@ public class BitmapUtils {
 
 	/**
 	 * 保存图片到SD卡
-	 * 
-	 * @param bitmap
-	 *            图片的bitmap对象
+	 *
+	 * @param bitmap 图片的bitmap对象
 	 * @return
 	 */
 	public static String savePhotoToSDCard(Bitmap bitmap) {
@@ -215,4 +220,74 @@ public class BitmapUtils {
 		return newFilePath;
 	}
 
+	/**
+	 * 将图片内容解析成字节数组
+	 *
+	 * @param bm
+	 * @return byte[]
+	 */
+	public static byte[] Bitmap2Bytes(Bitmap bm) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		return baos.toByteArray();
+	}
+
+
+	/*
+	* 将字节转换为bitmap
+	* */
+	public static Bitmap Bytes2Bimap(byte[] b) {
+		if (b.length != 0) {
+			return BitmapFactory.decodeByteArray(b, 0, b.length);
+		} else {
+			return null;
+		}
+	}
+
+	/*
+	* 图片缩放
+	* */
+	public static Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
+		int w = bitmap.getWidth();
+		int h = bitmap.getHeight();
+		Matrix matrix = new Matrix();
+		float scaleWidth = ((float) width / w);
+		float scaleHeight = ((float) height / h);
+		matrix.postScale(scaleWidth, scaleHeight);
+		Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+		return newbmp;
+	}
+
+	/*
+	* 将网络图片转换为bitmap
+	* */
+	public final static Bitmap returnBitMap(String url) {
+		Bitmap bitmap = null;
+		InputStream in = null;
+		BufferedOutputStream out = null;
+		try {
+			in = new BufferedInputStream(new URL(url).openStream(), 1024);
+			final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+			out = new BufferedOutputStream(dataStream, 1024);
+			copy(in, out);
+			out.flush();
+			byte[] data = dataStream.toByteArray();
+			bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+			data = null;
+			return bitmap;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	private static void copy(InputStream in, OutputStream out)
+			throws IOException {
+		byte[] b = new byte[1024];
+		int read;
+		while ((read = in.read(b)) != -1) {
+			out.write(b, 0, read);
+		}
+	}
 }

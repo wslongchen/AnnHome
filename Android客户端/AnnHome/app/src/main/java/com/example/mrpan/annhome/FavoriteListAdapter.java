@@ -11,15 +11,18 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
+import entity.Dialog;
+import utils.BitmapUtils;
+
 /**
  * Created by mrpan on 16/2/16.
  */
 public class FavoriteListAdapter extends RecyclerView.Adapter<FavoriteListAdapter.ViewHolder>{
-    private List<HashMap<String,Object>> articles;
+    private List<Dialog> articles;
 
     private Context mContext;
 
-    public FavoriteListAdapter( Context context , List<HashMap<String,Object>> actors)
+    public FavoriteListAdapter( Context context , List<Dialog> actors)
     {
         this.mContext = context;
         this.articles = actors;
@@ -37,10 +40,15 @@ public class FavoriteListAdapter extends RecyclerView.Adapter<FavoriteListAdapte
     public void onBindViewHolder( ViewHolder viewHolder, int i )
     {
         // 给ViewHolder设置元素
-        HashMap<String,Object> p = articles.get(i);
-        viewHolder.favorite_title.setText(p.get("title").toString());
-        viewHolder.favorite_total.setText(p.get("total").toString());
-        viewHolder.favorite_pic.setImageResource(R.mipmap.drawing012);
+        Dialog p = articles.get(i);
+        viewHolder.favorite_title.setText(p.getTitle());
+        viewHolder.favorite_total.setText(p.getDate()+"  from "+p.getAuthor());
+        if(p.getImage().length>0)
+        {
+            viewHolder.favorite_pic.setImageBitmap(BitmapUtils.Bytes2Bimap(p.getImage()));
+        }
+        else
+            viewHolder.favorite_pic.setImageResource(R.mipmap.drawing012);
     }
 
     @Override

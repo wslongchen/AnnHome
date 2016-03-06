@@ -1,5 +1,6 @@
 package com.example.mrpan.annhome;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +17,11 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
+import DB.DBAdapter;
+import entity.Dialog;
 import utils.MySharePreference;
 
 /**
@@ -35,6 +39,8 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener{
 
     private ImageButton m_toggle;
 
+    private Context context=null;
+
 
     @Nullable
     @Override
@@ -45,6 +51,7 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener{
         if (parent != null) {
             parent.removeView(currentView);
         }
+        context=getActivity();
         ((MainActivity)getActivity()).setSlidingPaneLayout(currentView);
         return currentView;
 
@@ -65,19 +72,20 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener{
         m_toggle.setOnClickListener(this);
 
         //data
-        ArrayList<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
-        HashMap<String,Object> hashMap=new HashMap<String,Object>();
-        hashMap.put("title","喜欢的标题");
-        hashMap.put("total","喜欢的摘要");
-        hashMap.put("pic","");
-        datas.add(hashMap);
+//        ArrayList<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
+//        HashMap<String,Object> hashMap=new HashMap<String,Object>();
+//        hashMap.put("title","喜欢的标题");
+//        hashMap.put("total","喜欢的摘要");
+//        hashMap.put("pic","");
+//        datas.add(hashMap);
+        List<Dialog> datas= DBAdapter.getDBAdapter(context).getArticles("游客",10);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 设置ItemAnimator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // 设置固定大小
         mRecyclerView.setHasFixedSize(true);
         // 初始化自定义的适配器
-        FavoriteListAdapter myAdapter = new FavoriteListAdapter(getActivity(),datas);
+        FavoriteListAdapter myAdapter = new FavoriteListAdapter(context,datas);
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(myAdapter);
     }

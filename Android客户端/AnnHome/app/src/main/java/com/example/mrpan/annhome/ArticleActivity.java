@@ -1,17 +1,20 @@
 package com.example.mrpan.annhome;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mobads.AdView;
 import com.baidu.mobads.AdViewListener;
@@ -19,9 +22,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
+
+import DB.DBAdapter;
+import entity.Dialog;
 import entity.Posts;
 import entity.Share;
 import tencent.QQShared;
+import utils.BitmapUtils;
 
 /**
  * Created by mrpan on 16/2/4.
@@ -36,6 +45,10 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
 
     private ImageButton m_toggle=null;
     private ImageButton m_settings=null;
+    private ImageButton m_favorite=null;
+
+    private Bitmap artile_img=null;
+
     RelativeLayout relativeLayout;
 
     AdView adView;
@@ -94,6 +107,10 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
             art_author.setText(posts.getAuthor().getName());
             art_title.setText(posts.getTitle());
             // art_content.loadUrl(posts.getUrl());
+            if(posts.getAttachments().size() > 0) {
+                //artile_img=BitmapUtils.returnBitMap(posts.getAttachments().get(0).getUrl());
+                new DownImage(posts.getAttachments().get(0).getUrl()).execute();
+            }
             art_content.loadDataWithBaseURL(null, posts.getContent(), "text/html", "UTF-8", null);
         }
     }
@@ -110,7 +127,8 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
         m_toggle.setOnClickListener(this);
         m_settings=(ImageButton)findViewById(R.id.art_shares);
         m_settings.setOnClickListener(this);
-
+        m_favorite=(ImageButton)findViewById(R.id.imgBtn_download_art);
+        m_favorite.setOnClickListener(this);
         WebSettings webSettings = art_content.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(false); // 设置显示缩放按钮
@@ -135,6 +153,72 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
                 share.setTARGET_URL(posts.getUrl());
                 qq.ShareSimple(share);
                 break;
+            case R.id.imgBtn_download_art:
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("是否作" +
+                        "为羞答答的私密喜欢收藏？");
+
+                builder.setTitle("提示");
+                builder.setPositiveButton("欣喜接受",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                if(posts!=null){
+                                    Dialog d=new Dialog();
+                                    d.setTitle(posts.getTitle());
+                                    d.setAuthor(posts.getAuthor().getName());
+                                    d.setContent(posts.getContent());
+                                    d.setDate(posts.getDate());
+                                    if(artile_img!=null){
+                                        byte[] bytes=BitmapUtils.Bitmap2Bytes(artile_img);
+                                        if(bytes.length>0){
+                                            d.setImage(bytes);
+                                        }
+                                    }
+                                    d.setIsLock(false);
+                                    d.setUser("游客");
+                                    if(DBAdapter.getDBAdapter(context).SaveArticle(d,true)>0)
+                                    {
+                                        Toast.makeText(context, "喜欢成功！", Toast.LENGTH_LONG).show();
+                                        m_favorite.setBackgroundResource(R.mipmap.favorite_press);
+                                    }
+                                }
+                            }
+                        });
+                builder.setNegativeButton("残忍拒绝",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                if(posts!=null){
+                                    Dialog d=new Dialog();
+                                    d.setTitle(posts.getTitle());
+                                    d.setAuthor(posts.getAuthor().getName());
+                                    d.setContent(posts.getContent());
+                                    d.setDate(posts.getDate());
+                                    d.setIsLock(false);
+                                    if(artile_img!=null){
+                                        byte[] bytes=BitmapUtils.Bitmap2Bytes(artile_img);
+                                        if(bytes.length>0){
+                                            d.setImage(bytes);
+                                        }
+                                    }
+                                    d.setUser("游客");
+                                    if(DBAdapter.getDBAdapter(context).SaveArticle(d,false)>0)
+                                    {
+                                        Toast.makeText(context,"喜欢成功！",Toast.LENGTH_LONG).show();
+                                        m_favorite.setBackgroundResource(R.mipmap.favorite_press);
+                                    }
+                                }
+
+                            }
+                        });
+
+                builder.create().show();
+                break;
             default:
                 break;
         }
@@ -144,7 +228,29 @@ public class ArticleActivity extends Activity implements PullToRefreshBase.OnRef
     public void onRefresh(PullToRefreshBase<WebView> refreshView) {
 
     }
+    class DownImage extends AsyncTask {
 
+        private String imageView;
+
+        public DownImage(String imageView) {
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            String url = imageView;
+            Bitmap bitmap = null;
+            try {
+                //加载一个网络图片
+                InputStream is = new URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(is);
+                System.out.println("successed");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+    }
     @Override
     protected void onDestroy() {
         adView.destroy();

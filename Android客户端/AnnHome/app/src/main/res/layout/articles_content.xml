@@ -89,7 +89,8 @@
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:id="@+id/imageButton"
+                    android:background="@drawable/btn_favorite"
+                    android:id="@+id/imgBtn_download_art"
                     android:layout_marginLeft="300dp"
                     android:layout_marginTop="400dp"
                     android:layout_marginRight="100dp"

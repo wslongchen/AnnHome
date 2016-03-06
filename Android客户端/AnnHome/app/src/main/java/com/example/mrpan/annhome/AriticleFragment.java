@@ -1,13 +1,16 @@
 package com.example.mrpan.annhome;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +24,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshHorizontalScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 
+import DB.DBAdapter;
 import entity.Posts;
 import entity.Share;
 import tencent.QQShared;
@@ -51,6 +56,7 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
     private ImageButton m_toggle=null;
     private ImageButton m_settings=null;
 
+
     private FragmentTransaction fragmentTransaction;
 
     ScrollView mScrollView;
@@ -63,7 +69,7 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentView = inflater.inflate(R.layout.articles_content,
                 container, false);
-        context = this.getActivity();
+        context = getActivity();
         ViewGroup parent = (ViewGroup) currentView.getParent();
         if (parent != null) {
             parent.removeView(currentView);
@@ -98,6 +104,9 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
         m_toggle.setOnClickListener(this);
         m_settings=(ImageButton)currentView.findViewById(R.id.art_shares);
         m_settings.setOnClickListener(this);
+
+
+
 
       // mScrollView = (ScrollView) currentView.findViewById(R.id.pull_refresh_scrollview);
 
@@ -169,6 +178,11 @@ public class AriticleFragment extends Fragment implements PullToRefreshBase.OnRe
                 share.setTITLE(posts.getTitle());
                 share.setTARGET_URL(posts.getUrl());
                 qq.ShareSimple(share);
+                break;
+            case R.id.imgBtn_download_art:
+                Toast.makeText(context,"click",Toast.LENGTH_LONG).show();
+
+
                 break;
             default:
                 break;
