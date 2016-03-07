@@ -56,7 +56,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>/>
         </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -73,12 +73,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
-        <activity android:name=".DetailActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".LocationActivity"/>
         <activity android:name=".SkinActivity"/>
-        <activity android:name=".ArticleActivity"/>
-
+        <activity android:name=".GuidActivity"/>
     </application>
 
 </manifest>

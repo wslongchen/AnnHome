@@ -12,5 +12,6 @@
     <color name="transparent">#00000000</color>
     <drawable name="clr_normal">#00000000</drawable>
     <drawable name="clr_pressed">#22c85555</drawable>
+    <color name="base_shallow_black">#818181</color>
 
 </resources>

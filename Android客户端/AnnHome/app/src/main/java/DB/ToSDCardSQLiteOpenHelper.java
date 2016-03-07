@@ -121,6 +121,9 @@ public abstract class ToSDCardSQLiteOpenHelper {
     }
 
     public abstract void onCreate(SQLiteDatabase db);
+    public static SQLiteDatabase openOrCreateDatabase(String path, SQLiteDatabase.CursorFactory factory) {
+        return SQLiteDatabase.openDatabase(path, factory, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+    }
     public abstract void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
     public void onOpen(SQLiteDatabase db) {}
 

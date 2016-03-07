@@ -29,7 +29,7 @@ public class DBHelper extends ToSDCardSQLiteOpenHelper {
 
     public DBHelper(Context context,String path, String name, SQLiteDatabase.CursorFactory factory,
                           int version) {
-        super(context,path,name, factory, version);
+        super(context, path, name, factory, version);
     }
 
     // 该构造函数有3个参数，因为它把上面函数的第3个参数固定为null了
@@ -51,7 +51,13 @@ public class DBHelper extends ToSDCardSQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //onCreate(db);
-        Log. e("Database", "onUpgrade");
+        Log. v("Database", "onUpgrade");
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        Log. v("Database", "onOpen");
     }
 
     public static synchronized DBHelper getMyDataBase(Context context){
@@ -63,7 +69,7 @@ public class DBHelper extends ToSDCardSQLiteOpenHelper {
 
     public synchronized SQLiteDatabase getmDb(){
         if (mDb == null) {
-            mDb = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DATABASE_NAME, null);
+            mDb = ToSDCardSQLiteOpenHelper.openOrCreateDatabase(DB_PATH + DATABASE_NAME, null);
         }
         return mDb;
     }

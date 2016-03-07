@@ -20,7 +20,7 @@ public class DBAdapter {
 
 
     public DBAdapter(Context context){
-        mDb=DBHelper.getMyDataBase(context).getmDb();
+        mDb=DBHelper.getMyDataBase(context).getWritableDatabase();
     }
 
     public static DBAdapter getDBAdapter(Context context){
@@ -69,11 +69,22 @@ public class DBAdapter {
                 articles.add(d);
             }
         }
-
+        cs.close();
         return articles;
     }
 
     private Cursor ArticleCursorByUser(String user,int index){
-        return mDb.query("Dialog",null,"dia_user='"+user+"'",null,null,null,"dia_id","limit 10 offset 10*"+(index-1));
+        return mDb.query("Dialog",null,"dia_user='"+user+"'",null,null,null,"dia_id",null);
+    }
+
+    public boolean isHave(String User,String title){
+        Cursor cs=mDb.query("Dialog",null,"dia_user='"+User+"' and dia_title='"+title+"'",null,null,null,null);
+        if(cs.getCount()>0)
+            return true;
+        return false;
+    }
+
+    public int DeleteDialog(String user,String title){
+        return mDb.delete("Dialog","dia_user='"+user+"' and dia_title='"+title+"'",null);
     }
 }

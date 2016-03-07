@@ -3,6 +3,7 @@ package utils;
 import android.content.Context;
 
 import com.example.mrpan.annhome.Config;
+import com.example.mrpan.annhome.WebBrowserActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -148,6 +149,8 @@ public class CacheUtils {
         File cacheDir = context.getCacheDir();
         File netCache= new File(Config.DIR_PATH);
         File imgCache=new File(Config.DIR_IMAGE_PATH);
+        File dataBaseCache=new File(Config.DIR_DATABASE_PATH);
+        fileSize +=getDirSize(dataBaseCache);
         fileSize += getDirSize(netCache);
         fileSize+=getDirSize(imgCache);
         fileSize += getDirSize(filesDir);

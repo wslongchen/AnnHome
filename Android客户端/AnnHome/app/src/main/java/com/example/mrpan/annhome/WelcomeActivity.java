@@ -1,7 +1,6 @@
 package com.example.mrpan.annhome;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,21 +9,21 @@ import android.widget.RelativeLayout;
 import com.baidu.mobads.SplashAd;
 import com.baidu.mobads.SplashAdListener;
 
+import utils.MySharePreference;
+
 /**
  * Created by mrpan on 16/2/17.
  */
 public class WelcomeActivity extends Activity{
 
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-        context=this;
+        setContentView(R.layout.activity_welcome);
         RelativeLayout adsParent = (RelativeLayout) this
                 .findViewById(R.id.adsRl);
-        SplashAdListener listener=new SplashAdListener(){
+        SplashAdListener listener = new SplashAdListener() {
             @Override
             public void onAdPresent() {
 
@@ -49,6 +48,18 @@ public class WelcomeActivity extends Activity{
 
         String adPlaceId = "2412017";//代码位ID
         new SplashAd(this, adsParent, listener, adPlaceId, true);
+
+        MySharePreference sharedPreferences = new MySharePreference(this);
+        boolean isFirst = sharedPreferences.getBoolean("first", false);
+        if (!isFirst) {
+            sharedPreferences.commitBoolean("first", true);
+            //int theme=sharedPreferences.getInt("theme",0);
+            sharedPreferences.commitInt("theme", R.color.list_bg_color);
+        }
+        else
+        {
+            jump();
+        }
 
     }
 

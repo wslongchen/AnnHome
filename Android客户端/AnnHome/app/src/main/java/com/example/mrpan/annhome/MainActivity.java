@@ -9,23 +9,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
 
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.baidu.mobads.BaiduManager;
-import com.baidu.mobads.InterstitialAd;
-import com.baidu.mobads.InterstitialAdListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.io.IOException;
@@ -35,9 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fragments.AllFragment;
+import fragments.FavoriteFragment;
+import fragments.MainFragment;
+import fragments.MenuFragment;
+import fragments.OtherFragment;
+import fragments.SkinFragment;
 import utils.LocationUtils;
 import utils.MyLog;
-import utils.MySharePreference;
 
 public class MainActivity extends FragmentActivity {
 
@@ -46,7 +45,7 @@ public class MainActivity extends FragmentActivity {
     private MainFragment mainFragment;
     private AllFragment allFramgment;
     private SkinFragment skinFragment;
-    private AriticleFragment ariticleFragment;
+    private OtherFragment otherFragment;
     private FavoriteFragment favoriteFragment;
 
     //框架中的slidingMenu
@@ -92,13 +91,13 @@ public class MainActivity extends FragmentActivity {
         lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingpanellayout);
         allFramgment = new AllFragment();
-        ariticleFragment = new AriticleFragment();
+        otherFragment = new OtherFragment();
         mainFragment = new MainFragment();
         menuFragment = new MenuFragment();
         skinFragment=new SkinFragment();
         favoriteFragment=new FavoriteFragment();
 
-        fragmentMap.put(AriticleFragment.TAG, ariticleFragment);
+        fragmentMap.put(OtherFragment.TAG, otherFragment);
         fragmentMap.put(AllFragment.TAG, allFramgment);
         fragmentMap.put(MainFragment.TAG, mainFragment);
         fragmentMap.put(SkinFragment.TAG,skinFragment);

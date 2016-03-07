@@ -3,7 +3,9 @@ package http;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.example.mrpan.annhome.Config;
 import com.example.mrpan.annhome.MyApplication;
+import com.example.mrpan.annhome.WebBrowserActivity;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,7 +16,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -63,14 +64,14 @@ public class HttpHelper {
 
 
         if (null != appPreference) {
-            int permission = appPreference.getInt(com.example.mrpan.annhome.Config.TYPE_CONN, 0);
+            int permission = appPreference.getInt(Config.TYPE_CONN, 0);
             Network netUtils =new Network(MyApplication.getInstance());
             Network.NetWorkState state = netUtils.getConnectState();
             if (state.equals(Network.NetWorkState.MOBILE)) {
 
-                if (permission == com.example.mrpan.annhome.Config.TYPE_ALL) {
+                if (permission == Config.TYPE_ALL) {
                     threadPool.execute(getGetHttpThread(url, httpCallBack));
-                } else if (permission == com.example.mrpan.annhome.Config.TYPE_WIFI) {
+                } else if (permission == Config.TYPE_WIFI) {
                     httpCallBack.onFailure(0, Con_Permission,
                             "请在设置中打开MOBILE连接 ");
                     MyLog.i(TAG, "未发送请求，用户设置了网络限制");
@@ -94,14 +95,14 @@ public class HttpHelper {
 
 
         if (null != appPreference) {
-            int permission = appPreference.getInt(com.example.mrpan.annhome.Config.TYPE_CONN, 0);
+            int permission = appPreference.getInt(Config.TYPE_CONN, 0);
             Network netUtils =new Network(MyApplication.getInstance());
             Network.NetWorkState state = netUtils.getConnectState();
             if (state.equals(Network.NetWorkState.MOBILE)) {
 
-                if (permission == com.example.mrpan.annhome.Config.TYPE_ALL) {
+                if (permission == Config.TYPE_ALL) {
                     threadPool.execute(getPostHttpThread(url, JsonStr, httpCallBack));
-                } else if (permission == com.example.mrpan.annhome.Config.TYPE_WIFI) {
+                } else if (permission == Config.TYPE_WIFI) {
                     httpCallBack.onFailure(0, Con_Permission,
                             "请在设置中打开MOBILE连接 ");
                     MyLog.i(TAG, "未发送请求，用户设置了网络限制");

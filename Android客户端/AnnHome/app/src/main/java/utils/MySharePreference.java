@@ -48,4 +48,17 @@ public class MySharePreference {
 			return defValue;
 		return mPreference.getString(key, defValue);
 	}
+
+	public void commitBoolean(String key,boolean value){
+		if(null==mEditor)
+			return;
+		mEditor.putBoolean(key,value);
+		mEditor.commit();
+	}
+	public boolean getBoolean(String key,boolean defValue){
+		if(mPreference==null){
+			return defValue;
+		}
+		return mPreference.getBoolean(key,defValue);
+	}
 }

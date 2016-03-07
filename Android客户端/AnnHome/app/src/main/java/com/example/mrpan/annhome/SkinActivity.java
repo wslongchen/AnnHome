@@ -1,6 +1,5 @@
 package com.example.mrpan.annhome;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.MySharePreference;
+import utils.SkinListAdapter;
+import utils.SkinListItemData;
 
 /**
  * Created by mrpan on 15/12/19.

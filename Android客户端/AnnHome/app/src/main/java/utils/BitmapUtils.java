@@ -9,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
@@ -18,7 +16,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -32,6 +29,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.example.mrpan.annhome.Config;
 import com.example.mrpan.annhome.R;
 
 
@@ -92,8 +90,8 @@ public class BitmapUtils {
 		int h = drawable.getIntrinsicHeight();
 
 		// 取 drawable 的颜色格式
-		Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Config.ARGB_8888
-				: Config.RGB_565;
+		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+				: Bitmap.Config.RGB_565;
 		// 建立对应 bitmap
 		Bitmap bitmap = Bitmap.createBitmap(w, h, config);
 		// 建立对应 bitmap 的画布
@@ -196,10 +194,10 @@ public class BitmapUtils {
 			return null;
 		}
 		FileOutputStream fileOutputStream = null;
-		FileUtils.createDirFile(com.example.mrpan.annhome.Config.DIR_PATH);
+		FileUtils.createDirFile(Config.DIR_PATH);
 
 		String fileName = UUID.randomUUID().toString() + ".jpg";
-		String newFilePath = com.example.mrpan.annhome.Config.DIR_PATH + fileName;
+		String newFilePath = Config.DIR_PATH + fileName;
 		File file = FileUtils.createNewFile(newFilePath);
 		if (file == null) {
 			return null;
