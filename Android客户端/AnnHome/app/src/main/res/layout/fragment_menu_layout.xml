@@ -147,21 +147,10 @@
                 android:gravity="left|center"
                 android:padding="5dp"
                 android:text="其他工具"
+                android:visibility="gone"
                 android:textColor="@color/xingren_bai"
                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/bt_systemSetting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/menu_select"
-                android:drawableLeft="@mipmap/icon_meun_setting"
-                android:drawablePadding="5dp"
-                android:gravity="left|center"
-                android:padding="5dp"
-                android:text="系统设置"
-                android:textColor="@color/xingren_bai"
-                android:textSize="20sp" />
         </LinearLayout>
     </view.MyScrollView>
     <View

@@ -61,13 +61,12 @@
                 android:text="检测更新" />
 
             <LinearLayout
-                android:id="@+id/item_clear_cache"
                 style="@style/MoreSettingItem"
                 android:background="@drawable/round_corner_item_below_bg" >
 
                 <TextView
                     style="@style/MoreItemTextStyle"
-
+                    android:id="@+id/item_clear_cache"
                     android:text="清除缓存" />
 
                 <TextView

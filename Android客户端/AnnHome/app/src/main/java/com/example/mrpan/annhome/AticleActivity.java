@@ -111,7 +111,7 @@ import utils.BitmapUtils;
                 //artile_img=BitmapUtils.returnBitMap(posts.getAttachments().get(0).getUrl());
                 new DownImage(posts.getAttachments().get(0).getUrl()).execute();
             }
-            if(DBAdapter.getDBAdapter(context).isHave("游客",posts.getTitle()))
+            if(DBAdapter.getDBAdapter(context).isHave("游客",posts.getTitle().trim()))
                 m_favorite.setImageResource(R.mipmap.favorite_press);
             art_content.loadDataWithBaseURL(null, posts.getContent(), "text/html", "UTF-8", null);
         }

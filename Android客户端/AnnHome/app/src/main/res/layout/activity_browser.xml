@@ -1,11 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<WebView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/webbrowser">
+    <LinearLayout
+        android:id="@+id/browser_top_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/transparent">
 
-</WebView>
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/top_bar_height"
+            android:background="@color/transparent"
+            android:paddingLeft="@dimen/round_corner_bg_item_padding"
+            android:paddingRight="@dimen/round_corner_bg_item_padding" >
+
+            <TextView
+                android:id="@+id/browser_top_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:textColor="@color/dark_brown"
+                android:textSize="20.0sp" />
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@mipmap/logo"
+                android:layout_centerVertical="true"
+                android:paddingLeft="25dp"
+                android:id="@+id/browser_return"
+                android:contentDescription="@null"
+                />
+            <ImageButton
+                android:id="@+id/browser_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/setting_btn"
+                android:contentDescription="@null" />
+        </RelativeLayout>
+
+        <include layout="@layout/top_bar_shadow" />
+
+
+
+    </LinearLayout>
+    <view.ProgressWebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/webbrowser"
+        android:layout_below="@+id/browser_top_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/browser_bottom_bar">
+
+    </view.ProgressWebView>
+    <LinearLayout
+        android:id="@+id/browser_bottom_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/list_bg_color">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:id="@+id/browser_progressBar" />
+        </LinearLayout>
+        <include layout="@layout/top_bar_shadow" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/top_bar_height"
+            android:background="@color/transparent"
+            android:paddingLeft="@dimen/round_corner_bg_item_padding"
+            android:paddingRight="@dimen/round_corner_bg_item_padding"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:id="@+id/back"
+                android:layout_alignTop="@+id/refresh"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="20dp"/>
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:layout_alignTop="@+id/back"
+                android:layout_toRightOf="@+id/back"
+                android:layout_toEndOf="@+id/back"
+                android:layout_marginLeft="5dp"/>
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:layout_toLeftOf="@+id/more"
+                android:layout_marginRight="5dp"
+                />
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

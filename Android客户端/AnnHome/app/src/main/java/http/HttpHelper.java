@@ -7,15 +7,27 @@ import com.example.mrpan.annhome.Config;
 import com.example.mrpan.annhome.MyApplication;
 import com.example.mrpan.annhome.WebBrowserActivity;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -122,6 +134,37 @@ public class HttpHelper {
 
     }
 
+    public void asyHttpPostRequest(String url,List<NameValuePair> params, HttpResponseCallBack httpCallBack) {
+
+
+        if (null != appPreference) {
+            int permission = appPreference.getInt(Config.TYPE_CONN, 0);
+            Network netUtils =new Network(MyApplication.getInstance());
+            Network.NetWorkState state = netUtils.getConnectState();
+            if (state.equals(Network.NetWorkState.MOBILE)) {
+
+                if (permission == Config.TYPE_ALL) {
+                    threadPool.execute(getPostHttpThread(url, params, httpCallBack));
+                } else if (permission == Config.TYPE_WIFI) {
+                    httpCallBack.onFailure(0, Con_Permission,
+                            "请在设置中打开MOBILE连接 ");
+                    MyLog.i(TAG, "未发送请求，用户设置了网络限制");
+                }
+                // 未知网络
+                else {
+                    threadPool.execute(getPostHttpThread(url, params, httpCallBack));
+                }
+
+            } else {
+                threadPool.execute(getPostHttpThread(url, params, httpCallBack));
+            }
+
+        } else {
+            threadPool.execute(getPostHttpThread(url, params, httpCallBack));
+        }
+
+    }
+
     private Runnable getGetHttpThread(final String urlStr,
                                       final HttpResponseCallBack httpCallBack) {
 
@@ -210,7 +253,7 @@ public class HttpHelper {
         };
 
     }
-    private Runnable getPostHttpThread(final String adress_Http, final String strJson, final HttpResponseCallBack httpCallBack){
+    private Runnable getPostHttpThread(final String adress_Http, final String params, final HttpResponseCallBack httpCallBack){
 
         return new Runnable() {
             int responseCode = -1;
@@ -234,7 +277,7 @@ public class HttpHelper {
                     conn.connect();
                     DataOutputStream out = new DataOutputStream(conn
                             .getOutputStream());
-                    byte[] content = strJson.getBytes("utf-8");
+                    byte[] content = params.getBytes("utf-8");
                     out.write(content, 0, content.length);
                    responseCode=conn.getResponseCode();
                     if (responseCode == 200) {
@@ -280,6 +323,53 @@ public class HttpHelper {
 
                 if (null != conn)
                     conn.disconnect();
+            }
+        };
+    }
+
+    private Runnable getPostHttpThread(final String adress_Http, final List<NameValuePair> params, final HttpResponseCallBack httpCallBack){
+
+        return new Runnable() {
+            int responseCode = -1;
+            URL url = null;
+
+            @Override
+            public void run() {
+                try{
+
+                    HttpPost httpRequest =new HttpPost(adress_Http);
+                    //发出HTTP request
+                    httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+                    httpRequest.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                    //取得HTTP response
+                    HttpResponse httpResponse=new DefaultHttpClient().execute(httpRequest);
+                    //若状态码为200 ok
+                    if(httpResponse.getStatusLine().getStatusCode()==200){
+                        //取出回应字串
+                        //String strResult= EntityUtils.toString(httpResponse.getEntity());
+                        String strResult = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+
+                        httpCallBack.onSuccess(adress_Http,
+                                URLDecoder.decode(strResult, "utf-8"));
+
+
+                    } else {
+                        httpCallBack.onFailure(responseCode, REQUEST_FAIL,
+                                "请求失败！");
+                    }
+                }catch(ClientProtocolException e){
+                    httpCallBack.onFailure(responseCode, URL_Exception,
+                            e.getMessage());
+                    MyLog.i(TAG, e.toString());
+                } catch (UnsupportedEncodingException e) {
+                    httpCallBack.onFailure(responseCode, URL_Exception,
+                            e.getMessage());
+                    MyLog.i(TAG, e.toString());
+                } catch (IOException e) {
+                    httpCallBack.onFailure(responseCode, IO_Exception,
+                            e.getMessage());
+                    MyLog.i(TAG, e.toString());
+                }
             }
         };
     }

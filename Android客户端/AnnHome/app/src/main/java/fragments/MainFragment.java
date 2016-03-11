@@ -1,5 +1,6 @@
 package fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -36,6 +37,8 @@ import com.example.mrpan.annhome.LocationActivity;
 import com.example.mrpan.annhome.MainActivity;
 import com.example.mrpan.annhome.R;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,7 +169,10 @@ public void changeTheme(){
 
 		mHttpClient.asyHttpGetRequest("http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1", new
 				FilpperHttpResponseCallBack(1));
-
+		List<NameValuePair> params=new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("name","this is post"));
+		params.add(new BasicNameValuePair("content","post"));
+		//mHttpClient.asyHttpPostRequest("http://114.215.113.48/index.php?action=post",params,new FilpperHttpResponseCallBack(3));
 	}
 
 	//加载显示缓存数据
@@ -370,6 +376,9 @@ public void changeTheme(){
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
+								break;
+							case 3:
+								String ss=msg.obj.toString();
 								break;
 						}
 					}

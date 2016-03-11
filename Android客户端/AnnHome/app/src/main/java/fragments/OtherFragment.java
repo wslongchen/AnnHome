@@ -70,7 +70,7 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
         m_setting=(ImageButton)currentView.findViewById(R.id.m_setting);
         m_setting.setVisibility(View.GONE);
         mTitleTextView = (TextView) currentView.findViewById(R.id.top_bar_title);
-        mTitleTextView.setText("更换皮肤");
+        mTitleTextView.setText("其他工具");
 
     }
 

@@ -55,6 +55,8 @@ public class WelcomeActivity extends Activity{
             sharedPreferences.commitBoolean("first", true);
             //int theme=sharedPreferences.getInt("theme",0);
             sharedPreferences.commitInt("theme", R.color.list_bg_color);
+            this.startActivity(new Intent(WelcomeActivity.this, GuidActivity.class));
+            this.finish();
         }
         else
         {

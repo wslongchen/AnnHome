@@ -26,7 +26,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 	private View currentView = null;
 	private Button bt_all, bt_favorite, bt_widget,
-			bt_skin, bt_systemSetting,bt_index;
+			bt_skin,bt_index;
 
 	private Button bt_exit, bt_setting;
 
@@ -46,9 +46,6 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		bt_widget = (Button) currentView
 				.findViewById(R.id.bt_widget);
 		bt_skin = (Button) currentView.findViewById(R.id.bt_skin);
-		bt_systemSetting = (Button) currentView
-				.findViewById(R.id.bt_systemSetting);
-		bt_systemSetting.setOnClickListener(this);
 		bt_all.setOnClickListener(this);
 		bt_favorite.setOnClickListener(this);
 		bt_widget.setOnClickListener(this);
@@ -132,8 +129,6 @@ public class MenuFragment extends Fragment implements OnClickListener {
 			transaction.addToBackStack(null);
 			transaction.commit();
 				break;
-		case R.id.bt_systemSetting:
-			break;
 
 		case R.id.bt_exit:
 			 exitiDalog();

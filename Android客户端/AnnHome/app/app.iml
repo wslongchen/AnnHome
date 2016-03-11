@@ -98,5 +98,6 @@
     <orderEntry type="library" exported="" name="mta-sdk-1.6.2" level="project" />
     <orderEntry type="module" module-name="library_pullToRefresh" exported="" />
     <orderEntry type="module" module-name="library2" exported="" />
+    <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>
 </module>
