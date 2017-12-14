@@ -1,143 +1,127 @@
-### 续节
+# 前言
 
-上回书说到，师徒四人途经狮驼国，狮驼国三位国师对唐僧心怀不轨，要与师徒四人进行斗法。咳，跑偏了跑偏了。
+作为一名全干打字员，干活时经常会被要求使用各种各样的语言去实现各种各样的需求，来回切换起来写的代码就会或多或少有点不规范。今天我们以JAVA为例，讲讲在代码中，我们需要注意的某些规范。（本文标准依赖于阿里巴巴的JAVA开发代码规范）
 
-大家静一静，上一次最后我们介绍了Express的模板引擎，今天我们接着上次的继续。
+# 示例
 
-### 庖丁解牛（续）
+以下举出本猿在工作中常常出现的问题，包括但不仅限于：
 
-- 更换模板引擎
++ 逻辑判断语句
 
-首先我们在 ```package.json``` 文件中 ```dependencies``` 节点增加包：
-```json
- "ejs": "~2.5.2",
+在 ```if/else/for/while/do``` 语句中必须使用大括号，即使只有一行代码，避免使用下面的形式：
+```java
+if(condition) statements;
 ```
-执行 ```npm install``` 编译过后，修改 ```app.js``` 文件中的模板渲染一行。
-```js
-//将jade换成ejs
-app.set('view engine', 'ejs');
++ 属性copy
+
+很多童鞋喜欢使用 ```Apache Beanutils``` 进行属性的copy， ```Apache BeanUtils``` 性能较差，我们应该尽量避免使用,可以使用其他方案比如 ```Spring BeanUtils``` , ```Cglib BeanCopier``` 。
+```java
+TestObject a = new TestObject();
+TestObject b = new TestObject();
+a.setX(b.getX());
+a.setY(b.getY());  
 ```
-然后将 ```index.jade``` 换成 ```index.ejs``` ，因为现在我们已经将模板切换到ejs了。
-下面是 ``` index.js``` 文件内容。
 
-```ejs
-<%include header.ejs %>
-    <p>Wecolme to <%=title%></p>
-<%include footer.ejs %>
++ 覆写方法
+
+所有的覆写方法，都必须要加上 ```@Override``` 注解。
+
++ 类方法命名
+
+方法名、参数名、成员变量、局部变量都应该统一使用 ```lowerCamelCase``` ，类名使用 ```UpperCamelCase``` 风格，遵从驼峰命名的标准，尽量避免如 ```_``` ```-```等字符连接,但以下情形例外：（领域模型的相关命名）DO / BO / DTO / VO / DAO。另外，类都应该加上创建者的信息，方法名也应该加上对应的参数及用途说明。
+
+常量命名应该全部大写，但此间使用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
+
++ Random实例
+
+首先 ```Random``` 示例包括 ```java.util.Random``` 或者 ```Math.random()```，我们应该避免其被多线程使用，虽然共享该实例是线程安全的，但会因竞争统一 ```seed``` 导致性能下降。
+```java
+ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
+ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+    singleThreadPool.execute(()-> System.out.println(Thread.currentThread().getName()));
+    singleThreadPool.shutdown();   
 ```
-现在java程序员是不是看着顺眼了很多呢，这仅仅是个人习惯，仅供参考。
 
-- 工程目录总览
++字符串拼接
 
-现在我们回顾一下整体工程的目录结构：
-```json
-- bin            # 命令文件
-- node_modules   # 下载的依赖包
-- public         # 静态资源目录
-- routes         # 路由文件
-- views          # 视图模板文件
-  app.js         # 入口文件
-  package.json   # 工程依赖配置文件
+在循环体内，我们应当使用 ```StringBuilder``` 的 ```append``` 方法进行字符串的连接。
+
+```JAVA
+反例:
+    String result;
+    for (String string : tagNameList) {
+        result = result + string;
+    }   
+正例:
+    StringBuilder stringBuilder = new StringBuilder();
+    for (String string : tagNameList) {
+        stringBuilder.append(string);
+    }
+    String result = stringBuilder.toString();   
 ```
-现在相信大家对整个项目已经有了基本的认识了，接下来我们就开始对微信公众号的集成了。
 
-### 集成微信公众号
++ equals判断
 
-关于微信公众平台的开发文档可以去 [官网][1] 获取，里面有很详细的介绍，以下配图步骤均来自官方文档：
-从文档里面我们可以知道，首先我们必须要在自己公众号的后台进行服务器的配置。
-
-![clipboard.png](/img/bVZo2k)
-
-然后填上我们的服务器配置，由于我们暂时还没有写，所以这里暂时先写上 ```http://www.dailyguitar.cc/wechat/index```。
-
-接下来我们就得写对 ```/wechat/index``` 的处理了。
-
-- 验证服务端的有效性
-
-微信会对上面我们填写的地址进行有效性的检测，它会用请求我们的地址，我们必须对它请求过来的参数进行解密，然后返回同样的数据给它，否则将无法使用公众平台的相关接口。
-
-首先我们在 ```index.js``` 中加入如下代码，
-```js
-/* 微信校验 */
-var token="weixin";
-
-router.get('/wechat/index', function(req, res, next) {
-  try{
-        var signature = req.query.signature;
-        var timestamp = req.query.timestamp;
-        var nonce = req.query.nonce;
-        var echostr = req.query.echostr;
-        /*  加密/校验流程如下： */
-        //1. 将token、timestamp、nonce三个参数进行字典序排序
-        var array = new Array(token,timestamp,nonce);
-        array.sort();
-        var str = array.toString().replace(/,/g,"");
-        //2. 将三个参数字符串拼接成一个字符串进行sha1加密
-        var sha1Code = crypto.createHash("sha1");
-        var code = sha1Code.update(str,'utf-8').digest("hex");
-        //3. 获得加密后的字符串可与signature对比，标识该请求来源于微信
-        if(code===signature){
-            res.send(echostr);
-            console.log(""+echostr);
-        }else{
-            res.send("error");
-        }
-    }catch(error){
-        console.log("error:"+error);
-  	}
-});
-```
-其中我们用到了一个加密模块 ```crypto``` ，我们需要手动引用一下，然后我们将项目运行起来，由于微信需要用到域名否则无法进行调试，这里本猿推荐两个内网穿透工具，一个是花生壳一个叫做ngrok，大家可以自己研究研究。
-
-到这里其实与微信的对接已经完成了，在微信后台我们就可以配置成功了，记得别忘了我们的token哟。
-
-+ 处理微信消息
-
-当用户和我们的公众号发生操作的时候，微信会发送post请求到我们配置的URL中，所以我们只需要接收微信发过来的xml数据进行解析，并以xml的格式返回数据即可完成对消息的回复。
-所以我们得对 ```index.js``` 再增加一个post的捕捉。
-```js
-/* 微信消息处理 */
-router.post('/wechat/index', function(req, res, next) {
-  try{
-        var bodyData;
-	    req.on("data",function(data){
-	        /*微信服务器传过来的是xml格式的，是buffer类型，
-	        	需要通过toString把xml转换为字符串*/
-	        bodyData = data.toString("utf-8");
-
-	    });
-	    req.on("end",function(){
-	        var ToUserName = getXMLNodeValue('ToUserName',bodyData);
-	        var FromUserName = getXMLNodeValue('FromUserName',bodyData);
-	        var CreateTime = getXMLNodeValue('CreateTime',bodyData);
-	        var MsgType = getXMLNodeValue('MsgType',bodyData);
-	        var Content = getXMLNodeValue('Content',bodyData);
-	        var MsgId = getXMLNodeValue('MsgId',bodyData);
-	        console.log(ToUserName);
-	        console.log(FromUserName);
-	        console.log(CreateTime);
-	        console.log(MsgType);
-	        console.log(Content);
-	        console.log(MsgId);
-	        var xml = '<xml><ToUserName>'+FromUserName+'</ToUserName><FromUserName>'+ToUserName+'</FromUserName><CreateTime>'+CreateTime+'</CreateTime><MsgType>'+MsgType+'</MsgType><Content>'+Content+'</Content></xml>';
-	        res.send(xml);
-    	});
-    }catch(error){
-        console.log("error:"+error);
-  	}
-});
-
-/* 获取节点 */
-function getXMLNodeValue(node_name,xml){
-    var str = xml.split("<"+node_name+">");
-    var tempStr = str[1].split("</"+node_name+">");
-    return tempStr[0];
+很多人喜欢使用下面的代码进行 ```equals``` 判断是否为某个值：
+```JAVA
+public static final String type = "FOOD";
+if(Object.equals(type)){
+    //do something
 }
 ```
-打开应用，对着自己公众号发送一条消息，很快也会收到一条内容一样的回复，大功告成！
+对象中的equals很容易抛空指针异常，所以我们应该尽量使用常量或者确定有值的对象来调用equals。
 
-### 结语
+```JAVA
+public void f(String str){
+        String inner = "hi";
+        if(inner.equals(str)){
+            System.out.println("hello world");
+        }
+    }
+```
 
-本次实战只为达到简单的操作效果，我们可以对其进行更深层次的处理和封装，具体可以看一看我的开源项目中对微信公众号模块的处理。另外node中有一个比较方便公众号开发的模块 ```wechat``` ，它提供了很多便捷的方法如支付以及模版消息等模块的支持，有兴趣的朋友可以自行研究一下。
++ 集合初始化
 
-  [1]: https://mp.weixin.qq.com/wiki
+我们往往在集合初始化的时候忘记指定集合的初始值大小，在高并发的情况下，这样很可能会造成内存的使用不当引起一系列的问题。所以在使用诸如 ```HashMap``` 的时候尽量指定初始值的大小。
+```JAVA
+反例:   
+   Map<String, String> map = new HashMap<String, String>();   
+正例: 
+   Map<String, String> map = new HashMap<String, String>(16);   
+```
+
++ 注释
+
+方法内部应当使用单行注释，在被注释语句的上方另起一行，使用 ```//``` 进行注释，多行注释则使用 ```/* */``` ，强迫症下应注意与代码对齐。
+```JAVA
+public void method() {
+        // Put single line comment above code. (Note: align '//' comment with code)
+        int a = 3;
+    
+        /**
+        * Some description about follow code. (Note: align '/**' comment with code)
+        */
+        int b = 4;
+    } 
+```
+
++ Switch语句
+
+在每一个switch块内，每一个case都必须通过 ```break/return``` 来终止或者是注释说明程序继续执行到某一个case为止，并且都应该包含一个 ```default``` 语句放在最后，即便没有代码。
+```JAVA
+switch( x ){
+        case 1 :
+        break ;
+        case 2 :
+        break ;
+        default :
+    }  
+```
+
+# 结语
+
+虽然我们往往写出的代码可能不是很高效、简洁，但是我们一定注意代码的可读性，毕竟代码除了机器看之外，也是给人看的。
+
+# 福利
+
+送福利送福利啦，本猿最近获得了三张 ```5QB``` 的抵用卷，本着蚊子再小也是肉的原则，把它送给在公众号上留言的前三位童鞋，留言的前三位童鞋看到后记得在后台留下QQ号联系打字员大大领取福利哟~
