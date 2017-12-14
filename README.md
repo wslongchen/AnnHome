@@ -42,7 +42,7 @@ ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MIL
     singleThreadPool.shutdown();   
 ```
 
-+字符串拼接
++ 字符串拼接
 
 在循环体内，我们应当使用 ```StringBuilder``` 的 ```append``` 方法进行字符串的连接。
 
