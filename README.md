@@ -1,127 +1,198 @@
 # 前言
 
-作为一名全干打字员，干活时经常会被要求使用各种各样的语言去实现各种各样的需求，来回切换起来写的代码就会或多或少有点不规范。今天我们以JAVA为例，讲讲在代码中，我们需要注意的某些规范。（本文标准依赖于阿里巴巴的JAVA开发代码规范）
+本文首发公众号 【一名打字员】
 
-# 示例
+网上墙内关于这方面的文章真的很少，本猿也是通过官网一点一点学习，希望能够帮助到大家。[express-gateway官网][1]
 
-以下举出本猿在工作中常常出现的问题，包括但不仅限于：
+# 安装
 
-+ 逻辑判断语句
++ 安装Express Gateway
 
-在 ```if/else/for/while/do``` 语句中必须使用大括号，即使只有一行代码，避免使用下面的形式：
-```java
-if(condition) statements;
 ```
-+ 属性copy
-
-很多童鞋喜欢使用 ```Apache Beanutils``` 进行属性的copy， ```Apache BeanUtils``` 性能较差，我们应该尽量避免使用,可以使用其他方案比如 ```Spring BeanUtils``` , ```Cglib BeanCopier``` 。
-```java
-TestObject a = new TestObject();
-TestObject b = new TestObject();
-a.setX(b.getX());
-a.setY(b.getY());  
+npm install -g express-gateway
 ```
 
-+ 覆写方法
++ 创建一个项目
 
-所有的覆写方法，都必须要加上 ```@Override``` 注解。
-
-+ 类方法命名
-
-方法名、参数名、成员变量、局部变量都应该统一使用 ```lowerCamelCase``` ，类名使用 ```UpperCamelCase``` 风格，遵从驼峰命名的标准，尽量避免如 ```_``` ```-```等字符连接,但以下情形例外：（领域模型的相关命名）DO / BO / DTO / VO / DAO。另外，类都应该加上创建者的信息，方法名也应该加上对应的参数及用途说明。
-
-常量命名应该全部大写，但此间使用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
-
-+ Random实例
-
-首先 ```Random``` 示例包括 ```java.util.Random``` 或者 ```Math.random()```，我们应该避免其被多线程使用，虽然共享该实例是线程安全的，但会因竞争统一 ```seed``` 导致性能下降。
-```java
-ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
-ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-    singleThreadPool.execute(()-> System.out.println(Thread.currentThread().getName()));
-    singleThreadPool.shutdown();   
+```
+eg gateway create
 ```
 
-+ 字符串拼接
++ 初始一些基本信息配置
 
-在循环体内，我们应当使用 ```StringBuilder``` 的 ```append``` 方法进行字符串的连接。
-
-```JAVA
-反例:
-    String result;
-    for (String string : tagNameList) {
-        result = result + string;
-    }   
-正例:
-    StringBuilder stringBuilder = new StringBuilder();
-    for (String string : tagNameList) {
-        stringBuilder.append(string);
-    }
-    String result = stringBuilder.toString();   
+```
+eg gateway create
+ ? What is the name of your Express Gateway? my-gateway
+ ? Where would you like to install your Express Gateway? my-gateway
+ ? What type of Express Gateway do you want to create? (Use arrow keys)
+ ❯ Getting Started with Express Gateway
+   Basic (default pipeline with proxy)
 ```
 
-+ equals判断
++ 启动
 
-很多人喜欢使用下面的代码进行 ```equals``` 判断是否为某个值：
-```JAVA
-public static final String type = "FOOD";
-if(Object.equals(type)){
-    //do something
+```
+cd my-gateway && npm start
+```
+
+这样基本的一个项目就已经成型了。
+
+# 使用方法
+
+### 指定服务并把API暴露出来（API提供者）
+
++ 第一步
+
+我们会发现，项目中已经把代理了一个现有的服务 ```https://httpbin.org/ip``` ,并对其进行管理。它提供了一个json的输出，我们可以展示一下快速网关的功能。访问 ```https://httpbin.org/ip``` ，会有以下输出：
+
+```
+{
+  "origin": "218.80.1.67"  #自己的IP
 }
 ```
-对象中的equals很容易抛空指针异常，所以我们应该尽量使用常量或者确定有值的对象来调用equals。
 
-```JAVA
-public void f(String str){
-        String inner = "hi";
-        if(inner.equals(str)){
-            System.out.println("hello world");
-        }
-    }
++ 第二步
+
+
+![clipboard.png](/img/bV0pEQ)
+
+
+该服务被指定为快速网关中默认管道的服务端，网关有自己的代理策略，之前的 ```https://httpbin.org/ip``` 则是网关设置的一个服务请求。配置在config目录下的 ```gateway.config.yml``` 文件。
+
+```
+http:
+  port: 8080
+admin:
+  port: 9876
+  hostname: localhost
+apiEndpoints:
+  api:
+    host: localhost
+    paths: '/ip'
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin 
+              changeOrigin: true
 ```
 
-+ 集合初始化
+可以看到这里配置了一个默认的服务端点，网关会在默认代理策略中找到 ```httmbin``` 。
 
-我们往往在集合初始化的时候忘记指定集合的初始值大小，在高并发的情况下，这样很可能会造成内存的使用不当引起一系列的问题。所以在使用诸如 ```HashMap``` 的时候尽量指定初始值的大小。
-```JAVA
-反例:   
-   Map<String, String> map = new HashMap<String, String>();   
-正例: 
-   Map<String, String> map = new HashMap<String, String>(16);   
++ 第三步
+
+
+![clipboard.png](/img/bV0pES)
+
+
+接下来我们需要让 ```httpbin``` 服务作为一个API端点穿过网关，并当这个API公开时，可以被外部所访问。
+在上面的 ```gateway.config.yml``` 配置文件中，我们找到 ```apiEndpoints``` 这个设置，其中有一个 ```api``` 的设置项。
+
+```
+apiEndpoints:
+  api:
+    host: localhost
+    paths: '/ip'
 ```
 
-+ 注释
+PS:默认情况下，API请求路径将被代理策略挂在服务端点中。
 
-方法内部应当使用单行注释，在被注释语句的上方另起一行，使用 ```//``` 进行注释，多行注释则使用 ```/* */``` ，强迫症下应注意与代码对齐。
-```JAVA
-public void method() {
-        // Put single line comment above code. (Note: align '//' comment with code)
-        int a = 3;
-    
-        /**
-        * Some description about follow code. (Note: align '/**' comment with code)
-        */
-        int b = 4;
-    } 
++ 第四步
+
+![clipboard.png](/img/bV0pEW)
+
+现在我们就可以通过网关来访问API了，访问 ```http://localhost:8080/ip``` 。
+
+### 创建API消费者
+
+方便管理API，我们将允许使用API的授权用户称为“消费者”。如用户的创建，进入项目根目录，创建：
+
+```
+eg users create
+ Enter username [required]: mrpan
+ Enter firstname [required]: coder
+ Enter lastname [required]: coder
+ Enter email: 1049058427@qq.com
+ Enter redirectUri: www.baidu.com
+√ Created 892775c8-80c5-480e-b596-6cb3133691f2
+
+ "firstname": "coder",
+ "lastname": "coder",
+ "email": "1049058427@qq.com",
+ "redirectUri": "www.baidu.com",
+ "isActive": true,
+ "username": "mrpan",
+ "id": "892775c8-80c5-480e-b596-6cb3133691f2",
+ "createdAt": "Sat Dec 16 2017 13:21:13 GMT+0800 (中国标准时间)",
+ "updatedAt": "Sat Dec 16 2017 13:21:13 GMT+0800 (中国标准时间)"
+
 ```
 
-+ Switch语句
+### API权限认证
 
-在每一个switch块内，每一个case都必须通过 ```break/return``` 来终止或者是注释说明程序继续执行到某一个case为止，并且都应该包含一个 ```default``` 语句放在最后，即便没有代码。
-```JAVA
-switch( x ){
-        case 1 :
-        break ;
-        case 2 :
-        break ;
-        default :
-    }  
++ 第一步
+
+现在我们的API是公开的，没有进行权限的控制，所以任何人都可以对它进行访问。我们现在用密钥授权对它进行保护，首先必须要将这个授权策略加入在配置文件 ```gateway.config.yml``` 中。
+
 ```
+pipelines:
+  - name: getting-started
+    apiEndpoints:
+      - api
+    policies:
+      - key-auth:
+      - proxy:
+        - action:
+          serviceEndpoint: httpbin
+          changeOrigin: true
+```
+
++ 第二步
+
+![clipboard.png](/img/bV0pGZ)
+
+将密钥分给上面的用户 ```mrpan```
+
+```
+eg credentials create -c mrpan -t key-auth -q
+10b9Yaalb982DreBukZvGf:3A2bhd1xzqwAvNWX0QfjD5
+```
+PS：上面的-q选项是将输出限制为api的key，便于粘贴复制。
+
++ 第三步
+
+![clipboard.png](/img/bV0pHl)
+
+再次访问 ```http://localhost:8080/ip``` ，这个时候便不会打印结果了，只会打印出 ```Unauthorized``` 。
+
++ 第四步
+
+![clipboard.png](/img/bV0pHE)
+
+我们在访问的时候把key加上。这样，就能继续使用API了。
+
+到这里，网关的基本使用也就差不多了，大家可以梳理一下在自己的系统中进行扩展。
 
 # 结语
 
-虽然我们往往写出的代码可能不是很高效、简洁，但是我们一定注意代码的可读性，毕竟代码除了机器看之外，也是给人看的。
+现在大多大型网站架构都采用了微服务的模式，把系统拆分成一个一个的微服务，服务层可能会使用java或者使用其它语言编写，毕竟有Netflix这样的先例，成功的使用Node.js API网关及其JAVA后端来支持广泛的客户端。
 
-# 福利
+  [1]: http://www.express-gateway.io
 
-送福利送福利啦，本猿最近获得了三张 ```5QB``` 的抵用卷，本着蚊子再小也是肉的原则，把它送给在公众号上留言的前三位童鞋，留言的前三位童鞋看到后记得在后台留下QQ号联系打字员大大领取福利哟~
